@@ -17,6 +17,6 @@ describe("/openapi", () => {
     it("should return a response", async () => {
         const response = await request.get("/openapi")
         expect(response.status).toBe(200)
-        expect(response.text).toBe(fs.readFileSync(path.join(__dirname, '..\\api', 'openapi.yaml'), 'utf8'));
+        expect(response.text).toBe(fs.readFileSync(path.join(__dirname, '..'+path.sep+'api', 'openapi.yaml'), 'utf8'));
     })
 });

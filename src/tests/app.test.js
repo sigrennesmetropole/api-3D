@@ -3,7 +3,17 @@ const supertest = require("supertest");
 const config = require('../config');
 const fs = require('fs');
 const path = require('path');
-const request = supertest( new ExpressServer(config.URL_PORT, config.OPENAPI_YAML).app);
+const { serve } = require('swagger-ui-express');
+let server, request;
+beforeAll(() => {
+    server = new ExpressServer(config.URL_PORT, config.OPENAPI_YAML);
+    request = supertest( server.app);
+    server.launch();
+});
+
+afterAll(() => {
+    server.close();
+});
 
 describe("/hello", () => {
     it("should return a response", async () => {
@@ -18,5 +28,29 @@ describe("/openapi", () => {
         const response = await request.get("/openapi")
         expect(response.status).toBe(200)
         expect(response.text).toBe(fs.readFileSync(path.join(__dirname, '..'+path.sep+'api', 'openapi.yaml'), 'utf8'));
+    })
+});
+
+describe("/", () => {
+    it("should return a response", async () => {
+        const response = await request.get("/")
+        expect(response.status).toBe(200)
+        expect(response.text).toBe(`{"f":"json"}`)
+    })
+});
+
+describe("/conformance", () => {
+    it("should return a response", async () => {
+        const response = await request.get("/conformance")
+        expect(response.status).toBe(200)
+        expect(response.text).toBe(`{"f":"json"}`)
+    })
+});
+
+describe("/collections", () => {
+    it("should return a response", async () => {
+        const response = await request.get("/collections")
+        expect(response.status).toBe(200)
+        expect(response.text).toBe(`{}`)
     })
 });

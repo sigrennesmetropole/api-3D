@@ -1,0 +1,15 @@
+{
+    "name": "rennes-metropole-api-3d-generator",
+    "version": "1.0.0",
+    "description": "Génère le code depuis le fichier YML",
+    "scripts": {
+        "build": "openapi-generator-cli generate -g nodejs-express-server -i ./api/openapi.yaml -o ./src",
+        "start": "docker-compose -f ./docker-compose.yml up -d",
+        "test": "jest src/tests/app.test.js"
+    },
+    "devDependencies": {
+        "@openapitools/openapi-generator-cli": "^2.5.1",
+        "jest": "^28.1.0",
+        "supertest": "^6.2.3"
+    }
+}

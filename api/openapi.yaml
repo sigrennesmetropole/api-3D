@@ -1,0 +1,404 @@
+openapi: 3.0.2
+info:
+  title: >-
+    RENNES METROPOLE - API 3D
+  version: 1.0.0
+  description: >-
+    'TODO Description'
+  contact:
+    name: Rennes Metropole - Service Information Géographique
+    email: sig@rennesmetropole.fr
+    url: https://public.sig.rennesmetropole.fr/
+  license:
+    name: Licence ODbL 1.0
+    url: https://opendatacommons.org/licenses/odbl/
+  x-keywords:
+    - geospatial
+    - data
+    - api
+    - rennes metropole
+    - 3D
+    - CityGML
+    - CityJSON
+    - Open API Feature
+    - OGC
+servers:
+  - url: https://data.example.org/
+    description: Serveur de production
+  - url: https://dev.example.org/
+    description: Serveur de développement
+tags:
+  - name: Capabilities
+    description: essential characteristics of this API
+  - name: Data
+    description: |-
+      access to data (features)
+paths:
+  /:
+    get:
+      description: >-
+        The landing page provides links to the API definition and the
+        conformance statements for this API.
+      parameters:
+        - $ref: '#/components/parameters/f'
+      operationId: getLandingPage
+      responses:
+        '200':
+          $ref: '#/components/responses/LandingPage'
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: Landing page
+      tags:
+        - Capabilities
+  /conformance:
+    get:
+      description: >-
+        A list of all conformance classes specified in a standard that the
+        server conforms to.
+      parameters:
+        - $ref: '#/components/parameters/f'
+      operationId: getConformanceDeclaration
+      responses:
+        '200':
+          $ref: '#/components/responses/ConformanceDeclaration'
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: API conformance definition
+      tags:
+        - Capabilities
+  /collections:
+    get:
+      tags:
+        - Capabilities
+      summary: the feature collections in the dataset
+      operationId: getCollections
+      responses:
+        '200':
+          $ref: 'https://raw.githubusercontent.com/opengeospatial/ogcapi-features/master/core/openapi/ogcapi-features-1.yaml#/components/responses/Collections'
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: 'https://raw.githubusercontent.com/opengeospatial/ogcapi-features/master/core/openapi/ogcapi-features-1.yaml#/components/responses/ServerError'
+  /raster/elevation/commune/{code_insee}:
+    get:
+      description: TODO Description
+      parameters:
+        - name: code_insee
+          in: path
+          required: true
+          schema:
+            type: string
+            example : "35238"
+            minimum: 1
+            maximum: 1
+      responses:
+        '200':
+          $ref: '#/components/responses/wms'
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500' 
+        default:
+          $ref: '#/components/responses/400'
+      summary: Terrain en raster d'élévation non texturé
+      tags:
+        - Data
+  /raster/elevation/bbox/:
+    get:
+      description: TODO Description
+      parameters:
+        - $ref: '#/components/parameters/bbox'
+      responses:
+        '200':
+          $ref: '#/components/responses/wms'
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'  
+        default:
+          $ref: '#/components/responses/400'
+      summary: Terrain en raster d'élévation non texturé
+      tags:
+        - Data
+  /batiments/:
+    get:
+      description: TODO Description
+      parameters:
+        - $ref: '#/components/parameters/bbox'
+        - name: texture
+          in: query
+          required: true
+          schema:
+            type: boolean
+            default: false
+          allowEmptyValue: false
+        - name: format
+          in: header
+          required: false
+          schema:
+            type: string
+            enum: [cityJSON, CityGML]
+      responses:
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        default:
+          $ref: '#/components/responses/400'
+      summary: Maquette blanche en accès direct (cityJSON, cityGML) sur Bbox
+      tags:
+        - Data
+  /batiments/commune/{code_insee}:
+    get:
+      description: TODO Description
+      parameters:
+      - name: code_insee
+        in: path
+        required: true
+        schema:
+          type: string
+          example : "35238"
+          minimum: 1
+          maximum: 1
+      - name: texture
+        in: query
+        required: true
+        schema:
+          type: boolean
+          default: false
+        allowEmptyValue: false
+      - name: format
+        in: header
+        required: false
+        schema:
+          type: string
+          enum: [cityJSON, CityGML]
+      responses:
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        default:
+          $ref: '#/components/responses/400'
+      summary: Maquette blanche en accès direct (cityJSON, cityGML) sur code insee
+      tags:
+        - Data
+  /batiments/batiment/{id}:
+    get:
+      description: TODO Description
+      parameters:
+      - name: id
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: texture
+        in: query
+        required: true
+        schema:
+          type: boolean
+          default: false
+        allowEmptyValue: false
+      - name: format
+        in: header
+        required: false
+        schema:
+          type: string
+          enum: [cityJSON, CityGML]
+      responses:
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+        default:
+          $ref: '#/components/responses/400'
+      summary: Maquette blanche en accès direct (cityJSON, cityGML) sur id de batiment
+      tags:
+        - Data
+components:
+  parameters:
+    f:
+      description: >-
+        The optional f parameter indicates the output format that the server
+        shall provide as part of the response document.  The default format is JSON.
+      explode: false
+      in: query
+      name: f
+      required: false
+      schema:
+        default: json
+        enum:
+          - json
+          - html
+        type: string
+      style: form
+    bbox:
+      name: bbox
+      in: query
+      required: false
+      schema:
+        type: array
+        minItems: 4
+        maxItems: 6
+        items:
+          type: number
+      style: form
+      explode: false
+  schemas:
+    landingPage:
+      type: object
+      required:
+        - links
+      properties:
+        title:
+          type: string
+          example: Buildings in Bonn
+        description:
+          type: string
+        links:
+          type: array
+          items:
+            $ref: "#/components/schemas/link"
+    link:
+      type: object
+      required:
+        - href
+        - rel
+      properties:
+        href:
+          type: string
+          example: http://data.example.com/buildings/123
+        rel:
+          type: string
+          example: alternate
+        type:
+          type: string
+          example: application/json
+        hreflang:
+          type: string
+          example: en
+        title:
+          type: string
+          example: Trierer Strasse 70, 53115 Bonn
+        length:
+          type: integer
+    exception:
+     description: JSON schema for exceptions based on RFC 7807
+     type: object
+     required:
+      - type
+     properties:
+      type: 
+        type: string
+      title: 
+        type: string
+      status:
+        type: integer
+      detail: 
+        type: string
+      instance: 
+        type: string    
+    confClasses:
+      type: object
+      required:
+        - conformsTo
+      properties:
+        conformsTo:
+          type: array
+          items:
+            type: string
+  responses:
+    '200':
+      description: successful operation
+    wms:
+      description: image de retour
+      content:
+        image/tiff:
+          schema: 
+            type: string
+            format: binary
+    400:
+      description: |-
+        General HTTP error response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/exception'
+        text/html:
+          schema:
+            type: string    
+    404:
+      description: |-
+        Not found response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/exception'
+        text/html:
+          schema:
+            type: string    
+    500:
+      description: |-
+        A server error occurred.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/exception'
+        text/html:
+          schema:
+            type: string
+    LandingPage:
+      description: |-
+        The landing page provides links to the API definition
+        (link relations `service-desc` and `service-doc`),
+        and the Conformance declaration (path `/conformance`,
+        link relation `conformance`).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/landingPage'
+        text/html:
+          schema:
+            type: string
+    ConformanceDeclaration:
+      description: |-
+        The URIs of all conformance classes supported by the server.
+
+        To support "generic" clients that want to access multiple
+        OGC API Features implementations - and not "just" a specific
+        API / server, the server declares the conformance
+        classes it implements and conforms to.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/confClasses'
+          example:
+            conformsTo:
+              - 'http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/core'
+              - 'http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/landingPage'
+              - 'http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/oas30'
+              - 'http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/html'
+              - 'http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/json'
+        text/html:
+          schema:
+            type: string

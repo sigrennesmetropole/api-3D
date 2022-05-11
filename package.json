@@ -4,6 +4,7 @@
     "description": "Génère le code depuis le fichier YML",
     "scripts": {
         "build": "openapi-generator-cli generate -g nodejs-express-server -i ./api/openapi.yaml -o ./src",
+        "build-sub": "cd src & npm install",
         "start": "docker-compose -f ./docker-compose.yml up -d",
         "test": "jest src/tests/app.test.js"
     },

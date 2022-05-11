@@ -6,7 +6,7 @@
         "build": "openapi-generator-cli generate -g nodejs-express-server -i ./api/openapi.yaml -o ./src",
         "build-sub": "cd src & npm install",
         "start": "docker-compose -f ./docker-compose.yml up -d",
-        "test": "jest src/tests/app.test.js"
+        "test": "jest src/tests/app.test.js --forceExit"
     },
     "devDependencies": {
         "@openapitools/openapi-generator-cli": "^2.5.1",

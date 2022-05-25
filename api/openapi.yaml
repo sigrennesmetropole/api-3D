@@ -22,11 +22,6 @@ info:
     - CityJSON
     - Open API Feature
     - OGC
-servers:
-  - url: https://data.example.org/
-    description: Serveur de production
-  - url: https://dev.example.org/
-    description: Serveur de développement
 tags:
   - name: Capabilities
     description: essential characteristics of this API
@@ -39,18 +34,14 @@ paths:
       description: >-
         The landing page provides links to the API definition and the
         conformance statements for this API.
+      operationId: getLandingPage
       parameters:
         - $ref: '#/components/parameters/f'
-      operationId: getLandingPage
       responses:
         '200':
           $ref: '#/components/responses/LandingPage'
-        '400':
-          $ref: '#/components/responses/400'
-        '404':
-          $ref: '#/components/responses/404'
         '500':
-          $ref: '#/components/responses/500'
+          $ref: '#/components/responses/ServerError'
       summary: Landing page
       tags:
         - Capabilities
@@ -65,12 +56,8 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/ConformanceDeclaration'
-        '400':
-          $ref: '#/components/responses/400'
-        '404':
-          $ref: '#/components/responses/404'
         '500':
-          $ref: '#/components/responses/500'
+          $ref: '#/components/responses/ServerError'
       summary: API conformance definition
       tags:
         - Capabilities
@@ -79,16 +66,110 @@ paths:
       tags:
         - Capabilities
       summary: the feature collections in the dataset
+      parameters:
+        - $ref: '#/components/parameters/f'
       operationId: getCollections
       responses:
         '200':
-          $ref: 'https://raw.githubusercontent.com/opengeospatial/ogcapi-features/master/core/openapi/ogcapi-features-1.yaml#/components/responses/Collections'
-        '400':
-          $ref: '#/components/responses/400'
-        '404':
-          $ref: '#/components/responses/404'
+          $ref: '#/components/responses/Collections'
         '500':
-          $ref: 'https://raw.githubusercontent.com/opengeospatial/ogcapi-features/master/core/openapi/ogcapi-features-1.yaml#/components/responses/ServerError'
+          $ref: '#/components/responses/ServerError'
+  /collections/{collectionId}:
+    get:
+      tags:
+        - Capabilities
+      summary: describe the feature collection with id `collectionId`
+      operationId: describeCollection
+      parameters:
+        - $ref: '#/components/parameters/f'
+        - $ref: '#/components/parameters/collectionId'
+      responses:
+        '200':
+          $ref: '#/components/responses/Collection'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /collections/{collectionId}/items:
+    get:
+      tags:
+        - Data
+      summary: fetch features
+      description: |-
+        Fetch features of the feature collection with id `collectionId`.
+
+        Every feature in a dataset belongs to a collection. A dataset may
+        consist of multiple feature collections. A feature collection is often a
+        collection of features of a similar type, based on a common schema.
+
+        Use content negotiation to request HTML or GeoJSON.
+      operationId: getFeatures
+      parameters:
+        - $ref: '#/components/parameters/collectionId'
+        - $ref: '#/components/parameters/bbox'
+        - $ref: '#/components/parameters/otherParameters'
+      responses:
+        '200':
+          $ref: '#/components/responses/Features'
+        '400':
+          $ref: '#/components/responses/InvalidParameter'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /collections/{collectionId}/items/{featureId}:
+    get:
+      tags:
+        - Data
+      summary: fetch a single feature
+      description: |-
+        Fetch the feature with id `featureId` in the feature collection
+        with id `collectionId`.
+
+        Use content negotiation to request HTML or GeoJSON.
+      operationId: getFeature
+      parameters:
+        - $ref: '#/components/parameters/collectionId'
+        - $ref: '#/components/parameters/featureId'
+        - $ref: '#/components/parameters/otherParameters'
+      responses:
+        '200':
+          content:
+            text/html:
+              schema:
+                type: string
+            application/x-gpkg:
+              schema:
+                type: string
+                format: binary
+            application/geopackage+sqlite3:
+              schema:
+                type: string
+                format: binary
+            application/vnd.google-earth.kml+xml:
+              schema:
+                type: string
+                format: binary
+            application/geo+json:
+              schema:
+                type: string
+                format: binary
+            application/gml+xml;version=3.2:
+              schema:
+                type: string
+                format: binary
+            text/csv:
+              schema:
+                type: string
+            application/json:
+              schema:
+                type: string
+                format: binary
+          $ref: '#/components/responses/Feature'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
   /raster/elevation/commune/{code_insee}:
     get:
       description: TODO Description
@@ -114,7 +195,7 @@ paths:
           $ref: '#/components/responses/400'
       summary: Terrain en raster d'élévation non texturé
       tags:
-        - Data
+        - Data_old
   /raster/elevation/bbox/:
     get:
       description: TODO Description
@@ -133,7 +214,7 @@ paths:
           $ref: '#/components/responses/400'
       summary: Terrain en raster d'élévation non texturé
       tags:
-        - Data
+        - Data_old
   /batiments/:
     get:
       description: TODO Description
@@ -163,7 +244,7 @@ paths:
           $ref: '#/components/responses/400'
       summary: Maquette blanche en accès direct (cityJSON, cityGML) sur Bbox
       tags:
-        - Data
+        - Data_old
   /batiments/commune/{code_insee}:
     get:
       description: TODO Description
@@ -200,7 +281,7 @@ paths:
           $ref: '#/components/responses/400'
       summary: Maquette blanche en accès direct (cityJSON, cityGML) sur code insee
       tags:
-        - Data
+        - Data_old
   /batiments/batiment/{id}:
     get:
       description: TODO Description
@@ -234,7 +315,7 @@ paths:
           $ref: '#/components/responses/400'
       summary: Maquette blanche en accès direct (cityJSON, cityGML) sur id de batiment
       tags:
-        - Data
+        - Data_old
 components:
   parameters:
     f:
@@ -246,10 +327,10 @@ components:
       name: f
       required: false
       schema:
-        default: json
+        default: application/json
         enum:
-          - json
-          - html
+          - application/json
+          - text/html
         type: string
       style: form
     bbox:
@@ -264,7 +345,98 @@ components:
           type: number
       style: form
       explode: false
+    collectionId:
+      name: collectionId
+      in: path
+      description: local identifier of a collection
+      required: true
+      schema:
+        type: string
+        enum: [raster-elevation, batiments]
+    otherParameters:
+      name: otherParameters
+      in: query
+      description: Allows unrecognized parameters to be added in the query string without getting a 400 back (e.g., cache busters)
+      style: form
+      schema:
+        type: object
+        additionalProperties: true
+    featureId:
+      name: featureId
+      in: path
+      description: local identifier of a feature
+      required: true
+      schema:
+        type: string
   schemas:
+    collection:
+      required:
+        - id
+        - links
+      type: object
+      properties:
+        id:
+          type: string
+          description: identifier of the collection used, for example, in URIs
+          example: address
+        title:
+          type: string
+          description: human readable title of the collection
+          example: address
+        description:
+          type: string
+          description: a description of the features in the collection
+          example: An address.
+        links:
+          type: array
+          example:
+            - href: http://data.example.com/buildings
+              rel: item
+            - href: http://example.com/concepts/buildings.html
+              rel: describedBy
+              type: text/html
+          items:
+            $ref: '#/components/schemas/link'
+        itemType:
+          type: string
+          description: indicator about the type of the items in the collection (the default value is 'feature').
+          default: feature
+        crs:
+          type: array
+          description: the list of coordinate reference systems supported by the service
+          example:
+            - http://www.opengis.net/def/crs/OGC/1.3/CRS84
+            - http://www.opengis.net/def/crs/EPSG/0/4326
+          items:
+            type: string
+            format: uri;
+          default:
+            - http://www.opengis.net/def/crs/OGC/1.3/CRS84
+    collections:
+      required:
+        - collections
+        - links
+      type: object
+      properties:
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/link'
+        collections:
+          type: array
+          items:
+            $ref: '#/components/schemas/collection'
+        crs:
+          type: array
+          description: a list of CRS identifiers that are supported for more that one feature collection offered by the service
+          example:
+            - http://www.opengis.net/def/crs/OGC/1.3/CRS84
+            - http://www.opengis.net/def/crs/EPSG/0/4326
+          items:
+            type: string
+            format: uri
+          default:
+            - http://www.opengis.net/def/crs/OGC/1.3/CRS84
     landingPage:
       type: object
       required:
@@ -303,21 +475,15 @@ components:
         length:
           type: integer
     exception:
-     description: JSON schema for exceptions based on RFC 7807
-     type: object
-     required:
-      - type
-     properties:
-      type: 
-        type: string
-      title: 
-        type: string
-      status:
-        type: integer
-      detail: 
-        type: string
-      instance: 
-        type: string    
+      required:
+        - code
+      type: object
+      properties:
+        code:
+          type: string
+        description:
+          type: string
+      description: 'Information about the exception: an error code plus an optional description.' 
     confClasses:
       type: object
       required:
@@ -327,6 +493,74 @@ components:
           type: array
           items:
             type: string
+    featureCollectionGeoJSON:
+      required:
+        - features
+        - type
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - FeatureCollection
+        features:
+          type: array
+          items:
+            $ref: '#/components/schemas/featureGeoJSON'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/link'
+        timeStamp:
+          $ref: '#/components/schemas/timeStamp'
+        numberMatched:
+          $ref: '#/components/schemas/numberMatched'
+        numberReturned:
+          $ref: '#/components/schemas/numberReturned'
+    featureGeoJSON:
+      required:
+        - properties
+        - type
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - Feature
+        properties:
+          type: object
+          nullable: true
+        id:
+          oneOf:
+            - type: string
+            - type: integer
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/link'
+    timeStamp:
+      type: string
+      description: This property indicates the time and date when the response was generated.
+      format: date-time
+    numberMatched:
+      minimum: 0
+      type: integer
+      description: |-
+        The number of features of the feature type that match the selection
+        parameters like `bbox`.
+      example: 127
+    numberReturned:
+      minimum: 0
+      type: integer
+      description: |-
+        The number of features in the feature collection.
+
+        A server may omit this information in a response, if the information
+        about the number of features is not known or difficult to compute.
+
+        If the value is provided, the value shall be identical to the number
+        of items in the "features" array.
+      example: 10
   responses:
     '200':
       description: successful operation
@@ -367,6 +601,17 @@ components:
         text/html:
           schema:
             type: string
+    NotFound:
+      description: The requested URI was not found.
+    ServerError:
+      description: A server error occurred.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/exception'
+        text/html:
+          schema:
+            type: string
     LandingPage:
       description: |-
         The landing page provides links to the API definition
@@ -399,6 +644,193 @@ components:
               - 'http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/oas30'
               - 'http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/html'
               - 'http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/json'
+        text/html:
+          schema:
+            type: string
+    Collections:
+      description: |-
+        The feature collections shared by this API.
+
+        The dataset is organized as one or more feature collections. This resource
+        provides information about and access to the collections.
+
+        The response contains the list of collections. For each collection, a link
+        to the items in the collection (path `/collections/{collectionId}/items`,
+        link relation `items`) as well as key information about the collection.
+        This information includes:
+
+        * A local identifier for the collection that is unique for the dataset;
+        * A list of coordinate reference systems (CRS) in which geometries may be returned by the server. The first CRS is the default coordinate reference system (the default is always WGS 84 with axis order longitude/latitude);
+        * An optional title and description for the collection;
+        * An optional extent that can be used to provide an indication of the spatial and temporal extent of the collection - typically derived from the data;
+        * An optional indicator about the type of the items in the collection (the default value, if the indicator is not provided, is 'feature').
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/collections'
+          example:
+            links:
+              - href: http://data.example.org/collections.json
+                rel: self
+                type: application/json
+                title: this document
+              - href: http://data.example.org/collections.html
+                rel: alternate
+                type: text/html
+                title: this document as HTML
+              - href: http://schemas.example.org/1.0/buildings.xsd
+                rel: describedBy
+                type: application/xml
+                title: GML application schema for Acme Corporation building data
+              - href: http://download.example.org/buildings.gpkg
+                rel: enclosure
+                type: application/geopackage+sqlite3
+                title: Bulk download (GeoPackage)
+                length: 472546
+            collections:
+              - id: buildings
+                title: Buildings
+                description: Buildings in the city of Bonn.
+                extent:
+                  spatial:
+                    bbox:
+                      - - 7.01
+                        - 50.63
+                        - 7.22
+                        - 50.78
+                  temporal:
+                    interval:
+                      - - '2010-02-15T12:34:56Z'
+                        - null
+                links:
+                  - href: http://data.example.org/collections/buildings/items
+                    rel: items
+                    type: application/geo+json
+                    title: Buildings
+                  - href: http://data.example.org/collections/buildings/items.html
+                    rel: items
+                    type: text/html
+                    title: Buildings
+                  - href: https://creativecommons.org/publicdomain/zero/1.0/
+                    rel: license
+                    type: text/html
+                    title: CC0-1.0
+                  - href: https://creativecommons.org/publicdomain/zero/1.0/rdf
+                    rel: license
+                    type: application/rdf+xml
+                    title: CC0-1.0
+        text/html:
+          schema:
+            type: string
+    Collection:
+      description: |-
+        Information about the feature collection with id `collectionId`.
+
+        The response contains a link to the items in the collection
+        (path `/collections/{collectionId}/items`, link relation `items`)
+        as well as key information about the collection. This information
+        includes:
+
+        * A local identifier for the collection that is unique for the dataset;
+        * A list of coordinate reference systems (CRS) in which geometries may be returned by the server. The first CRS is the default coordinate reference system (the default is always WGS 84 with axis order longitude/latitude);
+        * An optional title and description for the collection;
+        * An optional extent that can be used to provide an indication of the spatial and temporal extent of the collection - typically derived from the data;
+        * An optional indicator about the type of the items in the collection (the default value, if the indicator is not provided, is 'feature').
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/collection'
+          example:
+            id: buildings
+            title: Buildings
+            description: Buildings in the city of Bonn.
+            extent:
+              spatial:
+                bbox:
+                  - - 7.01
+                    - 50.63
+                    - 7.22
+                    - 50.78
+              temporal:
+                interval:
+                  - - '2010-02-15T12:34:56Z'
+                    - null
+            links:
+              - href: http://data.example.org/collections/buildings/items
+                rel: items
+                type: application/geo+json
+                title: Buildings
+              - href: http://data.example.org/collections/buildings/items.html
+                rel: items
+                type: text/html
+                title: Buildings
+              - href: https://creativecommons.org/publicdomain/zero/1.0/
+                rel: license
+                type: text/html
+                title: CC0-1.0
+              - href: https://creativecommons.org/publicdomain/zero/1.0/rdf
+                rel: license
+                type: application/rdf+xml
+                title: CC0-1.0
+        text/html:
+          schema:
+            type: string
+    Features:
+      description: |-
+        The response is a document consisting of features in the collection.
+        The features included in the response are determined by the server
+        based on the query parameters of the request. To support access to
+        larger collections without overloading the client, the API supports
+        paged access with links to the next page, if more features are selected
+        that the page size.
+
+        The `bbox` and `datetime` parameter can be used to select only a
+        subset of the features in the collection (the features that are in the
+        bounding box or time interval). The `bbox` parameter matches all features
+        in the collection that are not associated with a location, too. The
+        `datetime` parameter matches all features in the collection that are
+        not associated with a time stamp or interval, too.
+
+        The `limit` parameter may be used to control the subset of the
+        selected features that should be returned in the response, the page size.
+        Each page may include information about the number of selected and
+        returned features (`numberMatched` and `numberReturned`) as well as
+        links to support paging (link relation `next`).
+      content:
+        application/geo+json:
+          schema:
+            $ref: '#/components/schemas/featureCollectionGeoJSON'
+          example:
+            type: FeatureCollection
+            links:
+              - href: http://data.example.com/collections/buildings/items.json
+                rel: self
+                type: application/geo+json
+                title: this document
+              - href: http://data.example.com/collections/buildings/items.html
+                rel: alternate
+                type: text/html
+                title: this document as HTML
+              - href: http://data.example.com/collections/buildings/items.json&offset=10&limit=2
+                rel: next
+                type: application/geo+json
+                title: next page
+            timeStamp: '2018-04-03T14:52:23Z'
+            numberMatched: 123
+            numberReturned: 2
+            features:
+              - type: Feature
+                id: 'bbox'
+                properties:
+                  bbox: [ 160.6, -55.95, -170, -25.89 ]
+              - type: Feature
+                id: 'commune'
+                properties:
+                  code_insee: 35000
+              - type: Feature
+                id: 'id-batiment'
+                properties:
+                  id: 1
         text/html:
           schema:
             type: string

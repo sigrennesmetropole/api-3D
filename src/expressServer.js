@@ -1,5 +1,5 @@
 // const { Middleware } = require('swagger-express-middleware');
-const http = require('http');
+const https = require('https');
 const fs = require('fs');
 const path = require('path');
 const swaggerUI = require('swagger-ui-express');
@@ -11,11 +11,13 @@ const bodyParser = require('body-parser');
 const { OpenApiValidator } = require('express-openapi-validator');
 const logger = require('./logger');
 const config = require('./config');
+const metadata = require("./clients/metadata/metadata");
 
 class ExpressServer {
   constructor(port, openApiYaml) {
     this.port = port;
     this.app = express();
+    this.app.set('view engine', 'ejs');
     this.openApiPath = openApiYaml;
     try {
       this.schema = jsYaml.safeLoad(fs.readFileSync(openApiYaml));
@@ -42,10 +44,18 @@ class ExpressServer {
       res.status(200);
       res.json(req.query);
     });
+    for (const uuid of process.env['FILES_IDS'].split(",")){
+      this.app.get('/files/'+uuid, (req, res) => res.sendFile((path.join(__dirname, 'uploaded_files', uuid+'.zip'))));
+    }
     this.app.get('/oauth2-redirect.html', (req, res) => {
       res.status(200);
       res.json(req.query);
     });
+    this.app.get('/telechargements', (req, res) => {
+      var data = metadata.getMetadata().then(function(result){
+        res.render(path.join(__dirname,'templates/telechargement'), result);
+      });
+  });
   }
 
   launch() {
@@ -65,7 +75,10 @@ class ExpressServer {
           });
         });
 
-        http.createServer(this.app).listen(this.port);
+        https.createServer({
+          key: fs.readFileSync('server.key'),
+          cert: fs.readFileSync('server.cert')
+        },this.app).listen(this.port);
         console.log(`Listening on port ${this.port}`);
       });
   }

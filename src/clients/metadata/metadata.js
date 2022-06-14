@@ -26,9 +26,13 @@ const retrieveMetadata = (url) => new Promise(
 const getMetadata = async () => {
   let result = [];
   for (const uuid of process.env['FILES_IDS'].split(",")){
-    console.log("uuid " + uuid)
+    try {
     let metadata = await retrieveMetadata('https://public.sig.rennesmetropole.fr/geonetwork/srv/api/0.1/records/'+uuid);
     result.push(metadata);
+    }catch (e) {
+      console.log("Impossible de récupérer l'uuid "+ uuid);
+      console.log(e);
+    }
   }
   return {metadata: result}
 };

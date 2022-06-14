@@ -5,13 +5,19 @@ services:
       image: sigrennesmetropole/api-3d:${TAG:-latest}
       ports:
         - 8080:8080
+      volumes:
+        - C:\Softs\3DCityDB-Importer-Exporter-5.1.0:/etc/impexp
       environment:
         # TODO ajouter les variables d'environnements
         DB_USERNAME: admin
         DB_HOST: 3dciytdb
-        DB_DATABASE: postgres
+        DB_DATABASE: citydb
         DB_PASSWORD: password
         DB_PORT: 5432
+        IMPORTER_EXPORTER_PATH: /etc/impexp
+        DISPLAY: :0.0
+        #JAVA_HOME: /etc/java
+        #PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$JAVA_HOME/bin
         FILES_IDS: 3faad540-1cc3-4224-a326-2bf1e8f550bc,72bca5d3-ee31-4a83-8a92-837e8d048cc3,0d75bd55-be52-4493-9bd7-f623c49f6531,7f742cc7-97db-4619-bcf2-fc8451c22015
       init: true
   3dciytdb:
@@ -25,26 +31,13 @@ services:
         SRID: 3948
         HEIGHT_EPSG: 5720
       init: true
-  # impexp:
-  #     image: 3dcitydb/impexp:5.1.0-alpine
-  #     environment:
-  #       CITYDB_TYPE: postgresql
-  #       CITYDB_HOST: 3dciytdb
-  #       CITYDB_PORT: 5432
-  #       CITYDB_NAME: citydb
-  #       CITYDB_SCHEMA: citydb
-  #       CITYDB_USERNAME: admin
-  #       CITYDB_PASSWORD: password
-  #     init: true
-  #     command: ps -aux
-  #     volumes:
-  #     - ./nginx/conf:/etc/nginx/conf.d
   nginx:
     image: nginx:mainline-alpine
     container_name: front_nginx
     restart: unless-stopped
     volumes:
       - ./nginx/conf:/etc/nginx/conf.d
+      - ./nginx/tls:/etc/tls
       - ./impexp_data:/data
     ports:
       - "80:80"

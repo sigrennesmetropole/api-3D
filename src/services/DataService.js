@@ -1,73 +1,40 @@
 /* eslint-disable no-unused-vars */
 const Service = require('./Service');
-
+const exporter = require('../clients/impexp/exp');
+const uuid = require('uuid');
+const fs = require('fs');
 /**
-* Maquette blanche en accès direct (cityJSON, cityGML) sur id de batiment
-* TODO Description
+* fetch buildings
+* Fetch features of the feature collection with id `buildings`.  Every feature in a dataset belongs to a collection. A dataset may consist of multiple feature collections. A feature collection is often a collection of features of a similar type, based on a common schema.  Use content negotiation to request HTML or GeoJSON.
 *
-* id String 
-* texture Boolean 
-* format String  (optional)
-* returns exception
-* */
-const batimentsBatimentIdGET = ({ id, texture, format }) => new Promise(
-  async (resolve, reject) => {
-    try {
-      resolve(Service.successResponse({
-        id,
-        texture,
-        format,
-      }));
-    } catch (e) {
-      reject(Service.rejectResponse(
-        e.message || 'Invalid input',
-        e.status || 405,
-      ));
-    }
-  },
-);
-/**
-* Maquette blanche en accès direct (cityJSON, cityGML) sur code insee
-* TODO Description
-*
-* codeUnderscoreinsee String 
-* texture Boolean 
-* format String  (optional)
-* returns exception
-* */
-const batimentsCommuneCodeInseeGET = ({ codeUnderscoreinsee, texture, format }) => new Promise(
-  async (resolve, reject) => {
-    try {
-      resolve(Service.successResponse({
-        codeUnderscoreinsee,
-        texture,
-        format,
-      }));
-    } catch (e) {
-      reject(Service.rejectResponse(
-        e.message || 'Invalid input',
-        e.status || 405,
-      ));
-    }
-  },
-);
-/**
-* Maquette blanche en accès direct (cityJSON, cityGML) sur Bbox
-* TODO Description
-*
-* texture Boolean 
+* f String The optional f parameter indicates the output format that the server shall provide as part of the response document.  The default format is JSON. (optional)
 * bbox List  (optional)
-* format String  (optional)
-* returns exception
+* limit Integer  (optional)
+* startIndex Integer  (optional)
+* returns Buildings
 * */
-const batimentsGET = ({ texture, bbox, format }) => new Promise(
+const getBuildings = ({ f, bbox, limit, startIndex }) => new Promise(
   async (resolve, reject) => {
     try {
-      resolve(Service.successResponse({
-        texture,
-        bbox,
-        format,
-      }));
+      console.log(bbox);
+      let format = f === 'application/json' ? ".json" : ".citygml";
+      let id = uuid.v4();
+      exporter.exportData(id,format).then((valeur) => {
+        console.log(valeur)
+        let result;
+        if (format === '.json'){
+          result = JSON.parse(fs.readFileSync(__dirname+"/../"+id+format, 'utf8'));
+        }else {
+          result = fs.readFileSync(__dirname+"/../"+id+format, 'utf8');
+        }
+        resolve(Service.successResponse(result));
+      }, (raison) => {
+        console.log(raison);
+        reject(Service.rejectResponse(
+          e.message || 'Invalid input',
+          e.status || 405,
+        ));
+    });
     } catch (e) {
       reject(Service.rejectResponse(
         e.message || 'Invalid input',
@@ -77,17 +44,19 @@ const batimentsGET = ({ texture, bbox, format }) => new Promise(
   },
 );
 /**
-* Terrain en raster d'élévation non texturé
-* TODO Description
+* fetch raster tile from bbox or insee code
+* Fetch raster tile from bbox or insee code.
 *
 * bbox List  (optional)
+* codeInsee String  (optional)
 * returns File
 * */
-const rasterElevationBboxGET = ({ bbox }) => new Promise(
+const getRaster = ({ bbox, codeInsee }) => new Promise(
   async (resolve, reject) => {
     try {
       resolve(Service.successResponse({
         bbox,
+        codeInsee,
       }));
     } catch (e) {
       reject(Service.rejectResponse(
@@ -98,17 +67,19 @@ const rasterElevationBboxGET = ({ bbox }) => new Promise(
   },
 );
 /**
-* Terrain en raster d'élévation non texturé
-* TODO Description
+* fetch a single building from his id
+* Fetch the feature with id `featureId` in the feature collection with id `batiments`.  Use content negotiation to request HTML or GeoJSON.
 *
-* codeUnderscoreinsee String 
-* returns File
+* buildingID String local identifier of a building
+* f String The optional f parameter indicates the output format that the server shall provide as part of the response document.  The default format is JSON. (optional)
+* returns Buildings
 * */
-const rasterElevationCommuneCodeInseeGET = ({ codeUnderscoreinsee }) => new Promise(
+const getbuildingById = ({ buildingID, f }) => new Promise(
   async (resolve, reject) => {
     try {
       resolve(Service.successResponse({
-        codeUnderscoreinsee,
+        buildingID,
+        f,
       }));
     } catch (e) {
       reject(Service.rejectResponse(
@@ -120,9 +91,7 @@ const rasterElevationCommuneCodeInseeGET = ({ codeUnderscoreinsee }) => new Prom
 );
 
 module.exports = {
-  batimentsBatimentIdGET,
-  batimentsCommuneCodeInseeGET,
-  batimentsGET,
-  rasterElevationBboxGET,
-  rasterElevationCommuneCodeInseeGET,
+  getBuildings,
+  getRaster,
+  getbuildingById,
 };

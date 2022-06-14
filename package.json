@@ -4,16 +4,19 @@
     "description": "Génère le code depuis le fichier YML",
     "scripts": {
         "build": "openapi-generator-cli generate -g nodejs-express-server -i ./api/openapi.yaml -o ./src",
-        "build-sub": "cd src & npm install",
-        "start": "docker-compose -f ./compose/docker-compose.yml up -d",
+        "build-sub": "cd src & npm i xml-js & npm i dotenv & npm i uuid & npm i ejs & npm i https & npm install",
+        "start-docker": "docker-compose -f ./compose/docker-compose.yml up -d",
+        "start": "nodemon src/index.js",
         "test": "jest src/tests/app.test.js --forceExit"
     },
     "devDependencies": {
         "@openapitools/openapi-generator-cli": "^2.5.1",
         "jest": "^28.1.0",
+        "nodemon": "^2.0.16",
         "supertest": "^6.2.3"
     },
     "dependencies": {
+        "dotenv": "^16.0.1",
         "ssl-root-cas": "^1.3.1"
     }
 }

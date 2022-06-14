@@ -26,8 +26,7 @@ tags:
   - name: Capabilities
     description: essential characteristics of this API
   - name: Data
-    description: |-
-      access to data (features)
+    description: Data methods
 paths:
   /:
     get:
@@ -41,7 +40,7 @@ paths:
         '200':
           $ref: '#/components/responses/LandingPage'
         '500':
-          $ref: '#/components/responses/ServerError'
+          $ref: '#/components/responses/500'
       summary: Landing page
       tags:
         - Capabilities
@@ -57,7 +56,7 @@ paths:
         '200':
           $ref: '#/components/responses/ConformanceDeclaration'
         '500':
-          $ref: '#/components/responses/ServerError'
+          $ref: '#/components/responses/500'
       summary: API conformance definition
       tags:
         - Capabilities
@@ -73,249 +72,91 @@ paths:
         '200':
           $ref: '#/components/responses/Collections'
         '500':
-          $ref: '#/components/responses/ServerError'
-  /collections/{collectionId}:
+          $ref: '#/components/responses/500'
+  /collections/buildings:
     get:
       tags:
         - Capabilities
-      summary: describe the feature collection with id `collectionId`
-      operationId: describeCollection
+      summary: describe the feature collection with id `buildings`
+      operationId: describeBuildings
       parameters:
         - $ref: '#/components/parameters/f'
-        - $ref: '#/components/parameters/collectionId'
       responses:
         '200':
           $ref: '#/components/responses/Collection'
         '404':
-          $ref: '#/components/responses/NotFound'
+          $ref: '#/components/responses/404'
         '500':
-          $ref: '#/components/responses/ServerError'
-  /collections/{collectionId}/items:
+          $ref: '#/components/responses/500'
+  /collections/buildings/items:
     get:
       tags:
         - Data
-      summary: fetch features
+      summary: fetch buildings
       description: |-
-        Fetch features of the feature collection with id `collectionId`.
+        Fetch features of the feature collection with id `buildings`.
 
         Every feature in a dataset belongs to a collection. A dataset may
         consist of multiple feature collections. A feature collection is often a
         collection of features of a similar type, based on a common schema.
 
         Use content negotiation to request HTML or GeoJSON.
-      operationId: getFeatures
+      operationId: getBuildings
       parameters:
-        - $ref: '#/components/parameters/collectionId'
+        - $ref: '#/components/parameters/f'
         - $ref: '#/components/parameters/bbox'
-        - $ref: '#/components/parameters/otherParameters'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/startIndex'
       responses:
         '200':
-          $ref: '#/components/responses/Features'
+          $ref: '#/components/responses/Buildings'
         '400':
-          $ref: '#/components/responses/InvalidParameter'
+          $ref: '#/components/responses/400'
         '404':
-          $ref: '#/components/responses/NotFound'
+          $ref: '#/components/responses/404'
         '500':
-          $ref: '#/components/responses/ServerError'
-  /collections/{collectionId}/items/{featureId}:
+          $ref: '#/components/responses/500'
+  /collections/buildings/items/{buildingID}:
     get:
       tags:
         - Data
-      summary: fetch a single feature
+      summary: fetch a single building from his id
       description: |-
         Fetch the feature with id `featureId` in the feature collection
-        with id `collectionId`.
+        with id `batiments`.
 
         Use content negotiation to request HTML or GeoJSON.
-      operationId: getFeature
+      operationId: getbuildingById
       parameters:
-        - $ref: '#/components/parameters/collectionId'
-        - $ref: '#/components/parameters/featureId'
-        - $ref: '#/components/parameters/otherParameters'
+        - $ref: '#/components/parameters/f'
+        - $ref: '#/components/parameters/buildingID'
       responses:
         '200':
-          content:
-            text/html:
-              schema:
-                type: string
-            application/x-gpkg:
-              schema:
-                type: string
-                format: binary
-            application/geopackage+sqlite3:
-              schema:
-                type: string
-                format: binary
-            application/vnd.google-earth.kml+xml:
-              schema:
-                type: string
-                format: binary
-            application/geo+json:
-              schema:
-                type: string
-                format: binary
-            application/gml+xml;version=3.2:
-              schema:
-                type: string
-                format: binary
-            text/csv:
-              schema:
-                type: string
-            application/json:
-              schema:
-                type: string
-                format: binary
-          $ref: '#/components/responses/Feature'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/ServerError'
-  /raster/elevation/commune/{code_insee}:
-    get:
-      description: TODO Description
-      parameters:
-        - name: code_insee
-          in: path
-          required: true
-          schema:
-            type: string
-            example : "35238"
-            minimum: 1
-            maximum: 1
-      responses:
-        '200':
-          $ref: '#/components/responses/wms'
-        '400':
-          $ref: '#/components/responses/400'
+          $ref: '#/components/responses/Buildings'
         '404':
           $ref: '#/components/responses/404'
         '500':
-          $ref: '#/components/responses/500' 
-        default:
-          $ref: '#/components/responses/400'
-      summary: Terrain en raster d'élévation non texturé
-      tags:
-        - Data_old
-  /raster/elevation/bbox/:
+          $ref: '#/components/responses/500'
+  /collections/raster/coverage/tiles:
     get:
-      description: TODO Description
+      tags:
+        - Data
+      summary: fetch raster tile from bbox or insee code
+      description: |-
+        Fetch raster tile from bbox or insee code.
+      operationId: getRaster
       parameters:
         - $ref: '#/components/parameters/bbox'
+        - $ref: '#/components/parameters/codeInsee'
       responses:
         '200':
-          $ref: '#/components/responses/wms'
-        '400':
-          $ref: '#/components/responses/400'
-        '404':
-          $ref: '#/components/responses/404'
-        '500':
-          $ref: '#/components/responses/500'  
-        default:
-          $ref: '#/components/responses/400'
-      summary: Terrain en raster d'élévation non texturé
-      tags:
-        - Data_old
-  /batiments/:
-    get:
-      description: TODO Description
-      parameters:
-        - $ref: '#/components/parameters/bbox'
-        - name: texture
-          in: query
-          required: true
-          schema:
-            type: boolean
-            default: false
-          allowEmptyValue: false
-        - name: format
-          in: header
-          required: false
-          schema:
-            type: string
-            enum: [cityJSON, CityGML]
-      responses:
+          $ref: '#/components/responses/MapTile'
         '400':
           $ref: '#/components/responses/400'
         '404':
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
-        default:
-          $ref: '#/components/responses/400'
-      summary: Maquette blanche en accès direct (cityJSON, cityGML) sur Bbox
-      tags:
-        - Data_old
-  /batiments/commune/{code_insee}:
-    get:
-      description: TODO Description
-      parameters:
-      - name: code_insee
-        in: path
-        required: true
-        schema:
-          type: string
-          example : "35238"
-          minimum: 1
-          maximum: 1
-      - name: texture
-        in: query
-        required: true
-        schema:
-          type: boolean
-          default: false
-        allowEmptyValue: false
-      - name: format
-        in: header
-        required: false
-        schema:
-          type: string
-          enum: [cityJSON, CityGML]
-      responses:
-        '400':
-          $ref: '#/components/responses/400'
-        '404':
-          $ref: '#/components/responses/404'
-        '500':
-          $ref: '#/components/responses/500'
-        default:
-          $ref: '#/components/responses/400'
-      summary: Maquette blanche en accès direct (cityJSON, cityGML) sur code insee
-      tags:
-        - Data_old
-  /batiments/batiment/{id}:
-    get:
-      description: TODO Description
-      parameters:
-      - name: id
-        in: path
-        schema:
-          type: string
-        required: true
-      - name: texture
-        in: query
-        required: true
-        schema:
-          type: boolean
-          default: false
-        allowEmptyValue: false
-      - name: format
-        in: header
-        required: false
-        schema:
-          type: string
-          enum: [cityJSON, CityGML]
-      responses:
-        '400':
-          $ref: '#/components/responses/400'
-        '404':
-          $ref: '#/components/responses/404'
-        '500':
-          $ref: '#/components/responses/500'
-        default:
-          $ref: '#/components/responses/400'
-      summary: Maquette blanche en accès direct (cityJSON, cityGML) sur id de batiment
-      tags:
-        - Data_old
 components:
   parameters:
     f:
@@ -330,7 +171,7 @@ components:
         default: application/json
         enum:
           - application/json
-          - text/html
+          - application/gml+xml;version=3.2
         type: string
       style: form
     bbox:
@@ -344,27 +185,29 @@ components:
         items:
           type: number
       style: form
-      explode: false
-    collectionId:
-      name: collectionId
-      in: path
-      description: local identifier of a collection
-      required: true
+      explode: true
+    codeInsee:
+      name: codeInsee
+      in: query
+      required: false
       schema:
         type: string
-        enum: [raster-elevation, batiments]
-    otherParameters:
-      name: otherParameters
+    limit:
+      name: limit
       in: query
-      description: Allows unrecognized parameters to be added in the query string without getting a 400 back (e.g., cache busters)
-      style: form
+      required: false
       schema:
-        type: object
-        additionalProperties: true
-    featureId:
-      name: featureId
+        type: integer
+    startIndex:
+      name: startIndex
+      in: query
+      required: false
+      schema:
+        type: integer
+    buildingID:
+      name: buildingID
       in: path
-      description: local identifier of a feature
+      description: local identifier of a building
       required: true
       schema:
         type: string
@@ -493,87 +336,82 @@ components:
           type: array
           items:
             type: string
-    featureCollectionGeoJSON:
-      required:
-        - features
-        - type
+    Buildings: 
       type: object
       properties:
-        type:
+        type: 
           type: string
-          enum:
-            - FeatureCollection
-        features:
-          type: array
-          items:
-            $ref: '#/components/schemas/featureGeoJSON'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/link'
-        timeStamp:
-          $ref: '#/components/schemas/timeStamp'
-        numberMatched:
-          $ref: '#/components/schemas/numberMatched'
-        numberReturned:
-          $ref: '#/components/schemas/numberReturned'
-    featureGeoJSON:
-      required:
-        - properties
-        - type
-      type: object
-      properties:
-        type:
+        version: 
           type: string
-          enum:
-            - Feature
-        properties:
+        CityObjects: 
           type: object
-          nullable: true
-        id:
-          oneOf:
-            - type: string
-            - type: integer
-        links:
+        transform: 
+          type: object
+          properties: 
+            scale: 
+              type: array
+              items: 
+                type: number
+            translate: 
+              type: array
+              items: 
+                type: number
+        vertices: 
           type: array
-          items:
-            $ref: '#/components/schemas/link'
-    timeStamp:
-      type: string
-      description: This property indicates the time and date when the response was generated.
-      format: date-time
-    numberMatched:
-      minimum: 0
-      type: integer
-      description: |-
-        The number of features of the feature type that match the selection
-        parameters like `bbox`.
-      example: 127
-    numberReturned:
-      minimum: 0
-      type: integer
-      description: |-
-        The number of features in the feature collection.
-
-        A server may omit this information in a response, if the information
-        about the number of features is not known or difficult to compute.
-
-        If the value is provided, the value shall be identical to the number
-        of items in the "features" array.
-      example: 10
+          items: 
+            type: array
+            items: 
+              type: integer
+              format: int32
+        appearance: 
+          type: object
+          properties: 
+            textures: 
+              type: array
+              items: 
+                type: object
+                properties: 
+                  type: 
+                    type: string
+                  image: 
+                    type: string
+                  wrapMode: 
+                    type: string
+                  textureType: 
+                    type: string
+                  borderColor: 
+                    type: array
+                    items: 
+                      type: integer
+                      format: int32
+            vertices-texture: 
+              type: array
+              items: 
+                type: array
+                items: 
+                  type: number
+        metadata: 
+          type: object
+          properties: 
+            referenceSystem: 
+              type: string
+            presentLoDs: 
+              type: object
+              properties: 
+                2: 
+                  type: integer
+                  format: int32
   responses:
-    '200':
-      description: successful operation
-    wms:
-      description: image de retour
+    MapTile:
+      description: A map tile image returned as a response.
       content:
-        image/tiff:
-          schema: 
+        image/tiff; application=geotiff:
+          schema:
             type: string
             format: binary
     400:
       description: |-
-        General HTTP error response.
+        Invalid parameter response.
       content:
         application/json:
           schema:
@@ -594,17 +432,6 @@ components:
     500:
       description: |-
         A server error occurred.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/exception'
-        text/html:
-          schema:
-            type: string
-    NotFound:
-      description: The requested URI was not found.
-    ServerError:
-      description: A server error occurred.
       content:
         application/json:
           schema:
@@ -691,17 +518,6 @@ components:
               - id: buildings
                 title: Buildings
                 description: Buildings in the city of Bonn.
-                extent:
-                  spatial:
-                    bbox:
-                      - - 7.01
-                        - 50.63
-                        - 7.22
-                        - 50.78
-                  temporal:
-                    interval:
-                      - - '2010-02-15T12:34:56Z'
-                        - null
                 links:
                   - href: http://data.example.org/collections/buildings/items
                     rel: items
@@ -744,17 +560,6 @@ components:
             id: buildings
             title: Buildings
             description: Buildings in the city of Bonn.
-            extent:
-              spatial:
-                bbox:
-                  - - 7.01
-                    - 50.63
-                    - 7.22
-                    - 50.78
-              temporal:
-                interval:
-                  - - '2010-02-15T12:34:56Z'
-                    - null
             links:
               - href: http://data.example.org/collections/buildings/items
                 rel: items
@@ -775,62 +580,14 @@ components:
         text/html:
           schema:
             type: string
-    Features:
+    Buildings:
       description: |-
-        The response is a document consisting of features in the collection.
-        The features included in the response are determined by the server
-        based on the query parameters of the request. To support access to
-        larger collections without overloading the client, the API supports
-        paged access with links to the next page, if more features are selected
-        that the page size.
-
-        The `bbox` and `datetime` parameter can be used to select only a
-        subset of the features in the collection (the features that are in the
-        bounding box or time interval). The `bbox` parameter matches all features
-        in the collection that are not associated with a location, too. The
-        `datetime` parameter matches all features in the collection that are
-        not associated with a time stamp or interval, too.
-
-        The `limit` parameter may be used to control the subset of the
-        selected features that should be returned in the response, the page size.
-        Each page may include information about the number of selected and
-        returned features (`numberMatched` and `numberReturned`) as well as
-        links to support paging (link relation `next`).
+        Reponse au format CityJson
       content:
-        application/geo+json:
+        application/json:
           schema:
-            $ref: '#/components/schemas/featureCollectionGeoJSON'
-          example:
-            type: FeatureCollection
-            links:
-              - href: http://data.example.com/collections/buildings/items.json
-                rel: self
-                type: application/geo+json
-                title: this document
-              - href: http://data.example.com/collections/buildings/items.html
-                rel: alternate
-                type: text/html
-                title: this document as HTML
-              - href: http://data.example.com/collections/buildings/items.json&offset=10&limit=2
-                rel: next
-                type: application/geo+json
-                title: next page
-            timeStamp: '2018-04-03T14:52:23Z'
-            numberMatched: 123
-            numberReturned: 2
-            features:
-              - type: Feature
-                id: 'bbox'
-                properties:
-                  bbox: [ 160.6, -55.95, -170, -25.89 ]
-              - type: Feature
-                id: 'commune'
-                properties:
-                  code_insee: 35000
-              - type: Feature
-                id: 'id-batiment'
-                properties:
-                  id: 1
-        text/html:
+            $ref: '#/components/schemas/Buildings'
+        application/gml+xml;version=3.2:
           schema:
-            type: string
+            type: object
+          

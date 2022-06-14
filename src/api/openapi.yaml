@@ -25,7 +25,7 @@ servers:
 tags:
 - description: essential characteristics of this API
   name: Capabilities
-- description: access to data (features)
+- description: Data methods
   name: Data
 paths:
   /:
@@ -42,10 +42,10 @@ paths:
         name: f
         required: false
         schema:
-          default: json
+          default: application/json
           enum:
           - application/json
-          - text/html
+          - application/gml+xml;version=3.2
           type: string
         style: form
       responses:
@@ -89,10 +89,10 @@ paths:
         name: f
         required: false
         schema:
-          default: json
+          default: application/json
           enum:
           - application/json
-          - text/html
+          - application/gml+xml;version=3.2
           type: string
         style: form
       responses:
@@ -143,10 +143,10 @@ paths:
         name: f
         required: false
         schema:
-          default: json
+          default: application/json
           enum:
           - application/json
-          - text/html
+          - application/gml+xml;version=3.2
           type: string
         style: form
       responses:
@@ -176,17 +176,6 @@ paths:
                 - id: buildings
                   title: Buildings
                   description: Buildings in the city of Bonn.
-                  extent:
-                    spatial:
-                      bbox:
-                      - - 7.01
-                        - 50.63
-                        - 7.22
-                        - 50.78
-                    temporal:
-                      interval:
-                      - - 2010-02-15T12:34:56Z
-                        - null
                   links:
                   - href: http://data.example.org/collections/buildings/items
                     rel: items
@@ -238,9 +227,9 @@ paths:
       tags:
       - Capabilities
       x-eov-operation-handler: controllers/CapabilitiesController
-  /collections/{collectionId}:
+  /collections/buildings:
     get:
-      operationId: describeCollection
+      operationId: describeBuildings
       parameters:
       - description: The optional f parameter indicates the output format that the
           server shall provide as part of the response document.  The default format
@@ -250,22 +239,12 @@ paths:
         name: f
         required: false
         schema:
-          default: json
+          default: application/json
           enum:
           - application/json
-          - text/html
+          - application/gml+xml;version=3.2
           type: string
         style: form
-      - description: local identifier of a collection
-        explode: false
-        in: path
-        name: collectionId
-        required: true
-        schema:
-          enum:
-          - test
-          type: string
-        style: simple
       responses:
         "200":
           content:
@@ -274,17 +253,6 @@ paths:
                 id: buildings
                 title: Buildings
                 description: Buildings in the city of Bonn.
-                extent:
-                  spatial:
-                    bbox:
-                    - - 7.01
-                      - 50.63
-                      - 7.22
-                      - 50.78
-                  temporal:
-                    interval:
-                    - - 2010-02-15T12:34:56Z
-                      - null
                 links:
                 - href: http://data.example.org/collections/buildings/items
                   rel: items
@@ -321,7 +289,14 @@ paths:
             * An optional extent that can be used to provide an indication of the spatial and temporal extent of the collection - typically derived from the data;
             * An optional indicator about the type of the items in the collection (the default value, if the indicator is not provided, is 'feature').
         "404":
-          description: The requested URI was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/exception'
+            text/html:
+              schema:
+                type: string
+          description: Not found response.
         "500":
           content:
             application/json:
@@ -331,33 +306,71 @@ paths:
               schema:
                 type: string
           description: A server error occurred.
-      summary: describe the feature collection with id `collectionId`
+      summary: describe the feature collection with id `buildings`
       tags:
       - Capabilities
       x-eov-operation-handler: controllers/CapabilitiesController
-  /raster/elevation/commune/{code_insee}:
+  /collections/buildings/items:
     get:
-      description: TODO Description
-      operationId: rasterElevationCommuneCodeInseeGET
+      description: |-
+        Fetch features of the feature collection with id `buildings`.
+
+        Every feature in a dataset belongs to a collection. A dataset may
+        consist of multiple feature collections. A feature collection is often a
+        collection of features of a similar type, based on a common schema.
+
+        Use content negotiation to request HTML or GeoJSON.
+      operationId: getBuildings
       parameters:
-      - explode: false
-        in: path
-        name: code_insee
-        required: true
+      - description: The optional f parameter indicates the output format that the
+          server shall provide as part of the response document.  The default format
+          is JSON.
+        explode: false
+        in: query
+        name: f
+        required: false
         schema:
-          example: "35238"
-          maximum: 1
-          minimum: 1
+          default: application/json
+          enum:
+          - application/json
+          - application/gml+xml;version=3.2
           type: string
-        style: simple
+        style: form
+      - explode: false
+        in: query
+        name: bbox
+        required: false
+        schema:
+          items:
+            type: number
+          maxItems: 6
+          minItems: 4
+          type: array
+        style: form
+      - explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: startIndex
+        required: false
+        schema:
+          type: integer
+        style: form
       responses:
         "200":
           content:
-            image/tiff:
+            application/json:
               schema:
-                format: binary
-                type: string
-          description: image de retour
+                $ref: '#/components/schemas/Buildings'
+            application/gml+xml;version=3.2:
+              schema:
+                type: object
+          description: Reponse au format CityJson
         "400":
           content:
             application/json:
@@ -366,7 +379,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: General HTTP error response.
+          description: Invalid parameter response.
         "404":
           content:
             application/json:
@@ -385,7 +398,52 @@ paths:
               schema:
                 type: string
           description: A server error occurred.
-        default:
+      summary: fetch buildings
+      tags:
+      - Data
+      x-eov-operation-handler: controllers/DataController
+  /collections/buildings/items/{buildingID}:
+    get:
+      description: |-
+        Fetch the feature with id `featureId` in the feature collection
+        with id `batiments`.
+
+        Use content negotiation to request HTML or GeoJSON.
+      operationId: getbuildingById
+      parameters:
+      - description: The optional f parameter indicates the output format that the
+          server shall provide as part of the response document.  The default format
+          is JSON.
+        explode: false
+        in: query
+        name: f
+        required: false
+        schema:
+          default: application/json
+          enum:
+          - application/json
+          - application/gml+xml;version=3.2
+          type: string
+        style: form
+      - description: local identifier of a building
+        explode: false
+        in: path
+        name: buildingID
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Buildings'
+            application/gml+xml;version=3.2:
+              schema:
+                type: object
+          description: Reponse au format CityJson
+        "404":
           content:
             application/json:
               schema:
@@ -393,15 +451,24 @@ paths:
             text/html:
               schema:
                 type: string
-          description: General HTTP error response.
-      summary: Terrain en raster d'élévation non texturé
+          description: Not found response.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/exception'
+            text/html:
+              schema:
+                type: string
+          description: A server error occurred.
+      summary: fetch a single building from his id
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
-  /raster/elevation/bbox/:
+  /collections/raster/coverage/tiles:
     get:
-      description: TODO Description
-      operationId: rasterElevationBboxGET
+      description: Fetch raster tile from bbox or insee code.
+      operationId: getRaster
       parameters:
       - explode: false
         in: query
@@ -414,14 +481,21 @@ paths:
           minItems: 4
           type: array
         style: form
+      - explode: true
+        in: query
+        name: codeInsee
+        required: false
+        schema:
+          type: string
+        style: form
       responses:
         "200":
           content:
-            image/tiff:
+            image/tiff; application=geotiff:
               schema:
                 format: binary
                 type: string
-          description: image de retour
+          description: A map tile image returned as a response.
         "400":
           content:
             application/json:
@@ -430,7 +504,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: General HTTP error response.
+          description: Invalid parameter response.
         "404":
           content:
             application/json:
@@ -449,239 +523,7 @@ paths:
               schema:
                 type: string
           description: A server error occurred.
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/exception'
-            text/html:
-              schema:
-                type: string
-          description: General HTTP error response.
-      summary: Terrain en raster d'élévation non texturé
-      tags:
-      - Data
-      x-eov-operation-handler: controllers/DataController
-  /batiments/:
-    get:
-      description: TODO Description
-      operationId: batimentsGET
-      parameters:
-      - explode: false
-        in: query
-        name: bbox
-        required: false
-        schema:
-          items:
-            type: number
-          maxItems: 6
-          minItems: 4
-          type: array
-        style: form
-      - allowEmptyValue: false
-        explode: true
-        in: query
-        name: texture
-        required: true
-        schema:
-          default: false
-          type: boolean
-        style: form
-      - explode: false
-        in: header
-        name: format
-        required: false
-        schema:
-          enum:
-          - cityJSON
-          - CityGML
-          type: string
-        style: simple
-      responses:
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/exception'
-            text/html:
-              schema:
-                type: string
-          description: General HTTP error response.
-        "404":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/exception'
-            text/html:
-              schema:
-                type: string
-          description: Not found response.
-        "500":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/exception'
-            text/html:
-              schema:
-                type: string
-          description: A server error occurred.
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/exception'
-            text/html:
-              schema:
-                type: string
-          description: General HTTP error response.
-      summary: Maquette blanche en accès direct (cityJSON, cityGML) sur Bbox
-      tags:
-      - Data
-      x-eov-operation-handler: controllers/DataController
-  /batiments/commune/{code_insee}:
-    get:
-      description: TODO Description
-      operationId: batimentsCommuneCodeInseeGET
-      parameters:
-      - explode: false
-        in: path
-        name: code_insee
-        required: true
-        schema:
-          example: "35238"
-          maximum: 1
-          minimum: 1
-          type: string
-        style: simple
-      - allowEmptyValue: false
-        explode: true
-        in: query
-        name: texture
-        required: true
-        schema:
-          default: false
-          type: boolean
-        style: form
-      - explode: false
-        in: header
-        name: format
-        required: false
-        schema:
-          enum:
-          - cityJSON
-          - CityGML
-          type: string
-        style: simple
-      responses:
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/exception'
-            text/html:
-              schema:
-                type: string
-          description: General HTTP error response.
-        "404":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/exception'
-            text/html:
-              schema:
-                type: string
-          description: Not found response.
-        "500":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/exception'
-            text/html:
-              schema:
-                type: string
-          description: A server error occurred.
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/exception'
-            text/html:
-              schema:
-                type: string
-          description: General HTTP error response.
-      summary: Maquette blanche en accès direct (cityJSON, cityGML) sur code insee
-      tags:
-      - Data
-      x-eov-operation-handler: controllers/DataController
-  /batiments/batiment/{id}:
-    get:
-      description: TODO Description
-      operationId: batimentsBatimentIdGET
-      parameters:
-      - explode: false
-        in: path
-        name: id
-        required: true
-        schema:
-          type: string
-        style: simple
-      - allowEmptyValue: false
-        explode: true
-        in: query
-        name: texture
-        required: true
-        schema:
-          default: false
-          type: boolean
-        style: form
-      - explode: false
-        in: header
-        name: format
-        required: false
-        schema:
-          enum:
-          - cityJSON
-          - CityGML
-          type: string
-        style: simple
-      responses:
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/exception'
-            text/html:
-              schema:
-                type: string
-          description: General HTTP error response.
-        "404":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/exception'
-            text/html:
-              schema:
-                type: string
-          description: Not found response.
-        "500":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/exception'
-            text/html:
-              schema:
-                type: string
-          description: A server error occurred.
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/exception'
-            text/html:
-              schema:
-                type: string
-          description: General HTTP error response.
-      summary: Maquette blanche en accès direct (cityJSON, cityGML) sur id de batiment
+      summary: fetch raster tile from bbox or insee code
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
@@ -695,14 +537,14 @@ components:
       name: f
       required: false
       schema:
-        default: json
+        default: application/json
         enum:
         - application/json
-        - text/html
+        - application/gml+xml;version=3.2
         type: string
       style: form
     bbox:
-      explode: false
+      explode: true
       in: query
       name: bbox
       required: false
@@ -713,27 +555,47 @@ components:
         minItems: 4
         type: array
       style: form
-    collectionId:
-      description: local identifier of a collection
+    codeInsee:
+      explode: true
+      in: query
+      name: codeInsee
+      required: false
+      schema:
+        type: string
+      style: form
+    limit:
+      explode: true
+      in: query
+      name: limit
+      required: false
+      schema:
+        type: integer
+      style: form
+    startIndex:
+      explode: true
+      in: query
+      name: startIndex
+      required: false
+      schema:
+        type: integer
+      style: form
+    buildingID:
+      description: local identifier of a building
       explode: false
       in: path
-      name: collectionId
+      name: buildingID
       required: true
       schema:
-        enum:
-        - test
         type: string
       style: simple
   responses:
-    "200":
-      description: successful operation
-    wms:
+    MapTile:
       content:
-        image/tiff:
+        image/tiff; application=geotiff:
           schema:
             format: binary
             type: string
-      description: image de retour
+      description: A map tile image returned as a response.
     "400":
       content:
         application/json:
@@ -742,7 +604,7 @@ components:
         text/html:
           schema:
             type: string
-      description: General HTTP error response.
+      description: Invalid parameter response.
     "404":
       content:
         application/json:
@@ -753,17 +615,6 @@ components:
             type: string
       description: Not found response.
     "500":
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/exception'
-        text/html:
-          schema:
-            type: string
-      description: A server error occurred.
-    NotFound:
-      description: The requested URI was not found.
-    ServerError:
       content:
         application/json:
           schema:
@@ -833,17 +684,6 @@ components:
             - id: buildings
               title: Buildings
               description: Buildings in the city of Bonn.
-              extent:
-                spatial:
-                  bbox:
-                  - - 7.01
-                    - 50.63
-                    - 7.22
-                    - 50.78
-                temporal:
-                  interval:
-                  - - 2010-02-15T12:34:56Z
-                    - null
               links:
               - href: http://data.example.org/collections/buildings/items
                 rel: items
@@ -889,17 +729,6 @@ components:
             id: buildings
             title: Buildings
             description: Buildings in the city of Bonn.
-            extent:
-              spatial:
-                bbox:
-                - - 7.01
-                  - 50.63
-                  - 7.22
-                  - 50.78
-              temporal:
-                interval:
-                - - 2010-02-15T12:34:56Z
-                  - null
             links:
             - href: http://data.example.org/collections/buildings/items
               rel: items
@@ -935,6 +764,15 @@ components:
         * An optional title and description for the collection;
         * An optional extent that can be used to provide an indication of the spatial and temporal extent of the collection - typically derived from the data;
         * An optional indicator about the type of the items in the collection (the default value, if the indicator is not provided, is 'feature').
+    Buildings:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Buildings'
+        application/gml+xml;version=3.2:
+          schema:
+            type: object
+      description: Reponse au format CityJson
   schemas:
     collection:
       example:
@@ -1127,9 +965,6 @@ components:
     exception:
       description: 'Information about the exception: an error code plus an optional
         description.'
-      example:
-        code: code
-        description: description
       properties:
         code:
           type: string
@@ -1150,4 +985,162 @@ components:
           type: array
       required:
       - conformsTo
+      type: object
+    Buildings:
+      example:
+        transform:
+          scale:
+          - 0.8008281904610115
+          - 0.8008281904610115
+          translate:
+          - 6.027456183070403
+          - 6.027456183070403
+        metadata:
+          presentLoDs:
+            "2": 2
+          referenceSystem: referenceSystem
+        appearance:
+          textures:
+          - image: image
+            borderColor:
+            - 5
+            - 5
+            wrapMode: wrapMode
+            textureType: textureType
+            type: type
+          - image: image
+            borderColor:
+            - 5
+            - 5
+            wrapMode: wrapMode
+            textureType: textureType
+            type: type
+          vertices-texture:
+          - - 5.637376656633329
+            - 5.637376656633329
+          - - 5.637376656633329
+            - 5.637376656633329
+        vertices:
+        - - 1
+          - 1
+        - - 1
+          - 1
+        type: type
+        version: version
+        CityObjects: '{}'
+      properties:
+        type:
+          type: string
+        version:
+          type: string
+        CityObjects:
+          type: object
+        transform:
+          $ref: '#/components/schemas/Buildings_transform'
+        vertices:
+          items:
+            items:
+              format: int32
+              type: integer
+            type: array
+          type: array
+        appearance:
+          $ref: '#/components/schemas/Buildings_appearance'
+        metadata:
+          $ref: '#/components/schemas/Buildings_metadata'
+      type: object
+    Buildings_transform:
+      example:
+        scale:
+        - 0.8008281904610115
+        - 0.8008281904610115
+        translate:
+        - 6.027456183070403
+        - 6.027456183070403
+      properties:
+        scale:
+          items:
+            type: number
+          type: array
+        translate:
+          items:
+            type: number
+          type: array
+      type: object
+    Buildings_appearance_textures:
+      example:
+        image: image
+        borderColor:
+        - 5
+        - 5
+        wrapMode: wrapMode
+        textureType: textureType
+        type: type
+      properties:
+        type:
+          type: string
+        image:
+          type: string
+        wrapMode:
+          type: string
+        textureType:
+          type: string
+        borderColor:
+          items:
+            format: int32
+            type: integer
+          type: array
+      type: object
+    Buildings_appearance:
+      example:
+        textures:
+        - image: image
+          borderColor:
+          - 5
+          - 5
+          wrapMode: wrapMode
+          textureType: textureType
+          type: type
+        - image: image
+          borderColor:
+          - 5
+          - 5
+          wrapMode: wrapMode
+          textureType: textureType
+          type: type
+        vertices-texture:
+        - - 5.637376656633329
+          - 5.637376656633329
+        - - 5.637376656633329
+          - 5.637376656633329
+      properties:
+        textures:
+          items:
+            $ref: '#/components/schemas/Buildings_appearance_textures'
+          type: array
+        vertices-texture:
+          items:
+            items:
+              type: number
+            type: array
+          type: array
+      type: object
+    Buildings_metadata_presentLoDs:
+      example:
+        "2": 2
+      properties:
+        "2":
+          format: int32
+          type: integer
+      type: object
+    Buildings_metadata:
+      example:
+        presentLoDs:
+          "2": 2
+        referenceSystem: referenceSystem
+      properties:
+        referenceSystem:
+          type: string
+        presentLoDs:
+          $ref: '#/components/schemas/Buildings_metadata_presentLoDs'
       type: object

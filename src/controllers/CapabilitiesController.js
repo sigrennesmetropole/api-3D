@@ -8,8 +8,8 @@
 
 const Controller = require('./Controller');
 const service = require('../services/CapabilitiesService');
-const describeCollection = async (request, response) => {
-  await Controller.handleRequest(request, response, service.describeCollection);
+const describeBuildings = async (request, response) => {
+  await Controller.handleRequest(request, response, service.describeBuildings);
 };
 
 const getCollections = async (request, response) => {
@@ -26,7 +26,7 @@ const getLandingPage = async (request, response) => {
 
 
 module.exports = {
-  describeCollection,
+  describeBuildings,
   getCollections,
   getConformanceDeclaration,
   getLandingPage,

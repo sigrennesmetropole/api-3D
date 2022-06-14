@@ -16,16 +16,14 @@ const fs = require('fs');
 const getBuildings = ({ f, bbox, limit, startIndex }) => new Promise(
   async (resolve, reject) => {
     try {
-      console.log(bbox);
       let format = f === 'application/json' ? ".json" : ".citygml";
       let id = uuid.v4();
-      exporter.exportData(id,format).then((valeur) => {
-        console.log(valeur)
+      exporter.exportData(id,format,bbox,null,limit,startIndex).then((valeur) => {
         let result;
         if (format === '.json'){
-          result = JSON.parse(fs.readFileSync(__dirname+"/../"+id+format, 'utf8'));
+          result = JSON.parse(fs.readFileSync(__dirname+"/../../"+id+format, 'utf8'));
         }else {
-          result = fs.readFileSync(__dirname+"/../"+id+format, 'utf8');
+          result = fs.readFileSync(__dirname+"/../../"+id+format, 'utf8');
         }
         resolve(Service.successResponse(result));
       }, (raison) => {
@@ -77,10 +75,23 @@ const getRaster = ({ bbox, codeInsee }) => new Promise(
 const getbuildingById = ({ buildingID, f }) => new Promise(
   async (resolve, reject) => {
     try {
-      resolve(Service.successResponse({
-        buildingID,
-        f,
-      }));
+      let format = f === 'application/json' ? ".json" : ".citygml";
+      let id = uuid.v4();
+      exporter.exportData(id,format,null, buildingID, null,null).then((valeur) => {
+        let result;
+        if (format === '.json'){
+          result = JSON.parse(fs.readFileSync(__dirname+"/../../"+id+format, 'utf8'));
+        }else {
+          result = fs.readFileSync(__dirname+"/../../"+id+format, 'utf8');
+        }
+        resolve(Service.successResponse(result));
+      }, (raison) => {
+        console.log(raison);
+        reject(Service.rejectResponse(
+          e.message || 'Invalid input',
+          e.status || 405,
+        ));
+    });
     } catch (e) {
       reject(Service.rejectResponse(
         e.message || 'Invalid input',

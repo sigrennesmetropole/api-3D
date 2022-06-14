@@ -336,7 +336,7 @@ paths:
           - application/gml+xml;version=3.2
           type: string
         style: form
-      - explode: false
+      - explode: true
         in: query
         name: bbox
         required: false
@@ -470,7 +470,7 @@ paths:
       description: Fetch raster tile from bbox or insee code.
       operationId: getRaster
       parameters:
-      - explode: false
+      - explode: true
         in: query
         name: bbox
         required: false

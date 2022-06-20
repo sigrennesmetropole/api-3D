@@ -19,23 +19,11 @@
             <div id="description">
                 <p class="text-sm-left">Rennes Métropole met à disposition ses données 3D en téléchargement ou en flux. Les fichiers en téléchargement représentent des données millésimées arrêtées à une date définie. Les fichiers téléchargés peuvent être mis à jour par l'utilisateur des maquettes par les flux qui sont mis à disposition.
                     Par exemple, la maquette texturée des bâtiments a une durée de vie de 3 ans. Elle peut être complété par le flux qui informe des bâtiments supprimés depuis la création de cette maquette et les flux qui fournissent les nouveaux bâtiments et les bâtiments modifiés depuis cette même date. Il est à noter que les données 3D provenant de ces flux sont non-texturés.
+                    <br/><a class="link-dark" href="api-docs/">Lien vers l'API</a>
                 </p>
             </div>
         </div>
         <div class="accordion accordion-flush" id="myAccordion">
-            <div class="accordion-item">
-                <h1 class="display-6 text-left p-3" id="">
-                    API 3D
-                </h1>
-                <div id="" class="accordion-collapse">
-                    <div class="row">
-                        <div class="col col-1 card-body justify-content-center">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam rutrum, ipsum at semper rutrum, nisl dui tempus libero, eget eleifend sem sapien non dolor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean placerat venenatis neque, cursus vehicula ipsum blandit non. Vestibulum sagittis quam vel neque congue ultrices. Nam faucibus, mauris id rutrum accumsan, velit dui posuere diam, cursus mattis eros metus a sem. Praesent quis nibh mollis, scelerisque nunc in, varius elit. Nulla elit tortor, faucibus nec leo id, eleifend tristique leo. Praesent feugiat aliquet ligula, et scelerisque purus commodo at. Quisque ullamcorper nibh mauris, vitae tempor risus accumsan id.</p>
-                            <p>Donec imperdiet ante sit amet mattis bibendum. Etiam placerat fringilla dui a fermentum. Aliquam eleifend, tortor at luctus dictum, lorem lectus efficitur nulla, non accumsan tellus est sed leo. Duis vel lacinia libero. Curabitur non iaculis turpis. Sed vitae mauris finibus, sollicitudin libero non, laoreet nibh. Morbi hendrerit ut sem vitae dictum. Nullam vel sagittis dui. In consectetur porta elit, vitae commodo turpis egestas lobortis. Fusce tempus dui eu neque vulputate, at venenatis purus sollicitudin.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
                 <% for(var i=0; i < metadata.length; i++) { %>
                    <div class="accordion-item">
                     <h2 class="accordion-header" id="heading<%= i %>">
@@ -61,7 +49,7 @@
                                     <div class="col" style="height: 40px;"> 
                                         <i class="bi bi-globe"></i> 
                                         <span class="h5"><%= metadata[i].title %></span> 
-                                        <a href="/files/<%= metadata[i].file %>" class="float-end btn btn-light">
+                                        <a href="files/<%= metadata[i].file %>" class="float-end btn btn-light">
                                             Télécharger
                                         </a>
                                     </div>
@@ -109,7 +97,32 @@
     </div>
     <footer class="footer mt-auto py-3 bg-light">
 	  <div class="container">
-	    <span class="text-muted">Mentions légales</span>
+        <div class="row">
+            <div class="col col-1"></div>
+            <div class="col col-5">
+                <strong class="ng-binding">Responsable</strong><br />
+                Rennes Métropole<br />
+                Pôle Stratégie Développement Aménagement<br />
+                Service Information Géographique<br />
+                4 avenue Henri Fréville<br />
+                CS 20723<br />
+                35207 RENNES cedex 2<br />
+                02 23 62 22 70
+            </div>
+            <div class="col col-5">
+                <strong class="ng-binding">Conception et réalisation</strong><br />
+                La conception et la réalisation initiale ont été faites par <a href="https://www.cgi.com/france/">CGI France</a><br />
+
+                <strong class="ng-binding">Code source</strong><br />
+                Le code source est disponible <a href="https://github.com/sigrennesmetropole/api-3D">ici</a><br />
+
+                <strong class="ng-binding">Hébergement</strong><br />
+                Groupement d'intérêt public <a href="https://www.sib.fr/">SIB</a><br />
+                4 rue du professeur Jean Pecker | 35065 RENNES<br />
+                02 99 54 75 10
+            </div>
+            <div class="col col-1"></div>
+        </div>
 	  </div>
 	</footer>
 </body>

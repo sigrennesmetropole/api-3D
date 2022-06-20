@@ -5,8 +5,22 @@ const config = {
   headers:{
     'accept': 'application/xml',
     'Accept': 'application/xml'
-  }
+  }  
+}
+if(!!process.env.https_proxy){
+  const tunnel = require('tunnel');
+
+  const agent = tunnel.httpsOverHttp({
+    proxy: {
+      host: 'fr-proxy.resultinfra.com',
+      port: 3128,
+    },
+  })
+   config.httpsAgent = agent;
+   config.proxy = false;
 };
+
+
 const retrieveMetadata = (url) => new Promise(
     async (resolve, reject) => {
       try {

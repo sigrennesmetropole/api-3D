@@ -51,7 +51,7 @@ class ExpressServer {
     });
 
     for (const uuid of process.env['FILES_IDS'].split(",")){
-      this.app.get('/files/'+uuid, (req, res) => res.sendFile((path.join(__dirname, 'uploaded_files', uuid+'.zip'))));
+      this.app.get('/files/'+uuid, (req, res) => res.download((path.join(__dirname, 'files', process.env[uuid])), process.env[uuid]));
     }
     this.app.get('/telechargements', (req, res) => {
         var data = metadata.getMetadata().then(function(result){
@@ -76,10 +76,6 @@ class ExpressServer {
             errors: err.errors || '',
           });
         });
-        // https.createServer({
-        //   key: fs.readFileSync('server.key'),
-        //   cert: fs.readFileSync('server.cert')
-        // },this.app).listen(this.port);
         http.createServer(this.app).listen(this.port);
         console.log(`Listening on port ${this.port}`);
       });

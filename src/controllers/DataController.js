@@ -8,31 +8,21 @@
 
 const Controller = require('./Controller');
 const service = require('../services/DataService');
-const batimentsBatimentIdGET = async (request, response) => {
-  await Controller.handleRequest(request, response, service.batimentsBatimentIdGET);
+const getBuildings = async (request, response) => {
+  await Controller.handleRequest(request, response, service.getBuildings);
 };
 
-const batimentsCommuneCodeInseeGET = async (request, response) => {
-  await Controller.handleRequest(request, response, service.batimentsCommuneCodeInseeGET);
+const getRaster = async (request, response) => {
+  await Controller.handleRequest(request, response, service.getRaster);
 };
 
-const batimentsGET = async (request, response) => {
-  await Controller.handleRequest(request, response, service.batimentsGET);
-};
-
-const rasterElevationBboxGET = async (request, response) => {
-  await Controller.handleRequest(request, response, service.rasterElevationBboxGET);
-};
-
-const rasterElevationCommuneCodeInseeGET = async (request, response) => {
-  await Controller.handleRequest(request, response, service.rasterElevationCommuneCodeInseeGET);
+const getbuildingById = async (request, response) => {
+  await Controller.handleRequest(request, response, service.getbuildingById);
 };
 
 
 module.exports = {
-  batimentsBatimentIdGET,
-  batimentsCommuneCodeInseeGET,
-  batimentsGET,
-  rasterElevationBboxGET,
-  rasterElevationCommuneCodeInseeGET,
+  getBuildings,
+  getRaster,
+  getbuildingById,
 };

@@ -1,9 +1,11 @@
 const config = require('./config');
 const logger = require('./logger');
 const ExpressServer = require('./expressServer');
-
+const dotenv = require('dotenv');
 const launchServer = async () => {
   try {
+    dotenv.config({ path: __dirname+'/.env' });
+    process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
     this.expressServer = new ExpressServer(config.URL_PORT, config.OPENAPI_YAML);
     this.expressServer.launch();
     logger.info('Express server running');

@@ -8,6 +8,7 @@ const config = {
   }  
 }
 if(!!process.env.https_proxy){
+  console.log("proxy activé")
   const tunnel = require('tunnel');
 
   const agent = tunnel.httpsOverHttp({

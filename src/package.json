@@ -14,6 +14,7 @@
   "license": "Unlicense",
   "private": true,
   "dependencies": {
+    "bbox": "^0.4.0",
     "body-parser": "^1.19.0",
     "camelcase": "^5.3.1",
     "cookie-parser": "^1.4.4",

@@ -3,6 +3,8 @@ const Service = require('./Service');
 const exporter = require('../clients/impexp/exp');
 const uuid = require('uuid');
 const fs = require('fs');
+var convert = require('xml-js');
+var BBox = require('bbox');
 /**
 * fetch buildings
 * Fetch features of the feature collection with id `buildings`.  Every feature in a dataset belongs to a collection. A dataset may consist of multiple feature collections. A feature collection is often a collection of features of a similar type, based on a common schema.  Use content negotiation to request HTML or GeoJSON.
@@ -15,28 +17,34 @@ const fs = require('fs');
 * */
 const getBuildings = ({ f, bbox, limit, startIndex }) => new Promise(
   async (resolve, reject) => {
+    if(!!bbox){
+      var fixed = BBox.create(bbox[0],bbox[1],bbox[2],bbox[3]);
+      let area = Math.abs(fixed.height*fixed.width/1000000);
+      if(area > 10){
+        reject(Service.rejectResponse(
+          {description: "La taille de la BBOX est limitée à 10Km²", code: 400},
+          400,
+        ));
+        return;
+      }
+    }
     try {
-      let format = f === 'application/json' ? ".json" : ".citygml";
       let id = uuid.v4();
-      exporter.exportData(id,format,bbox,null,limit,startIndex).then((valeur) => {
-        let result;
-        if (format === '.json'){
-          result = JSON.parse(fs.readFileSync(__dirname+"/../../"+id+format, 'utf8'));
-        }else {
-          result = fs.readFileSync(__dirname+"/../../"+id+format, 'utf8');
-        }
-        resolve(Service.successResponse(result));
+      let format = f === 'application/json' ? ".json" : ".citygml";
+      exporter.exportData(id, format, bbox,null,limit,startIndex).then((valeur) => {
+        traitementRetourExporter(id, format, limit, startIndex, reject, resolve);
       }, (raison) => {
         console.log(raison);
         reject(Service.rejectResponse(
-          e.message || 'Invalid input',
-          e.status || 405,
+          {description: "Erreur lors de l'appel de l'exporteur", code: 500},
+          500,
         ));
     });
     } catch (e) {
+      console.log(e.message);
       reject(Service.rejectResponse(
-        e.message || 'Invalid input',
-        e.status || 405,
+        {description: "Erreur lors de l'appel de l'exporteur", code: 500},
+        500,
       ));
     }
   },
@@ -75,31 +83,54 @@ const getRaster = ({ bbox, codeInsee }) => new Promise(
 const getbuildingById = ({ buildingID, f }) => new Promise(
   async (resolve, reject) => {
     try {
-      let format = f === 'application/json' ? ".json" : ".citygml";
       let id = uuid.v4();
-      exporter.exportData(id,format,null, buildingID, null,null).then((valeur) => {
-        let result;
-        if (format === '.json'){
-          result = JSON.parse(fs.readFileSync(__dirname+"/../../"+id+format, 'utf8'));
-        }else {
-          result = fs.readFileSync(__dirname+"/../../"+id+format, 'utf8');
-        }
-        resolve(Service.successResponse(result));
+      let format = f === 'application/json' ? ".json" : ".citygml";
+      exporter.exportData(id, format, null, buildingID, null,null).then((valeur) => {
+        traitementRetourExporter(id, format, reject, resolve)
       }, (raison) => {
         console.log(raison);
         reject(Service.rejectResponse(
-          e.message || 'Invalid input',
-          e.status || 405,
+          {description: "Erreur lors de l'appel de l'exporteur", code: 500},
+          500,
         ));
     });
     } catch (e) {
+      console.log(e.message);
       reject(Service.rejectResponse(
-        e.message || 'Invalid input',
-        e.status || 405,
+        {description: "Erreur lors de l'appel de l'exporteur", code: 500},
+        500,
       ));
     }
   },
 );
+
+function traitementRetourExporter(id, format, reject, resolve){
+  traitementRetourExporter(id, format, null, null, reject, resolve);
+}
+
+function traitementRetourExporter(id, format, limit, startIndex, reject, resolve) {
+  let file = fs.readFileSync(process.env['EXPORTER_SAVE_PATH'] + id + format, 'utf8');
+  fs.unlinkSync(process.env['EXPORTER_SAVE_PATH'] + id + format);
+  if (format === '.json') {
+    let json = JSON.parse(file);
+    let size = Object.keys(json.CityObjects).length;
+    if (size === 0) {
+      reject(Service.rejectResponse(
+        { description: 'Aucun résultat', code: 404},
+        404
+      ));
+    }
+    resolve(Service.successResponse(json));
+  } else {
+    if(!JSON.parse(convert.xml2json(file,{compact: true}))['CityModel']['cityObjectMember']){
+      reject(Service.rejectResponse(
+        { description: 'Aucun résultat', code: 404},
+        404
+      ));
+    }
+    resolve(Service.successResponse(file));
+  }
+}
 
 module.exports = {
   getBuildings,

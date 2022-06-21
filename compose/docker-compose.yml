@@ -16,6 +16,7 @@ services:
         DB_PORT: 5432
         IMPORTER_EXPORTER_PATH: /etc/impexp
         DISPLAY: :0.0
+        EXPORTER_SAVE_PATH: /usr/src/app/src/export/
         HTTP_PROXY: http://fr-proxy.resultinfra.com:3128/
         HTTPS_PROXY: http://fr-proxy.resultinfra.com:3128/
         http_proxy: http://fr-proxy.resultinfra.com:3128/
@@ -43,6 +44,7 @@ services:
         DB_PORT: 5432
         IMPORTER_EXPORTER_PATH: /etc/impexp
         DISPLAY: :0.0
+        EXPORTER_SAVE_PATH: /usr/src/app/src/export/
         HTTP_PROXY: http://fr-proxy.resultinfra.com:3128/
         HTTPS_PROXY: http://fr-proxy.resultinfra.com:3128/
         http_proxy: http://fr-proxy.resultinfra.com:3128/

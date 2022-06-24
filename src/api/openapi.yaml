@@ -21,7 +21,12 @@ info:
   - Open API Feature
   - OGC
 servers:
-- url: /
+  - url: https://api.example.com/v1
+    description: Serveur de production ( en cours )
+  - url: https://api3d.imfr.cgi.com/recette
+    description: Serveur de recette
+  - url: https://api3d.imfr.cgi.com/integration
+    description: Serveur d'integration
 tags:
 - description: essential characteristics of this API
   name: Capabilities

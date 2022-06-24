@@ -22,6 +22,15 @@ info:
     - CityJSON
     - Open API Feature
     - OGC
+servers:
+  - url: https://api.example.com/v1
+    description: Serveur de production ( en cours )
+  - url: https://api3d.imfr.cgi.com/recette
+    description: Serveur de recette
+  - url: https://api3d.imfr.cgi.com/integration
+    description: Serveur d'integration
+  - url: /
+    description: Serveur local
 tags:
   - name: Capabilities
     description: essential characteristics of this API

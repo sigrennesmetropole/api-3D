@@ -27,6 +27,8 @@ servers:
     description: Serveur de recette
   - url: https://api3d.imfr.cgi.com/integration
     description: Serveur d'integration
+  - url: /
+    description: Serveur local
 tags:
 - description: essential characteristics of this API
   name: Capabilities

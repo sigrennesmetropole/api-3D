@@ -15,7 +15,7 @@ var BBox = require('bbox');
 * startIndex Integer  (optional)
 * returns Buildings
 * */
-const getBuildings = ({ f, bbox, limit, startIndex }) => new Promise(
+const getBuildings = ({ f, bbox, limit, startIndex, texture }) => new Promise(
   async (resolve, reject) => {
     if(!!bbox){
       var fixed = BBox.create(bbox[0],bbox[1],bbox[2],bbox[3]);
@@ -31,7 +31,7 @@ const getBuildings = ({ f, bbox, limit, startIndex }) => new Promise(
     try {
       let id = uuid.v4();
       let format = f === 'application/json' ? ".json" : ".citygml";
-      exporter.exportData(id, format, bbox,null,limit,startIndex).then((valeur) => {
+      exporter.exportData(id, format, bbox,null,limit,startIndex, texture).then((valeur) => {
         traitementRetourExporter(id, format, limit, startIndex, reject, resolve);
       }, (raison) => {
         console.log(raison);
@@ -80,13 +80,14 @@ const getRaster = ({ bbox, codeInsee }) => new Promise(
 * f String The optional f parameter indicates the output format that the server shall provide as part of the response document.  The default format is JSON. (optional)
 * returns Buildings
 * */
-const getbuildingById = ({ buildingID, f }) => new Promise(
+const getbuildingById = ({ buildingID, f, texture }) => new Promise(
   async (resolve, reject) => {
+    console.log(texture)
     try {
       let id = uuid.v4();
       let format = f === 'application/json' ? ".json" : ".citygml";
-      exporter.exportData(id, format, null, buildingID, null,null).then((valeur) => {
-        traitementRetourExporter(id, format, reject, resolve)
+      exporter.exportData(id, format, null, buildingID, null,null, texture).then((valeur) => {
+        traitementRetourExporter(id, format, null, null, reject, resolve);
       }, (raison) => {
         console.log(raison);
         reject(Service.rejectResponse(
@@ -103,10 +104,6 @@ const getbuildingById = ({ buildingID, f }) => new Promise(
     }
   },
 );
-
-function traitementRetourExporter(id, format, reject, resolve){
-  traitementRetourExporter(id, format, null, null, reject, resolve);
-}
 
 function traitementRetourExporter(id, format, limit, startIndex, reject, resolve) {
   let file = fs.readFileSync(process.env['EXPORTER_SAVE_PATH'] + id + format, 'utf8');

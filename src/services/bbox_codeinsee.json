@@ -1,0 +1,432 @@
+[
+    {
+        "code_insee" : 35001,
+        "nom" : "Acigné",
+        "surface" : "30",
+        "surface_bbox" : "46",
+        "xmin" : "1360146",
+        "xmax" : "1367747",
+        "ymin" : "7222983",
+        "ymax" : "7229055"
+    },
+    {
+        "code_insee" : 35022,
+        "nom" : "Bécherel",
+        "surface" : "1",
+        "surface_bbox" : "1",
+        "xmin" : "1333013",
+        "xmax" : "1334132",
+        "ymin" : "7244152",
+        "ymax" : "7245168"
+    },
+    {
+        "code_insee" : 35024,
+        "nom" : "Betton",
+        "surface" : "27",
+        "surface_bbox" : "51",
+        "xmin" : "1350957",
+        "xmax" : "1358399",
+        "ymin" : "7226957",
+        "ymax" : "7233803"
+    },
+    {
+        "code_insee" : 35032,
+        "nom" : "Bourgbarré",
+        "surface" : "15",
+        "surface_bbox" : "34",
+        "xmin" : "1352676",
+        "xmax" : "1357686",
+        "ymin" : "7205046",
+        "ymax" : "7211895"
+    },
+    {
+        "code_insee" : 35039,
+        "nom" : "Brécé",
+        "surface" : "7",
+        "surface_bbox" : "14",
+        "xmin" : "1363674",
+        "xmax" : "1367499",
+        "ymin" : "7219983",
+        "ymax" : "7223727"
+    },
+    {
+        "code_insee" : 35047,
+        "nom" : "Bruz",
+        "surface" : "30",
+        "surface_bbox" : "58",
+        "xmin" : "1343182",
+        "xmax" : "1349048",
+        "ymin" : "7208663",
+        "ymax" : "7218541"
+    },
+    {
+        "code_insee" : 35051,
+        "nom" : "Cesson-Sévigné",
+        "surface" : "32",
+        "surface_bbox" : "53",
+        "xmin" : "1355014",
+        "xmax" : "1361428",
+        "ymin" : "7219830",
+        "ymax" : "7228097"
+    },
+    {
+        "code_insee" : 35055,
+        "nom" : "Chantepie",
+        "surface" : "12",
+        "surface_bbox" : "25",
+        "xmin" : "1353786",
+        "xmax" : "1360259",
+        "ymin" : "7217518",
+        "ymax" : "7221434"
+    },
+    {
+        "code_insee" : 35066,
+        "nom" : "Chartres-de-Bretagne",
+        "surface" : "10",
+        "surface_bbox" : "19",
+        "xmin" : "1347566",
+        "xmax" : "1351480",
+        "ymin" : "7213280",
+        "ymax" : "7218185"
+    },
+    {
+        "code_insee" : 35076,
+        "nom" : "Chavagne",
+        "surface" : "13",
+        "surface_bbox" : "26",
+        "xmin" : "1341101",
+        "xmax" : "1345656",
+        "ymin" : "7214461",
+        "ymax" : "7220146"
+    },
+    {
+        "code_insee" : 35079,
+        "nom" : "Chevaigné",
+        "surface" : "10",
+        "surface_bbox" : "19",
+        "xmin" : "1354114",
+        "xmax" : "1357078",
+        "ymin" : "7232085",
+        "ymax" : "7238641"
+    },
+    {
+        "code_insee" : 35080,
+        "nom" : "Cintré",
+        "surface" : "9",
+        "surface_bbox" : "16",
+        "xmin" : "1334052",
+        "xmax" : "1339172",
+        "ymin" : "7222085",
+        "ymax" : "7225221"
+    },
+    {
+        "code_insee" : 35081,
+        "nom" : "Clayes",
+        "surface" : "4",
+        "surface_bbox" : "7",
+        "xmin" : "1337860",
+        "xmax" : "1340732",
+        "ymin" : "7229883",
+        "ymax" : "7232472"
+    },
+    {
+        "code_insee" : 35088,
+        "nom" : "Corps-Nuds",
+        "surface" : "23",
+        "surface_bbox" : "44",
+        "xmin" : "1355353",
+        "xmax" : "1362736",
+        "ymin" : "7205052",
+        "ymax" : "7210947"
+    },
+    {
+        "code_insee" : 35120,
+        "nom" : "Gévezé",
+        "surface" : "28",
+        "surface_bbox" : "55",
+        "xmin" : "1341067",
+        "xmax" : "1347348",
+        "ymin" : "7229885",
+        "ymax" : "7238617"
+    },
+    {
+        "code_insee" : 35131,
+        "nom" : "l'Hermitage",
+        "surface" : "7",
+        "surface_bbox" : "13",
+        "xmin" : "1340056",
+        "xmax" : "1343521",
+        "ymin" : "7222908",
+        "ymax" : "7226786"
+    },
+    {
+        "code_insee" : 35058,
+        "nom" : "la Chapelle-Chaussée",
+        "surface" : "15",
+        "surface_bbox" : "26",
+        "xmin" : "1336004",
+        "xmax" : "1342162",
+        "ymin" : "7239133",
+        "ymax" : "7243309"
+    },
+    {
+        "code_insee" : 35059,
+        "nom" : "la Chapelle-des-Fougeretz",
+        "surface" : "9",
+        "surface_bbox" : "15",
+        "xmin" : "1345962",
+        "xmax" : "1349737",
+        "ymin" : "7228553",
+        "ymax" : "7232499"
+    },
+    {
+        "code_insee" : 35065,
+        "nom" : "la Chapelle-Thouarault",
+        "surface" : "8",
+        "surface_bbox" : "15",
+        "xmin" : "1336409",
+        "xmax" : "1341081",
+        "ymin" : "7223831",
+        "ymax" : "7227018"
+    },
+    {
+        "code_insee" : 35139,
+        "nom" : "Laillé",
+        "surface" : "32",
+        "surface_bbox" : "54",
+        "xmin" : "1345404",
+        "xmax" : "1351600",
+        "ymin" : "7203359",
+        "ymax" : "7212143"
+    },
+    {
+        "code_insee" : 35144,
+        "nom" : "Langan",
+        "surface" : "8",
+        "surface_bbox" : "19",
+        "xmin" : "1338110",
+        "xmax" : "1342197",
+        "ymin" : "7235314",
+        "ymax" : "7240072"
+    },
+    {
+        "code_insee" : 35240,
+        "nom" : "le Rheu",
+        "surface" : "19",
+        "surface_bbox" : "40",
+        "xmin" : "1340277",
+        "xmax" : "1346984",
+        "ymin" : "7218862",
+        "ymax" : "7224813"
+    },
+    {
+        "code_insee" : 35351,
+        "nom" : "le Verger",
+        "surface" : "7",
+        "surface_bbox" : "21",
+        "xmin" : "1330480",
+        "xmax" : "1337043",
+        "ymin" : "7217611",
+        "ymax" : "7220776"
+    },
+    {
+        "code_insee" : 35180,
+        "nom" : "Miniac-sous-Bécherel",
+        "surface" : "14",
+        "surface_bbox" : "26",
+        "xmin" : "1332192",
+        "xmax" : "1336456",
+        "ymin" : "7239581",
+        "ymax" : "7245684"
+    },
+    {
+        "code_insee" : 35189,
+        "nom" : "Montgermont",
+        "surface" : "5",
+        "surface_bbox" : "8",
+        "xmin" : "1347916",
+        "xmax" : "1350632",
+        "ymin" : "7226556",
+        "ymax" : "7229333"
+    },
+    {
+        "code_insee" : 35196,
+        "nom" : "Mordelles",
+        "surface" : "30",
+        "surface_bbox" : "75",
+        "xmin" : "1334596",
+        "xmax" : "1343118",
+        "ymin" : "7216373",
+        "ymax" : "7225127"
+    },
+    {
+        "code_insee" : 35204,
+        "nom" : "Nouvoitou",
+        "surface" : "19",
+        "surface_bbox" : "40",
+        "xmin" : "1357557",
+        "xmax" : "1364110",
+        "ymin" : "7210174",
+        "ymax" : "7216344"
+    },
+    {
+        "code_insee" : 35206,
+        "nom" : "Noyal-Châtillon-sur-Seiche",
+        "surface" : "27",
+        "surface_bbox" : "44",
+        "xmin" : "1349423",
+        "xmax" : "1356027",
+        "ymin" : "7213102",
+        "ymax" : "7219711"
+    },
+    {
+        "code_insee" : 35208,
+        "nom" : "Orgères",
+        "surface" : "17",
+        "surface_bbox" : "30",
+        "xmin" : "1349880",
+        "xmax" : "1354314",
+        "ymin" : "7205613",
+        "ymax" : "7212422"
+    },
+    {
+        "code_insee" : 35210,
+        "nom" : "Pacé",
+        "surface" : "35",
+        "surface_bbox" : "56",
+        "xmin" : "1341257",
+        "xmax" : "1348777",
+        "ymin" : "7224356",
+        "ymax" : "7231822"
+    },
+    {
+        "code_insee" : 35216,
+        "nom" : "Parthenay-de-Bretagne",
+        "surface" : "5",
+        "surface_bbox" : "8",
+        "xmin" : "1340031",
+        "xmax" : "1342376",
+        "ymin" : "7230578",
+        "ymax" : "7233806"
+    },
+    {
+        "code_insee" : 35363,
+        "nom" : "Pont-Péan",
+        "surface" : "9",
+        "surface_bbox" : "14",
+        "xmin" : "1348121",
+        "xmax" : "1351355",
+        "ymin" : "7209798",
+        "ymax" : "7214035"
+    },
+    {
+        "code_insee" : 35238,
+        "nom" : "Rennes",
+        "surface" : "50",
+        "surface_bbox" : "84",
+        "xmin" : "1346191",
+        "xmax" : "1356147",
+        "ymin" : "7219092",
+        "ymax" : "7227553"
+    },
+    {
+        "code_insee" : 35245,
+        "nom" : "Romillé",
+        "surface" : "29",
+        "surface_bbox" : "55",
+        "xmin" : "1334507",
+        "xmax" : "1341617",
+        "ymin" : "7232854",
+        "ymax" : "7240534"
+    },
+    {
+        "code_insee" : 35250,
+        "nom" : "Saint-Armel",
+        "surface" : "8",
+        "surface_bbox" : "13",
+        "xmin" : "1356972",
+        "xmax" : "1360641",
+        "ymin" : "7209880",
+        "ymax" : "7213535"
+    },
+    {
+        "code_insee" : 35266,
+        "nom" : "Saint-Erblon",
+        "surface" : "11",
+        "surface_bbox" : "26",
+        "xmin" : "1350929",
+        "xmax" : "1356423",
+        "ymin" : "7210185",
+        "ymax" : "7215001"
+    },
+    {
+        "code_insee" : 35275,
+        "nom" : "Saint-Gilles",
+        "surface" : "21",
+        "surface_bbox" : "37",
+        "xmin" : "1336021",
+        "xmax" : "1342666",
+        "ymin" : "7225570",
+        "ymax" : "7231071"
+    },
+    {
+        "code_insee" : 35278,
+        "nom" : "Saint-Grégoire",
+        "surface" : "18",
+        "surface_bbox" : "37",
+        "xmin" : "1348967",
+        "xmax" : "1355035",
+        "ymin" : "7225379",
+        "ymax" : "7231461"
+    },
+    {
+        "code_insee" : 35281,
+        "nom" : "Saint-Jacques-de-la-Lande",
+        "surface" : "12",
+        "surface_bbox" : "23",
+        "xmin" : "1345411",
+        "xmax" : "1350954",
+        "ymin" : "7217323",
+        "ymax" : "7221461"
+    },
+    {
+        "code_insee" : 35315,
+        "nom" : "Saint-Sulpice-la-Forêt",
+        "surface" : "7",
+        "surface_bbox" : "14",
+        "xmin" : "1358294",
+        "xmax" : "1361798",
+        "ymin" : "7231837",
+        "ymax" : "7235811"
+    },
+    {
+        "code_insee" : 35334,
+        "nom" : "Thorigné-Fouillard",
+        "surface" : "14",
+        "surface_bbox" : "34",
+        "xmin" : "1356298",
+        "xmax" : "1361790",
+        "ymin" : "7223973",
+        "ymax" : "7230228"
+    },
+    {
+        "code_insee" : 35352,
+        "nom" : "Vern-sur-Seiche",
+        "surface" : "20",
+        "surface_bbox" : "49",
+        "xmin" : "1353499",
+        "xmax" : "1359958",
+        "ymin" : "7211644",
+        "ymax" : "7219157"
+    },
+    {
+        "code_insee" : 35353,
+        "nom" : "Vezin-le-Coquet",
+        "surface" : "8",
+        "surface_bbox" : "16",
+        "xmin" : "1344277",
+        "xmax" : "1348551",
+        "ymin" : "7221894",
+        "ymax" : "7225613"
+    }
+]

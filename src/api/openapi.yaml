@@ -368,6 +368,15 @@ paths:
         schema:
           type: integer
         style: form
+      - explode: true
+        in: query
+        name: texture
+        required: false
+        schema:
+          default: oui
+          enum:
+          - oui
+          - non
       responses:
         "200":
           content:
@@ -440,6 +449,15 @@ paths:
         schema:
           type: string
         style: simple
+      - explode: true
+        in: query
+        name: texture
+        required: false
+        schema:
+          default: oui
+          enum:
+          - oui
+          - non
       responses:
         "200":
           content:

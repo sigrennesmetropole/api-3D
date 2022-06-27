@@ -116,6 +116,7 @@ paths:
         - $ref: '#/components/parameters/bbox'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/startIndex'
+        - $ref: '#/components/parameters/texture'
       responses:
         '200':
           $ref: '#/components/responses/Buildings'
@@ -139,6 +140,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/f'
         - $ref: '#/components/parameters/buildingID'
+        - $ref: '#/components/parameters/texture'
       responses:
         '200':
           $ref: '#/components/responses/Buildings'
@@ -220,6 +222,15 @@ components:
       required: true
       schema:
         type: string
+    texture:
+      in: query
+      name: texture
+      required: false
+      schema:
+        default: oui
+        enum:
+        - oui
+        - non
   schemas:
     collection:
       required:

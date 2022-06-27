@@ -17,7 +17,7 @@ const isBBoxLessThan10km2ElseReject = (bbox, reject) => {
 }
 
 const getBBoxFromCodeInseeElseReject = (codeInsee, reject) => {
-    let communes = JSON.parse(fs.readFileSync(__dirname+'\\bbox_codeinsee.json'));
+    let communes = JSON.parse(fs.readFileSync(__dirname+'/bbox_codeinsee.json'));
     for (let i = 0; i<communes.length; i++) {
         if (communes[i].code_insee == codeInsee) {
             return `${communes[i].xmin}%2C${communes[i].ymin}%2C${communes[i].xmax}%2C${communes[i].ymax}`;

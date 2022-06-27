@@ -1,7 +1,20 @@
 // const { exec } = require("child_process");
 const { successResponse } = require("../../services/Service");
 const axios = require('axios');
+const config = {responseType: 'arraybuffer'}
+if(!!process.env.https_proxy){
+console.log("proxy activé")
+const tunnel = require('tunnel');
 
+const agent = tunnel.httpsOverHttp({
+    proxy: {
+    host: 'fr-proxy.resultinfra.com',
+    port: 3128,
+    },
+})
+    config.httpsAgent = agent;
+    config.proxy = false;
+};
 const exportRasterWMS = (version, workspace, layers, bbox, witdh, height, srs, format) => new Promise(
     async (resolve, reject) => {
         try{
@@ -15,7 +28,7 @@ const exportRasterWMS = (version, workspace, layers, bbox, witdh, height, srs, f
             + '&srs=' + srs
             + '&format=' + format;
             
-            axios.get(url, {responseType: 'arraybuffer'})
+            axios.get(url, config)
                 .then(res => {
                     resolve(res.data);
                 })

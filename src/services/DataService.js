@@ -1,10 +1,13 @@
 /* eslint-disable no-unused-vars */
 const Service = require('./Service');
 const exporter = require('../clients/impexp/exp');
+const wms = require('../clients/geoserver/wms');
 const uuid = require('uuid');
 const fs = require('fs');
 var convert = require('xml-js');
 var BBox = require('bbox');
+const axios = require('axios');
+var dataValidator = require('./DataValidator');
 /**
 * fetch buildings
 * Fetch features of the feature collection with id `buildings`.  Every feature in a dataset belongs to a collection. A dataset may consist of multiple feature collections. A feature collection is often a collection of features of a similar type, based on a common schema.  Use content negotiation to request HTML or GeoJSON.
@@ -17,16 +20,8 @@ var BBox = require('bbox');
 * */
 const getBuildings = ({ f, bbox, limit, startIndex, texture }) => new Promise(
   async (resolve, reject) => {
-    if(!!bbox){
-      var fixed = BBox.create(bbox[0],bbox[1],bbox[2],bbox[3]);
-      let area = Math.abs(fixed.height*fixed.width/1000000);
-      if(area > 10){
-        reject(Service.rejectResponse(
-          {description: "La taille de la BBOX est limitée à 10Km²", code: 400},
-          400,
-        ));
-        return;
-      }
+    if (!!bbox){
+      dataValidator.isBBoxLessThan10km2ElseReject(bbox, reject);
     }
     try {
       let id = uuid.v4();
@@ -59,18 +54,38 @@ const getBuildings = ({ f, bbox, limit, startIndex, texture }) => new Promise(
 * */
 const getRaster = ({ bbox, codeInsee }) => new Promise(
   async (resolve, reject) => {
+    if (!!codeInsee & !!bbox){
+        reject(Service.rejectResponse(
+          {description: "Invalid input : <bbox> and <code insee> are mutully exclusive", code: 400},
+          400,
+        ));
+        return;
+    }
+    if (!!bbox){
+      dataValidator.isBBoxLessThan10km2ElseReject(bbox, reject);
+      bbox = bbox.toString();
+    } else if (!!codeInsee){
+      bbox = dataValidator.getBBoxFromCodeInseeElseReject(codeInsee, reject).toString();
+    } else {
+      bbox = "1330000.0%2C7203000.0%2C1368000.0%2C7246000.0";
+    }
     try {
-      resolve(Service.successResponse({
-        bbox,
-        codeInsee,
-      }));
-    } catch (e) {
+      wms.exportRasterWMS(version='1.1.0', workspace='raster', layers='mnt2018', bbox, witdh=678, height=768, srs='EPSG%3A3948', format='image%2Fgeotiff')
+        .then((result) => {
+          resolve(Service.fileResponse(result, 200, "image/geotiff"));
+        }, (raison) => {
+          reject(Service.rejectResponse(
+            {description: "Erreur lors de l'appel de Geoserver", code: 500},
+            500,
+          ));
+        });
+    } catch {
       reject(Service.rejectResponse(
-        e.message || 'Invalid input',
-        e.status || 405,
+        {description: "Erreur lors de l'appel de Geoserver", code: 500},
+            500,
       ));
     }
-  },
+  }
 );
 /**
 * fetch a single building from his id

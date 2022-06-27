@@ -13,7 +13,12 @@ class Controller {
     */
     response.status(payload.code || 200);
     const responsePayload = payload.payload !== undefined ? payload.payload : payload;
-    if (responsePayload instanceof Object) {
+    const isFileResponse = payload.type !== undefined ? true : false;
+    if(isFileResponse){
+      response.set('content-disposition', 'inline; filename=raster-ortho2020.tif')
+      response.type(payload.type);
+      response.end( responsePayload, 'binary' );
+    }else if (responsePayload instanceof Object) {
       response.json(responsePayload);
     } else {
       response.end(responsePayload);

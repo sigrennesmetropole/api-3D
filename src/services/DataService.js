@@ -18,15 +18,26 @@ var dataValidator = require('./DataValidator');
 * startIndex Integer  (optional)
 * returns Buildings
 * */
-const getBuildings = ({ f, bbox, limit, startIndex, texture }) => new Promise(
+const getBuildings = ({ f, bbox, codeInsee, limit, startIndex, texture }) => new Promise(
   async (resolve, reject) => {
+    if (!!codeInsee & !!bbox){
+      reject(Service.rejectResponse(
+        {description: "Invalid input : <bbox> and <code insee> are mutully exclusive", code: 400},
+        400,
+      ));
+      return;
+    }
     if (!!bbox){
       dataValidator.isBBoxLessThan10km2ElseReject(bbox, reject);
+    } else if (!!codeInsee){
+      bbox = dataValidator.getBBoxFromCodeInseeElseReject(codeInsee, reject);
+    } else {
+      bbox = [1330000, 7203000, 1368000, 7246000];
     }
     try {
       let id = uuid.v4();
       let format = f === 'application/json' ? ".json" : ".citygml";
-      exporter.exportData(id, format, bbox,null,limit,startIndex, texture).then((valeur) => {
+      exporter.exportData(id, format, bbox, null, limit, startIndex, texture).then((valeur) => {
         traitementRetourExporter(id, format, limit, startIndex, reject, resolve);
       }, (raison) => {
         console.log(raison);
@@ -63,14 +74,14 @@ const getRaster = ({ bbox, codeInsee }) => new Promise(
     }
     if (!!bbox){
       dataValidator.isBBoxLessThan10km2ElseReject(bbox, reject);
-      bbox = bbox.toString();
     } else if (!!codeInsee){
-      bbox = dataValidator.getBBoxFromCodeInseeElseReject(codeInsee, reject).toString();
+      bbox = dataValidator.getBBoxFromCodeInseeElseReject(codeInsee, reject);
     } else {
-      bbox = "1330000.0%2C7203000.0%2C1368000.0%2C7246000.0";
+      bbox = [1330000, 7203000, 1368000, 7246000];
     }
     try {
-      wms.exportRasterWMS(version='1.1.0', workspace='raster', layers='mnt2018', bbox, witdh=678, height=768, srs='EPSG%3A3948', format='image%2Fgeotiff')
+      let {height, width} = dataValidator.getBBoxHeightAndWidth(bbox);3948
+      wms.exportRasterWMS(version='1.1.0', workspace='raster', layers='mnt2018', bbox, witdh=Math.floor(width*2), height=Math.floor(height*2), srs='EPSG%3A3948', format='image%2Fgeotiff')
         .then((result) => {
           resolve(Service.fileResponse(result, 200, "image/geotiff"));
         }, (raison) => {

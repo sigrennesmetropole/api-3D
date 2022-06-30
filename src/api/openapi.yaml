@@ -350,9 +350,16 @@ paths:
         schema:
           items:
             type: number
-          maxItems: 6
+          maxItems: 4
           minItems: 4
           type: array
+        style: form
+      - explode: true
+        in: query
+        name: codeInsee
+        required: false
+        schema:
+          type: string
         style: form
       - explode: true
         in: query
@@ -490,9 +497,9 @@ paths:
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
-  /collections/raster/coverage/tiles:
+  /collections/mnt2018/coverage/tiles:
     get:
-      description: Fetch raster tile from bbox or insee code.
+      description: Fetch mnt raster tile from bbox or insee code.
       operationId: getRaster
       parameters:
       - explode: true
@@ -502,7 +509,7 @@ paths:
         schema:
           items:
             type: number
-          maxItems: 6
+          maxItems: 4
           minItems: 4
           type: array
         style: form
@@ -576,7 +583,7 @@ components:
       schema:
         items:
           type: number
-        maxItems: 6
+        maxItems: 4
         minItems: 4
         type: array
       style: form

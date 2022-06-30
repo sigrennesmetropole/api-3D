@@ -14,7 +14,9 @@ const exportData = (uuid,format,bbox,buildingID,limit,startIndex, texture) => ne
         if( !!limit) options = options+ ' --count='+limit;
         if( !!startIndex) options = options+ ' --start-index='+startIndex;
         if( texture === "non" ) options = options+ ' --no-appearance';
-        exec(process.env.IMPORTER_EXPORTER_PATH+'/bin/impexp export'
+        console.log(process.env.IMPORTER_EXPORTER_PATH+'\\bin\\impexp export'
+        + options)
+        exec(process.env.IMPORTER_EXPORTER_PATH+'\\bin\\impexp export' // CHANGE THIS
         + options
         , (error, stdout, stderr) => {
             if (error) {

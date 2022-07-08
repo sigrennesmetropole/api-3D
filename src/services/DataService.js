@@ -8,6 +8,7 @@ var convert = require('xml-js');
 var BBox = require('bbox');
 const axios = require('axios');
 var dataValidator = require('./DataValidator');
+const JSZip = require("jszip");
 /**
 * fetch buildings
 * Fetch features of the feature collection with id `buildings`.  Every feature in a dataset belongs to a collection. A dataset may consist of multiple feature collections. A feature collection is often a collection of features of a similar type, based on a common schema.  Use content negotiation to request HTML or GeoJSON.
@@ -36,21 +37,21 @@ const getBuildings = ({ f, bbox, codeInsee, limit, startIndex, texture }) => new
     }
     try {
       let id = uuid.v4();
-      let format = f === 'application/json' ? ".json" : ".citygml";
+      let format = f === 'application/json' ? ".cityjson" : ".citygml";
       exporter.exportData(id, format, bbox, null, limit, startIndex, texture).then((valeur) => {
-        traitementRetourExporter(id, format, limit, startIndex, reject, resolve);
+        traitementRetourExporter(id, format, limit, startIndex, texture, reject, resolve);
       }, (raison) => {
         console.log(raison);
         reject(Service.rejectResponse(
           {description: "Erreur lors de l'appel de l'exporteur", code: 500},
-          500,
+          500
         ));
     });
     } catch (e) {
       console.log(e.message);
       reject(Service.rejectResponse(
         {description: "Erreur lors de l'appel de l'exporteur", code: 500},
-        500,
+        500
       ));
     }
   },
@@ -68,7 +69,7 @@ const getRaster = ({ bbox, codeInsee }) => new Promise(
     if (!!codeInsee & !!bbox){
         reject(Service.rejectResponse(
           {description: "Invalid input : <bbox> and <code insee> are mutully exclusive", code: 400},
-          400,
+          400
         ));
         return;
     }
@@ -87,13 +88,13 @@ const getRaster = ({ bbox, codeInsee }) => new Promise(
         }, (raison) => {
           reject(Service.rejectResponse(
             {description: "Erreur lors de l'appel de Geoserver", code: 500},
-            500,
+            500
           ));
         });
     } catch {
       reject(Service.rejectResponse(
         {description: "Erreur lors de l'appel de Geoserver", code: 500},
-            500,
+            500
       ));
     }
   }
@@ -108,52 +109,90 @@ const getRaster = ({ bbox, codeInsee }) => new Promise(
 * */
 const getbuildingById = ({ buildingID, f, texture }) => new Promise(
   async (resolve, reject) => {
-    console.log(texture)
     try {
       let id = uuid.v4();
-      let format = f === 'application/json' ? ".json" : ".citygml";
-      exporter.exportData(id, format, null, buildingID, null,null, texture).then((valeur) => {
-        traitementRetourExporter(id, format, null, null, reject, resolve);
+      let format = f === 'application/json' ? ".cityjson" : ".citygml";
+      exporter.exportData(id, format, null, buildingID, null, null, texture).then((valeur) => {
+        traitementRetourExporter(id, format, null, null, texture, reject, resolve);
       }, (raison) => {
-        console.log(raison);
         reject(Service.rejectResponse(
           {description: "Erreur lors de l'appel de l'exporteur", code: 500},
-          500,
+          500
         ));
     });
     } catch (e) {
       console.log(e.message);
       reject(Service.rejectResponse(
         {description: "Erreur lors de l'appel de l'exporteur", code: 500},
-        500,
+        500
       ));
     }
   },
 );
 
-function traitementRetourExporter(id, format, limit, startIndex, reject, resolve) {
-  let file = fs.readFileSync(process.env['EXPORTER_SAVE_PATH'] + id + format, 'utf8');
-  fs.unlinkSync(process.env['EXPORTER_SAVE_PATH'] + id + format);
-  if (format === '.json') {
-    let json = JSON.parse(file);
-    let size = Object.keys(json.CityObjects).length;
-    if (size === 0) {
-      reject(Service.rejectResponse(
-        { description: 'Aucun résultat', code: 404},
-        404
-      ));
+async function traitementRetourExporter(id, format, limit, startIndex, texture, reject, resolve) {
+  try{
+    let fileExtention = texture === 'oui' ? '.zip' : format;
+    let data = await new JSZip.external.Promise(function (resolve, reject) {
+      fs.readFile(process.env['EXPORTER_SAVE_PATH'] + id + fileExtention, function(err, data) {
+          if (err) {
+              reject(err);
+          } else {
+              resolve(data);
+          }
+      });
+    });
+    if (texture === 'oui') {
+      let zip = await JSZip.loadAsync(data);
+      let file = await zip.file(id + `.${format.slice(5)}`).async("string");
+      if (format === '.cityjson') {
+        let parsed = await JSON.parse(file);
+        let size = Object.keys(parsed.CityObjects).length;
+        if (size === 0) {
+          reject(Service.rejectResponse(
+            { description: 'Aucun résultat', code: 404},
+            404
+          ));
+        }
+      } else {
+        if(!JSON.parse(convert.xml2json(file,{compact: true}))['CityModel']['cityObjectMember']){
+          reject(Service.rejectResponse(
+            { description: 'Aucun résultat', code: 404},
+            404
+          ));
+        }
+      }
+      resolve(Service.fileResponse(data, 200, 'application/zip'));
+    } else {
+      let file = fs.readFileSync(process.env['EXPORTER_SAVE_PATH'] + id + format, 'utf8');
+      fs.unlinkSync(process.env['EXPORTER_SAVE_PATH'] + id + format);
+      if (format === '.cityjson') {
+        let json = JSON.parse(file);
+        let size = Object.keys(json.CityObjects).length;
+        if (size === 0) {
+          reject(Service.rejectResponse(
+            { description: 'Aucun résultat', code: 404},
+            404
+          ));
+        }
+        resolve(Service.successResponse(json));
+      } else {
+        if(!JSON.parse(convert.xml2json(file,{compact: true}))['CityModel']['cityObjectMember']){
+          reject(Service.rejectResponse(
+            { description: 'Aucun résultat', code: 404},
+            404
+          ));
+        }
+        resolve(Service.successResponse(file));
+      }
     }
-    resolve(Service.successResponse(json));
-  } else {
-    if(!JSON.parse(convert.xml2json(file,{compact: true}))['CityModel']['cityObjectMember']){
-      reject(Service.rejectResponse(
-        { description: 'Aucun résultat', code: 404},
-        404
-      ));
-    }
-    resolve(Service.successResponse(file));
+  } catch {
+    reject(Service.rejectResponse(
+      {description: "Erreur lors de l'appel de l'exporteur", code: 500},
+      500
+    ));
   }
-}
+} 
 
 module.exports = {
   getBuildings,

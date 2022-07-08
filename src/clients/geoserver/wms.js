@@ -27,6 +27,7 @@ const exportRasterWMS = (version, workspace, layers, bbox, witdh, height, srs, f
             + '&height=' + height
             + '&srs=' + srs
             + '&format=' + format;
+            console.log(url)
             
             axios.get(url, config)
                 .then(res => {

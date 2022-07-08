@@ -34,6 +34,8 @@ tags:
   name: Capabilities
 - description: Data methods
   name: Data
+- description: Raster Data methods
+  name: Coverage
 paths:
   /:
     get:
@@ -339,6 +341,7 @@ paths:
         schema:
           default: application/json
           enum:
+          #- application/zip
           - application/json
           - application/gml+xml;version=3.2
           type: string
@@ -347,13 +350,14 @@ paths:
         in: query
         name: bbox
         required: false
+        description: xmin, ymin, xmax, ymax
         schema:
           items:
             type: number
           maxItems: 4
           minItems: 4
           type: array
-        style: form
+        style: spaceDelimited
       - explode: true
         in: query
         name: codeInsee
@@ -387,13 +391,16 @@ paths:
       responses:
         "200":
           content:
+            application/zip:
+              schema:
+                type: object
             application/json:
               schema:
                 $ref: '#/components/schemas/Buildings'
             application/gml+xml;version=3.2:
               schema:
                 type: object
-          description: Reponse au format CityJson
+          description: Cityjson or citygml file response. if textures = oui, a zip file containing textures and the cityjson or citygml file.
         "400":
           content:
             application/json:
@@ -497,22 +504,23 @@ paths:
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
-  /collections/mnt2018/coverage/tiles:
+  /collections/mnt2018/coverage/tiles: #HERE
     get:
       description: Fetch mnt raster tile from bbox or insee code.
       operationId: getRaster
       parameters:
-      - explode: true
+      - explode: false
         in: query
         name: bbox
         required: false
+        description: xmin, ymin, xmax, ymax
         schema:
           items:
             type: number
           maxItems: 4
           minItems: 4
           type: array
-        style: form
+        style: spaceDelimited
       - explode: true
         in: query
         name: codeInsee
@@ -557,7 +565,7 @@ paths:
           description: A server error occurred.
       summary: fetch raster tile from bbox or insee code
       tags:
-      - Data
+      - Coverage
       x-eov-operation-handler: controllers/DataController
 components:
   parameters:
@@ -576,17 +584,18 @@ components:
         type: string
       style: form
     bbox:
-      explode: true
+      explode: false #HERE
       in: query
       name: bbox
       required: false
+      description: xmin, ymin, xmax, ymax
       schema:
         items:
           type: number
         maxItems: 4
         minItems: 4
         type: array
-      style: form
+      style: spaceDelimited
     codeInsee:
       explode: true
       in: query

@@ -22,11 +22,12 @@ const exportRasterWMS = (version, workspace, layers, bbox, witdh, height, srs, f
             + '&version=' + version
             + '&request=GetMap'
             + '&layers=' + workspace + '%3A' + layers
-            + '&bbox=' + bbox.replace("/,/g","%2C")
+            + '&bbox=' + bbox.toString().replace(/,/g,"%2C")
             + '&width=' + witdh
             + '&height=' + height
             + '&srs=' + srs
             + '&format=' + format;
+            console.log(url)
             
             axios.get(url, config)
                 .then(res => {

@@ -3,9 +3,10 @@ const path = require('path');
 const camelCase = require('camelcase');
 const config = require('../config');
 const logger = require('../logger');
+const { trace } = require('console');
 
 class Controller {
-  static sendResponse(response, payload) {
+  static sendResponse(response, payload, request) {
     /**
     * The default response-code is 200. We want to allow to change that. in That case,
     * payload will be an object consisting of a code and a payload. If not customized
@@ -15,7 +16,19 @@ class Controller {
     const responsePayload = payload.payload !== undefined ? payload.payload : payload;
     const isFileResponse = payload.type !== undefined ? true : false;
     if(isFileResponse){
-      response.set('content-disposition', 'inline; filename=raster-ortho2020.tif')
+      let filename;
+      switch (request.openapi.schema.operationId) {
+        case "getBuildings":
+          filename = `buildings.${payload.type.split('/')[1]}`; //'application/json' -> 'json'
+          break;
+        case "getbuildingById":
+          filename = `building.${payload.type.split('/')[1]}`;
+          break;
+        case "getRaster":
+          filename = 'mnt.tif';
+          break;
+      }
+      response.set('content-disposition', `inline; filename=${filename}`) //HERE
       response.type(payload.type);
       response.end( responsePayload, 'binary' );
     }else if (responsePayload instanceof Object) {
@@ -46,6 +59,7 @@ class Controller {
   * @returns {string}
   */
   static collectFile(request, fieldName) {
+   
     let uploadedFileName = '';
     if (request.files && request.files.length > 0) {
       const fileObject = request.files.find(file => file.fieldname === fieldName);
@@ -109,7 +123,7 @@ class Controller {
   static async handleRequest(request, response, serviceOperation) {
     try {
       const serviceResponse = await serviceOperation(this.collectRequestParams(request));
-      Controller.sendResponse(response, serviceResponse);
+      Controller.sendResponse(response, serviceResponse, request);
     } catch (error) {
       Controller.sendError(response, error);
     }

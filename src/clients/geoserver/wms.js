@@ -2,14 +2,14 @@
 const { successResponse } = require("../../services/Service");
 const axios = require('axios');
 const config = {responseType: 'arraybuffer'}
-if(!!process.env.https_proxy){
+if(!!process.env.PROXY_HOST){
 console.log("proxy activé")
 const tunnel = require('tunnel');
 
 const agent = tunnel.httpsOverHttp({
     proxy: {
-    host: 'fr-proxy.resultinfra.com',
-    port: 3128,
+    host: process.env.PROXY_HOST,
+    port: process.env.PROXY_PORT,
     },
 })
     config.httpsAgent = agent;
@@ -27,7 +27,6 @@ const exportRasterWMS = (version, workspace, layers, bbox, witdh, height, srs, f
             + '&height=' + height
             + '&srs=' + srs
             + '&format=' + format;
-            console.log(url)
             
             axios.get(url, config)
                 .then(res => {

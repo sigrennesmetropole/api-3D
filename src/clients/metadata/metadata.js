@@ -7,14 +7,14 @@ const config = {
     'Accept': 'application/xml'
   }  
 }
-if(!!process.env.https_proxy){
-  console.log("proxy activé")
+if(!!process.env.PROXY_HOST){
+  console.log("proxy activé");
   const tunnel = require('tunnel');
 
   const agent = tunnel.httpsOverHttp({
     proxy: {
-      host: 'fr-proxy.resultinfra.com',
-      port: 3128,
+      host: process.env.PROXY_HOST,
+      port: process.env.PROXY_PORT,
     },
   })
    config.httpsAgent = agent;

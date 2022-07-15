@@ -21,7 +21,7 @@ const exportData = (uuid, format, bbox, buildingID, limit, startIndex, texture) 
         if (!!limit) options = options + ' --count=' + limit;
         if (!!startIndex) options = options + ' --start-index=' + startIndex;
 
-        exec(process.env.IMPORTER_EXPORTER_PATH + '\\bin\\impexp export'
+        exec(process.env.IMPORTER_EXPORTER_PATH + '/bin/impexp export'
         + options
         , (error, stdout, stderr) => {
             if (error) {

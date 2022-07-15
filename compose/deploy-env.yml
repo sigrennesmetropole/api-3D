@@ -9,7 +9,6 @@ services:
       volumes:
         - ${impexp_local_path}:/etc/impexp
         - ${download_file_path}:/usr/src/app/src/files
-      #env_file: ./${environnement}/telechargement.env
       environment:
         IMPORTER_EXPORTER_PATH: /etc/impexp
         EXPORTER_SAVE_PATH: /usr/src/app/src/export/
@@ -24,6 +23,9 @@ services:
         http_proxy: ${HTTP_PROXY:-}
         https_proxy: ${HTTP_PROXY:-}
         ftp_proxy: ${HTTP_PROXY:-}
+        PROXY_HOST: ${PROXY_HOST}
+        PROXY_PORT: ${PROXY_PORT}
+        BBOX_MAX_SIZE: ${BBOX_MAX_SIZE:-10}
         3faad540-1cc3-4224-a326-2bf1e8f550bc: 3d_rennesmetropole_terrain_maillage.zip
         72bca5d3-ee31-4a83-8a92-837e8d048cc3: 3d_rennesmetropole_terrain_raster.zip
         0d75bd55-be52-4493-9bd7-f623c49f6531: 3d_rennesmetropole_batis_cityjson.zip

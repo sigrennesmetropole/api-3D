@@ -29,7 +29,7 @@ const getBuildings = ({ f, bbox, codeInsee, limit, startIndex, texture }) => new
       return;
     }
     if (!!bbox){
-      dataValidator.isBBoxLessThan10km2ElseReject(bbox, reject);
+      dataValidator.isBBoxLessThanMaxSizeElseReject(bbox, reject);
     } else if (!!codeInsee){
       bbox = dataValidator.getBBoxFromCodeInseeElseReject(codeInsee, reject);
     } else {
@@ -74,7 +74,7 @@ const getRaster = ({ bbox, codeInsee }) => new Promise(
         return;
     }
     if (!!bbox){
-      dataValidator.isBBoxLessThan10km2ElseReject(bbox, reject);
+      dataValidator.isBBoxLessThanMaxSizeElseReject(bbox, reject);
     } else if (!!codeInsee){
       bbox = dataValidator.getBBoxFromCodeInseeElseReject(codeInsee, reject);
     } else {

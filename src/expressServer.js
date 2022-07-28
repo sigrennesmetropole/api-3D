@@ -51,7 +51,10 @@ class ExpressServer {
     });
 
     for (const uuid of process.env['FILES_IDS'].split(",")){
-      this.app.get('/files/'+uuid, (req, res) => res.download((path.join(__dirname, 'files', process.env[uuid])), process.env[uuid]));
+      this.app.get('/files/'+uuid, (req, res) => {
+        logger.info("Téléchargement du fichier "+ process.env[uuid])
+        res.download((path.join(__dirname, 'files', process.env[uuid])), process.env[uuid])
+      });
     }
     this.app.get('/telechargements', (req, res) => {
         var data = metadata.getMetadata().then(function(result){

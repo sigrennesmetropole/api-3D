@@ -8,7 +8,7 @@ const exportData = (uuid, format, bbox, buildingID, limit, startIndex, texture) 
         + ' --db-port=' + process.env.DB_PORT
         + ' --db-name=' + process.env.DB_DATABASE
         + ' --db-username=' + process.env.DB_USERNAME
-        + ' --db-password=' + process.env.DB_PASSWORD
+        + ' --db-password="' + process.env.DB_PASSWORD+'"'
         if (texture === "oui" ) {
             options = options + ' -o ' + process.env['EXPORTER_SAVE_PATH'] + uuid + '.zip'
             + ' --compressed-format=' + format.slice(1); //remove point before file extension

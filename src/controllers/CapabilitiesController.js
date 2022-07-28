@@ -12,6 +12,10 @@ const describeBuildings = async (request, response) => {
   await Controller.handleRequest(request, response, service.describeBuildings);
 };
 
+const describeMnt2018 = async (request, response) => {
+  await Controller.handleRequest(request, response, service.describeMnt2018);
+};
+
 const getCollections = async (request, response) => {
   await Controller.handleRequest(request, response, service.getCollections);
 };
@@ -27,6 +31,7 @@ const getLandingPage = async (request, response) => {
 
 module.exports = {
   describeBuildings,
+  describeMnt2018,
   getCollections,
   getConformanceDeclaration,
   getLandingPage,

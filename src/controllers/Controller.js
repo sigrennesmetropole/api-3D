@@ -122,7 +122,10 @@ class Controller {
 
   static async handleRequest(request, response, serviceOperation) {
     try {
-      const serviceResponse = await serviceOperation(this.collectRequestParams(request));
+      
+      let requestParams = this.collectRequestParams(request);
+      logger.info('Appel du path '+ request.route.path, { "parametres" : requestParams});
+      const serviceResponse = await serviceOperation(requestParams);
       Controller.sendResponse(response, serviceResponse, request);
     } catch (error) {
       Controller.sendError(response, error);

@@ -1,0 +1,436 @@
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T11:55:29.068Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T11:56:59.868Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T11:57:05.381Z"}
+{"level":"info","message":"Appel du path /","parametres":{"f":"application/json"},"service":"user-service","timestamp":"2022-08-01T14:03:40.440Z"}
+{"level":"info","message":"Appel du path /","parametres":{"f":"application/json"},"service":"user-service","timestamp":"2022-08-01T14:04:09.751Z"}
+{"level":"info","message":"Appel du path /","parametres":{"f":"application/json"},"service":"user-service","timestamp":"2022-08-01T14:04:11.215Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T14:08:29.768Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T14:39:44.404Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T14:40:12.484Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T14:42:56.357Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T14:43:14.929Z"}
+{"level":"error","message":"failed to start Express Server","service":"user-service","timestamp":"2022-08-01T14:49:31.840Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T14:49:31.878Z"}
+{"level":"error","message":"failed to start Express Server","service":"user-service","timestamp":"2022-08-01T14:51:48.163Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T14:51:48.193Z"}
+{"level":"error","message":"failed to start Express Server","service":"user-service","timestamp":"2022-08-01T14:53:31.911Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T14:53:31.968Z"}
+{"level":"error","message":"failed to start Express Server","service":"user-service","timestamp":"2022-08-01T14:54:03.815Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T14:54:03.860Z"}
+{"level":"error","message":"failed to start Express Server","service":"user-service","timestamp":"2022-08-01T14:54:17.624Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T14:54:17.713Z"}
+{"level":"error","message":"failed to start Express Server","service":"user-service","timestamp":"2022-08-01T14:54:40.184Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T14:54:40.274Z"}
+{"level":"error","message":"failed to start Express Server","service":"user-service","timestamp":"2022-08-01T14:56:15.948Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T14:56:15.992Z"}
+{"level":"error","message":"failed to start Express Server","service":"user-service","timestamp":"2022-08-01T14:56:49.952Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T14:56:49.991Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T15:09:30.244Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T15:11:02.040Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T15:11:24.535Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T15:19:20.491Z"}
+{"level":"error","message":"failed to start Express Server","service":"user-service","timestamp":"2022-08-01T15:22:57.004Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T15:22:57.055Z"}
+{"level":"error","message":"failed to start Express Server","service":"user-service","timestamp":"2022-08-01T15:23:34.826Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T15:23:34.896Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T15:26:52.828Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T15:27:49.250Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T15:28:29.042Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T15:28:57.887Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T15:31:37.250Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T15:32:48.537Z"}
+{"level":"info","message":"Appel du path /collections/buildings/items","parametres":{"codeInsee":"35001","f":"application/json","limit":1,"startIndex":0,"texture":"non"},"service":"user-service","timestamp":"2022-08-01T15:51:52.366Z"}
+{"level":"info","message":"Appel du path /collections/buildings/items","parametres":{"codeInsee":"35001","f":"application/json","limit":1,"startIndex":0,"texture":"non"},"service":"user-service","timestamp":"2022-08-01T15:53:31.268Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T15:54:34.306Z"}
+{"level":"info","message":"Appel du path /collections/buildings/items","parametres":{"codeInsee":"35001","f":"application/json","limit":1,"startIndex":0,"texture":"non"},"service":"user-service","timestamp":"2022-08-01T15:54:35.376Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T15:55:54.211Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-01T15:56:04.182Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-03T07:31:09.613Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-03T07:37:45.317Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-03T07:39:01.176Z"}
+{"level":"info","message":"Appel du path /collections/buildings/items","parametres":{"codeInsee":"35001","f":"application/json","limit":1,"startIndex":0,"texture":"oui"},"service":"user-service","timestamp":"2022-08-03T07:39:32.796Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-03T07:40:07.124Z"}
+{"level":"info","message":"Appel du path /collections/buildings/items","parametres":{"codeInsee":"35001","f":"application/json","limit":1,"startIndex":0,"texture":"oui"},"service":"user-service","timestamp":"2022-08-03T07:40:11.191Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-03T07:42:16.528Z"}
+{"level":"info","message":"Appel du path /collections/buildings/items","parametres":{"codeInsee":"35001","f":"application/json","limit":1,"startIndex":0,"texture":"oui"},"service":"user-service","timestamp":"2022-08-03T07:42:17.083Z"}
+{"level":"info","message":"Appel du path /collections/buildings/items","parametres":{"codeInsee":"35001","f":"application/json","limit":1,"startIndex":0,"texture":"oui"},"service":"user-service","timestamp":"2022-08-03T07:45:47.272Z"}
+{"level":"info","message":"Appel du path /collections/buildings/items","parametres":{"codeInsee":"35001","f":"application/json","limit":1,"startIndex":0,"texture":"oui"},"service":"user-service","timestamp":"2022-08-03T07:46:02.068Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-03T08:01:45.811Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-03T09:44:49.788Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-03T09:45:47.466Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","date":"2014-01-01","f":"application/json","limit":10,"startIndex":0},"service":"user-service","timestamp":"2022-08-03T09:46:19.233Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-03T09:47:13.385Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","date":"2014-01-01","f":"application/json","limit":10,"startIndex":0},"service":"user-service","timestamp":"2022-08-03T09:47:13.896Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-03T09:47:41.843Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","date":"2014-01-01","f":"application/json","limit":10,"startIndex":0},"service":"user-service","timestamp":"2022-08-03T09:47:42.395Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-03T09:48:03.972Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","date":"2014-01-01","f":"application/json","limit":10,"startIndex":0},"service":"user-service","timestamp":"2022-08-03T09:48:04.616Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-03T09:48:35.073Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","date":"2014-01-01","f":"application/json","limit":10,"startIndex":0},"service":"user-service","timestamp":"2022-08-03T09:48:35.549Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-03T09:48:46.434Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","date":"2014-01-01","f":"application/json","limit":10,"startIndex":0},"service":"user-service","timestamp":"2022-08-03T09:48:49.144Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-03T09:49:09.849Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","date":"2014-01-01","f":"application/json","limit":10,"startIndex":0},"service":"user-service","timestamp":"2022-08-03T09:49:10.480Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-03T09:49:51.877Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","date":"2014-01-01","f":"application/json","limit":10,"startIndex":0},"service":"user-service","timestamp":"2022-08-03T09:49:53.131Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-03T09:50:12.519Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","date":"2014-01-01","f":"application/json","limit":10,"startIndex":0},"service":"user-service","timestamp":"2022-08-03T09:50:13.058Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-03T09:50:46.246Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","date":"2014-01-01","f":"application/json","limit":10,"startIndex":0},"service":"user-service","timestamp":"2022-08-03T09:50:48.722Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-03T09:51:35.611Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","date":"2014-01-01","f":"application/json","limit":10,"startIndex":0},"service":"user-service","timestamp":"2022-08-03T09:51:36.910Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","f":"application/json","limit":10,"startIndex":0},"service":"user-service","timestamp":"2022-08-03T09:53:07.453Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","f":"application/gml+xml;version=3.2","limit":10,"startIndex":0},"service":"user-service","timestamp":"2022-08-03T09:53:34.097Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-03T14:10:27.854Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-03T14:10:31.918Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-03T14:10:38.945Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-03T14:12:25.515Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-03T14:12:35.955Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-04T08:30:00.927Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-04T08:31:30.139Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-04T08:31:30.592Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-04T08:34:06.141Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-04T08:34:07.134Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-04T08:34:54.567Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-04T08:34:55.273Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-04T09:49:47.445Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-08T07:35:14.589Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"date":"2020-01-01","f":"application/json","limit":1,"startIndex":1},"service":"user-service","timestamp":"2022-08-08T07:35:47.243Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"date":"1900-01-01","f":"application/json","limit":1,"startIndex":1},"service":"user-service","timestamp":"2022-08-08T07:37:29.315Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-08T08:16:00.498Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-08T08:16:14.060Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"date":"1900-01-01","f":"application/json","limit":1,"startIndex":1},"service":"user-service","timestamp":"2022-08-08T08:16:33.887Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-08T08:17:48.198Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","date":"1900-01-01","limit":5,"startIndex":1},"service":"user-service","timestamp":"2022-08-08T08:18:16.871Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-08T08:19:05.867Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","date":"1900-01-01","limit":5,"startIndex":1},"service":"user-service","timestamp":"2022-08-08T08:19:09.656Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-08T08:19:57.743Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","date":"1900-01-01","limit":5,"startIndex":1},"service":"user-service","timestamp":"2022-08-08T08:20:00.749Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-08T08:33:25.384Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","date":"1900-01-01","limit":5,"startIndex":1},"service":"user-service","timestamp":"2022-08-08T08:33:29.889Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-08T08:34:10.869Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","date":"1900-01-01","limit":5,"startIndex":1},"service":"user-service","timestamp":"2022-08-08T08:34:14.484Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-08T08:35:15.568Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","date":"1900-01-01","limit":5,"startIndex":1},"service":"user-service","timestamp":"2022-08-08T08:35:16.962Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-08T08:37:13.644Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","date":"1900-01-01","limit":5,"startIndex":1},"service":"user-service","timestamp":"2022-08-08T08:37:14.156Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-08T08:37:31.232Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","date":"1900-01-01","limit":5,"startIndex":1},"service":"user-service","timestamp":"2022-08-08T08:37:31.769Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-08T08:37:53.885Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","date":"1900-01-01","limit":5,"startIndex":1},"service":"user-service","timestamp":"2022-08-08T08:37:56.839Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-08T08:45:15.333Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","date":"1900-01-01","limit":5,"startIndex":1},"service":"user-service","timestamp":"2022-08-08T08:45:17.545Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-08T08:48:16.299Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-08T12:21:31.192Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-08T12:21:35.035Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-08T15:37:52.781Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-08T15:37:57.471Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T12:55:46.781Z"}
+{"level":"info","message":"Appel du path /","parametres":{"f":"application/json"},"service":"user-service","timestamp":"2022-08-17T12:56:39.074Z"}
+{"level":"info","message":"Appel du path /","parametres":{"f":"application/json"},"service":"user-service","timestamp":"2022-08-17T13:03:52.584Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T13:05:08.463Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T13:05:37.201Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","date":"2001-01-01","f":"application/gml+xml;version=3.2"},"service":"user-service","timestamp":"2022-08-17T13:05:48.919Z"}
+{"level":"info","message":"Appel du path /collections/modifed_building/items","parametres":{"codeInsee":"35001","date":"2001-01-01","f":"application/json"},"service":"user-service","timestamp":"2022-08-17T13:06:16.226Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T13:07:07.280Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T13:11:05.648Z"}
+{"level":"info","message":"Appel du path /collections/modifed_building/items","parametres":{"codeInsee":"35001","f":"application/json"},"service":"user-service","timestamp":"2022-08-17T13:21:43.824Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T13:45:39.532Z"}
+{"level":"info","message":"Appel du path /collections/buildings/items","parametres":{"codeInsee":"35001","f":"application/json","limit":1,"startIndex":0,"texture":"oui"},"service":"user-service","timestamp":"2022-08-17T13:45:57.286Z"}
+{"level":"info","message":"Appel du path /collections/buildings/items","parametres":{"codeInsee":"35001","f":"application/json","limit":1,"startIndex":0,"texture":"oui"},"service":"user-service","timestamp":"2022-08-17T13:46:06.224Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T13:50:01.695Z"}
+{"level":"info","message":"Appel du path /collections/buildings/items","parametres":{"codeInsee":"35001","f":"application/json","limit":1,"startIndex":0,"texture":"oui"},"service":"user-service","timestamp":"2022-08-17T13:50:08.879Z"}
+{"level":"info","message":"Appel du path /collections/buildings/items","parametres":{"codeInsee":"35001","f":"application/json","limit":1,"startIndex":0,"texture":"oui"},"service":"user-service","timestamp":"2022-08-17T13:50:27.312Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T13:52:43.974Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","f":"application/json"},"service":"user-service","timestamp":"2022-08-17T13:53:08.460Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T13:53:59.574Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","f":"application/json"},"service":"user-service","timestamp":"2022-08-17T13:54:03.304Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T13:54:26.720Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T13:55:22.264Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","f":"application/json"},"service":"user-service","timestamp":"2022-08-17T13:55:25.764Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T13:58:03.794Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T13:58:21.943Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T13:58:40.317Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","f":"application/json"},"service":"user-service","timestamp":"2022-08-17T13:58:54.195Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T13:59:36.160Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","f":"application/json"},"service":"user-service","timestamp":"2022-08-17T13:59:37.864Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:00:05.713Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","f":"application/json"},"service":"user-service","timestamp":"2022-08-17T14:00:07.380Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:00:58.998Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:01:31.727Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:03:26.940Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","f":"application/json"},"service":"user-service","timestamp":"2022-08-17T14:03:29.131Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:04:16.661Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:04:52.375Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","f":"application/json"},"service":"user-service","timestamp":"2022-08-17T14:04:59.837Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:07:47.519Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","f":"application/json"},"service":"user-service","timestamp":"2022-08-17T14:07:50.561Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","f":"application/json"},"service":"user-service","timestamp":"2022-08-17T14:08:27.080Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:10:35.820Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","f":"application/json"},"service":"user-service","timestamp":"2022-08-17T14:10:37.985Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","f":"application/json"},"service":"user-service","timestamp":"2022-08-17T14:11:03.839Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:13:25.933Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","f":"application/json"},"service":"user-service","timestamp":"2022-08-17T14:13:26.360Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:14:03.855Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","f":"application/json"},"service":"user-service","timestamp":"2022-08-17T14:14:15.811Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:18:53.412Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","f":"application/json"},"service":"user-service","timestamp":"2022-08-17T14:18:55.439Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:19:09.428Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","f":"application/json"},"service":"user-service","timestamp":"2022-08-17T14:19:12.442Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:19:22.164Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:22:16.821Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:22:26.500Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:22:36.111Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:22:57.706Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:23:11.712Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","f":"application/json"},"service":"user-service","timestamp":"2022-08-17T14:23:15.993Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","f":"application/json"},"service":"user-service","timestamp":"2022-08-17T14:23:46.972Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","date":"2000-01-01","f":"application/json"},"service":"user-service","timestamp":"2022-08-17T14:32:08.160Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:37:55.792Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:38:26.507Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:38:35.327Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:39:24.671Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:39:40.221Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","dbView":"v_batis_ajout","f":"application/json"},"service":"user-service","timestamp":"2022-08-17T14:39:42.052Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","dbView":"v_batis_ajout","f":"application/json"},"service":"user-service","timestamp":"2022-08-17T14:39:43.990Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:40:33.148Z"}
+{"level":"info","message":"Appel du path /collections/added_building/items","parametres":{"codeInsee":"35001","dbView":"v_batis_ajout","f":"application/json"},"service":"user-service","timestamp":"2022-08-17T14:40:35.689Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:41:02.918Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:41:17.309Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:48:01.007Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:48:13.149Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:49:36.189Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:51:51.285Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T14:54:49.577Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T15:26:44.565Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T15:27:09.865Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T15:27:44.937Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T15:29:01.011Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T15:30:50.157Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T15:31:36.702Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T15:31:39.061Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T15:31:43.572Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T15:32:03.630Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T15:32:08.721Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T15:32:13.622Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T15:36:05.631Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T15:37:01.051Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T15:38:05.049Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T15:38:38.217Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T15:46:22.567Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T15:49:07.561Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T15:49:56.904Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T15:50:46.607Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T15:54:53.701Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T15:55:08.520Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T15:55:35.330Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T15:56:03.412Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T15:59:30.454Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T15:59:53.423Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T16:01:10.646Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T16:02:12.611Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-17T16:06:15.150Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T11:39:31.030Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T11:46:32.406Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T11:46:56.037Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T11:47:17.296Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T11:47:34.367Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T11:47:49.157Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T11:48:12.388Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T11:53:06.682Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T11:53:27.562Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T11:54:13.811Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T11:54:24.362Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T11:54:50.865Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T12:37:58.769Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T12:38:15.548Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T12:40:15.979Z"}
+{"level":"info","message":"Appel du path /","parametres":{"f":"application/json"},"service":"user-service","timestamp":"2022-08-18T12:40:41.922Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-18T12:41:19.497Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T12:41:52.302Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T12:42:01.550Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-18T12:42:03.311Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T12:42:48.936Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T12:43:02.903Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-18T12:43:06.446Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T12:43:34.155Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-18T12:43:36.049Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T12:43:59.319Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-18T12:44:01.037Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T12:46:31.705Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-18T12:46:34.166Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T12:49:04.580Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-18T12:49:12.629Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T12:54:12.659Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-18T12:54:14.664Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T12:54:23.579Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-18T12:54:26.339Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T13:04:12.927Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-18T13:04:16.417Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T13:21:02.042Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T13:27:10.322Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T13:27:23.976Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T13:30:17.319Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T13:31:15.503Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-18T13:31:20.054Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T13:31:55.042Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-18T13:31:57.432Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T13:34:21.509Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-18T13:34:24.205Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T13:34:38.856Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-18T13:34:39.530Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T13:53:21.155Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-18T13:53:25.572Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T13:53:44.270Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-18T13:53:47.462Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T13:53:55.465Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-18T13:53:58.687Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T13:54:04.705Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T13:55:50.659Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-18T13:55:52.505Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T13:56:07.592Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-18T13:56:09.600Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T13:58:17.153Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-18T13:58:19.071Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T13:58:28.756Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T14:01:09.656Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-18T14:01:10.236Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T14:01:22.240Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-18T14:01:24.218Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T14:03:55.400Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-18T14:03:59.343Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T15:22:40.058Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"date":"2008-01-01"},"service":"user-service","timestamp":"2022-08-18T15:22:44.796Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T15:22:55.103Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"date":"2008-01-01"},"service":"user-service","timestamp":"2022-08-18T15:22:56.192Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T15:32:29.261Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-18T15:40:32.408Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T08:46:41.630Z"}
+{"level":"info","message":"Appel du path /","parametres":{"f":"application/json"},"service":"user-service","timestamp":"2022-08-19T08:50:16.659Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-19T08:50:34.160Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T08:53:15.423Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-19T08:53:15.924Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T08:56:05.397Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-19T08:56:06.029Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T08:57:44.345Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-19T08:57:44.900Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T08:58:16.613Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-19T08:58:17.210Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T08:59:50.592Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-19T08:59:51.187Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T09:02:51.232Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-19T09:02:51.956Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T09:07:17.457Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-19T09:07:18.135Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T09:07:54.884Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-19T09:07:58.152Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T09:08:45.296Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-19T09:08:46.020Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T09:09:02.617Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-19T09:09:05.228Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T09:09:41.777Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-19T09:09:43.467Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T09:09:55.225Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-19T09:09:55.945Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T09:11:35.607Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-19T09:11:36.263Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T09:16:18.523Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-19T09:16:22.966Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T09:21:52.315Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-19T09:21:53.205Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T09:25:55.633Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-19T09:26:00.078Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T09:27:53.474Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T09:35:55.288Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T09:36:22.339Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T09:36:45.417Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T09:37:54.481Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T09:39:52.017Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T09:40:14.672Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T09:40:38.175Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:07:13.644Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","date":"2001-01-01","limit":2,"startIndex":1},"service":"user-service","timestamp":"2022-08-19T12:07:46.366Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:08:13.518Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","date":"2001-01-01","limit":2,"startIndex":1},"service":"user-service","timestamp":"2022-08-19T12:08:13.978Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:08:18.587Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","date":"2001-01-01","limit":2,"startIndex":1},"service":"user-service","timestamp":"2022-08-19T12:08:21.016Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:08:35.751Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:08:50.159Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","date":"2001-01-01","limit":2,"startIndex":1},"service":"user-service","timestamp":"2022-08-19T12:08:52.347Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:09:05.610Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","date":"2001-01-01","limit":2,"startIndex":1},"service":"user-service","timestamp":"2022-08-19T12:09:07.419Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:09:14.224Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","date":"2001-01-01","limit":2,"startIndex":1},"service":"user-service","timestamp":"2022-08-19T12:09:16.191Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:10:04.669Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","date":"2001-01-01","limit":2,"startIndex":1},"service":"user-service","timestamp":"2022-08-19T12:10:05.937Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:14:35.485Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:14:40.176Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","date":"2001-01-01","limit":2,"startIndex":1},"service":"user-service","timestamp":"2022-08-19T12:14:41.400Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","date":"2008-01-01","limit":2,"startIndex":1},"service":"user-service","timestamp":"2022-08-19T12:14:56.629Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","startIndex":1},"service":"user-service","timestamp":"2022-08-19T12:15:05.993Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:18:43.935Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","startIndex":1},"service":"user-service","timestamp":"2022-08-19T12:18:48.703Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","startIndex":2},"service":"user-service","timestamp":"2022-08-19T12:19:07.321Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:19:36.858Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","startIndex":2},"service":"user-service","timestamp":"2022-08-19T12:19:38.036Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35000","startIndex":2},"service":"user-service","timestamp":"2022-08-19T12:19:52.768Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:20:54.209Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:22:11.078Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:22:21.414Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35000","startIndex":2},"service":"user-service","timestamp":"2022-08-19T12:22:23.069Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:24:06.221Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35000","startIndex":2},"service":"user-service","timestamp":"2022-08-19T12:24:06.878Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:24:28.868Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35000","startIndex":2},"service":"user-service","timestamp":"2022-08-19T12:24:30.398Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:25:05.825Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35000","startIndex":2},"service":"user-service","timestamp":"2022-08-19T12:25:06.407Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:25:21.601Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35000","startIndex":2},"service":"user-service","timestamp":"2022-08-19T12:25:22.350Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:25:34.158Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35000","startIndex":2},"service":"user-service","timestamp":"2022-08-19T12:25:36.707Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:27:39.427Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35000","startIndex":2},"service":"user-service","timestamp":"2022-08-19T12:27:42.617Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:27:48.899Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35000","startIndex":2},"service":"user-service","timestamp":"2022-08-19T12:27:50.240Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:27:59.818Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35000","startIndex":2},"service":"user-service","timestamp":"2022-08-19T12:28:01.403Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:28:24.536Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35000","startIndex":2},"service":"user-service","timestamp":"2022-08-19T12:28:25.085Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:28:56.737Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35000","startIndex":2},"service":"user-service","timestamp":"2022-08-19T12:28:58.648Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","startIndex":2},"service":"user-service","timestamp":"2022-08-19T12:29:37.709Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","startIndex":0},"service":"user-service","timestamp":"2022-08-19T12:30:01.767Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-19T12:30:11.070Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:30:40.063Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-19T12:30:40.705Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:31:20.885Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-19T12:31:21.348Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-19T12:31:40.431Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-19T12:31:42.361Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-19T12:31:42.919Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-19T12:31:43.113Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-19T12:31:43.292Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-19T12:31:43.442Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-19T12:31:43.590Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:32:37.640Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-19T12:32:38.319Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35000"},"service":"user-service","timestamp":"2022-08-19T12:32:46.542Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001"},"service":"user-service","timestamp":"2022-08-19T12:32:52.246Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","startIndex":0},"service":"user-service","timestamp":"2022-08-19T12:33:08.153Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","startIndex":1},"service":"user-service","timestamp":"2022-08-19T12:33:13.279Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","limit":2,"startIndex":1},"service":"user-service","timestamp":"2022-08-19T12:33:21.439Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","date":"2020-01-01","limit":2,"startIndex":1},"service":"user-service","timestamp":"2022-08-19T12:33:43.160Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","date":"2023-01-01","limit":2,"startIndex":1},"service":"user-service","timestamp":"2022-08-19T12:33:48.977Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","date":"2020-01-01","limit":2,"startIndex":1},"service":"user-service","timestamp":"2022-08-19T12:33:53.250Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","date":"2020-01-01","limit":2},"service":"user-service","timestamp":"2022-08-19T12:33:55.115Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35001","date":"2020-01-01"},"service":"user-service","timestamp":"2022-08-19T12:33:59.116Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{"codeInsee":"35000","date":"2020-01-01"},"service":"user-service","timestamp":"2022-08-19T12:34:04.061Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-19T12:34:31.421Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-19T12:34:36.747Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:39:24.821Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-19T12:39:27.095Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:41:06.831Z"}
+{"level":"info","message":"Appel du path /collections/deleted_building/items","parametres":{},"service":"user-service","timestamp":"2022-08-19T12:41:09.550Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:42:38.417Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T13:12:50.950Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-31T07:12:56.081Z"}

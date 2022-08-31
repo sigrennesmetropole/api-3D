@@ -120,10 +120,12 @@ class Controller {
     return requestParams;
   }
 
-  static async handleRequest(request, response, serviceOperation) {
+  static async handleRequest(request, response, serviceOperation, extraParams) {
     try {
-      
       let requestParams = this.collectRequestParams(request);
+      for (let i in extraParams) {
+        requestParams[i] = extraParams[i];
+      }
       logger.info('Appel du path '+ request.route.path, { "parametres" : requestParams});
       const serviceResponse = await serviceOperation(requestParams);
       Controller.sendResponse(response, serviceResponse, request);

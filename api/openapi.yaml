@@ -148,6 +148,29 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
+  /collections/added_building/items:
+    get:
+      tags:
+        - Data
+      summary: fetch added buildings
+      description: |-
+        Fetch buildings that were added from the specifed date onwards.
+        Default date is the digital model's year of realese.
+      operationId: getAddedBuildings
+      parameters:
+        - $ref: '#/components/parameters/f'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/codeInsee'
+        - $ref: '#/components/parameters/bbox'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/startIndex'
+      responses:
+        '200':
+          $ref: '#/components/responses/Buildings'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
   /collections/raster/coverage/tiles:
     get:
       tags:
@@ -231,6 +254,12 @@ components:
         enum:
         - oui
         - non
+    date:
+      in: query
+      description: date (YYYY-MM-DD)
+      required: false
+      format: date
+      example: "2020-01-01" 
   schemas:
     collection:
       required:

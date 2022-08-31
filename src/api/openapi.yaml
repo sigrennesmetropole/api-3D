@@ -346,7 +346,7 @@ paths:
                 title: Mnt2018
                 description: Fetch mnt2018
                 links:
-                - href: http://data.example.org/collections/mnt2018/coverage/tiles
+                - href: http://data.example.org/collections/mnt2018/coverage
                   rel: items
                   type: image/tiff;application=geotiff
                   title: Mnt2018
@@ -421,14 +421,10 @@ paths:
         in: query
         name: bbox
         required: false
-        description: xmin, ymin, xmax, ymax
+        description: coordonnées xmin, ymin, xmax, ymax séparées par une virgule (Ex '1330000,7203000,1368000,7246000') 
         schema:
-          items:
-            type: number
-          maxItems: 4
-          minItems: 4
-          type: array
-        style: spaceDelimited
+          type: string
+        allowReserved: true
       - explode: true
         in: query
         name: codeInsee
@@ -600,14 +596,10 @@ paths:
         in: query
         name: bbox
         required: false
-        description: xmin, ymin, xmax, ymax
+        description: coordonnées xmin, ymin, xmax, ymax séparées par une virgule (Ex '1330000,7203000,1368000,7246000') 
         schema:
-          items:
-            type: number
-          maxItems: 4
-          minItems: 4
-          type: array
-        style: spaceDelimited
+          type: string
+        allowReserved: true
       - explode: true
         in: query
         name: codeInsee
@@ -707,14 +699,10 @@ paths:
         in: query
         name: bbox
         required: false
-        description: xmin, ymin, xmax, ymax
+        description: coordonnées xmin, ymin, xmax, ymax séparées par une virgule (Ex '1330000,7203000,1368000,7246000') 
         schema:
-          items:
-            type: number
-          maxItems: 4
-          minItems: 4
-          type: array
-        style: spaceDelimited
+          type: string
+        allowReserved: true
       - explode: true
         in: query
         name: codeInsee
@@ -869,23 +857,19 @@ paths:
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
-  /collections/mnt2018/coverage/tiles:
+  /collections/mnt2018/coverage:
     get:
       description: Fetch mnt raster tile from bbox or insee code.
       operationId: getRaster
       parameters:
-      - explode: false
+      - explode: true
         in: query
         name: bbox
         required: false
-        description: xmin, ymin, xmax, ymax
+        description: coordonnées xmin, ymin, xmax, ymax séparées par une virgule (Ex '1330000,7203000,1368000,7246000') 
         schema:
-          items:
-            type: number
-          maxItems: 4
-          minItems: 4
-          type: array
-        style: spaceDelimited
+          type: string
+        allowReserved: true
       - explode: true
         in: query
         name: codeInsee
@@ -949,18 +933,14 @@ components:
         type: string
       style: form
     bbox:
-      explode: false #HERE
+      explode: true
       in: query
       name: bbox
       required: false
-      description: xmin, ymin, xmax, ymax
+      description: coordonnées xmin, ymin, xmax, ymax séparées par une virgule (Ex '1330000,7203000,1368000,7246000') 
       schema:
-        items:
-          type: number
-        maxItems: 4
-        minItems: 4
-        type: array
-      style: spaceDelimited
+        type: string
+      allowReserved: true
     codeInsee:
       explode: true
       in: query

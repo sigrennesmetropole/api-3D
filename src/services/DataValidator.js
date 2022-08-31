@@ -46,6 +46,7 @@ const getBBoxFromAny = (bbox, codeInsee, reject) => {
         return;
       }
       if (!!bbox){
+        bbox  = bbox.split(',');
         isBBoxLessThanMaxSizeElseReject(bbox, reject);
         return bbox
       } else if (!!codeInsee){

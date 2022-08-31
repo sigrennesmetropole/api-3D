@@ -71,7 +71,7 @@ const describeMnt2018 = ({ f }) => new Promise(
             "title": "Buildings"
           },
           {
-            "href": "/collections/mnt2018/coverage/tiles",
+            "href": "/collections/mnt2018/coverage",
             "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage",
             "type": "image/tiff;application=geotiff",
             "title": "mnt2018"
@@ -145,7 +145,7 @@ const getCollections = ({ f }) => new Promise(
             "description": "Fetch mnt2018",
             "links": [
               {
-                "href": "/collections/mnt2018/coverage/tiles",
+                "href": "/collections/mnt2018/coverage",
                 "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage",
                 "type": "image/tiff;application=geotiff",
                 "title": "mnt2018"

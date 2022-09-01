@@ -8,7 +8,7 @@
 
 const Controller = require('./Controller');
 const service = require('../services/DataService');
-const config = require('../config');
+//const config = require('../config');
 
 const getBuildings = async (request, response) => {
   await Controller.handleRequest(request, response, service.getBuildings);
@@ -23,7 +23,7 @@ const getbuildingById = async (request, response) => {
 };
 
 const getAddedBuildings = async (request, response) => {
-  await Controller.handleRequest(request, response, service.getBuildings, {'dbView': config.DB_VIEW_ADDED_BUILDINGS});
+  await Controller.handleRequest(request, response, service.getBuildings, {'dbView': process.env.DB_SCHEMA_EVOLUTION});
 };
 
 const getDeletedBuildings = async (request, response) => {
@@ -31,7 +31,7 @@ const getDeletedBuildings = async (request, response) => {
 };
 
 const getModifiedBuildings = async (request, response) => {
-  await Controller.handleRequest(request, response, service.getBuildings, {'dbView': config.DB_VIEW_MODIFIED_BUILDINGS});
+  await Controller.handleRequest(request, response, service.getBuildings, {'dbView': process.env.DB_VIEW_MODIFIED_BUILDINGS});
 };
 
 

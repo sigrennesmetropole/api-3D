@@ -23,7 +23,7 @@ const getbuildingById = async (request, response) => {
 };
 
 const getAddedBuildings = async (request, response) => {
-  await Controller.handleRequest(request, response, service.getBuildings, {'dbView': process.env.DB_SCHEMA_EVOLUTION});
+  await Controller.handleRequest(request, response, service.getBuildings, {'dbView': process.env.DB_VIEW_ADDED_BUILDINGS});
 };
 
 const getDeletedBuildings = async (request, response) => {

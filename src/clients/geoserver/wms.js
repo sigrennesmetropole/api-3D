@@ -2,15 +2,16 @@
 const { successResponse } = require("../../services/Service");
 const axios = require('axios');
 const config = {responseType: 'arraybuffer'}
-if(!!process.env.PROXY_HOST){
-console.log("proxy activé")
-const tunnel = require('tunnel');
 
-const agent = tunnel.httpsOverHttp({
-    proxy: {
-    host: process.env.PROXY_HOST,
-    port: process.env.PROXY_PORT,
-    },
+if (!!process.env.PROXY_HOST){
+    console.log("proxy activé")
+    const tunnel = require('tunnel');
+
+    const agent = tunnel.httpsOverHttp({
+        proxy: {
+        host: process.env.PROXY_HOST,
+        port: process.env.PROXY_PORT,
+        },
 })
     config.httpsAgent = agent;
     config.proxy = false;

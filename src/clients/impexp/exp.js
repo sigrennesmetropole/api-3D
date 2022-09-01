@@ -1,9 +1,8 @@
 const { exec } = require("child_process");
 const c = require('../../config');
 
-const exportData = (uuid, format, bbox, buildingID, limit, startIndex, texture) => new Promise((resolve, reject) => {
+const exportData = (uuid, format, bbox, buildingID, limit, startIndex, texture, sqlSelect) => new Promise((resolve, reject) => {
     try{
-        //console.log(format)
         let options = ' --db-host=' + process.env.DB_HOST
         + ' --db-port=' + process.env.DB_PORT
         + ' --db-name=' + process.env.DB_DATABASE
@@ -20,7 +19,9 @@ const exportData = (uuid, format, bbox, buildingID, limit, startIndex, texture) 
         if (!!buildingID) options = options + ' --resource-id=' + buildingID;
         if (!!limit) options = options + ' --count=' + limit;
         if (!!startIndex) options = options + ' --start-index=' + startIndex;
-
+        if (!!sqlSelect) options = options + ' --sql-select=' + sqlSelect;
+        // console.log(process.env.IMPORTER_EXPORTER_PATH + '/bin/impexp export'
+        // + options)
         exec(process.env.IMPORTER_EXPORTER_PATH + '/bin/impexp export'
         + options
         , (error, stdout, stderr) => {
@@ -35,7 +36,6 @@ const exportData = (uuid, format, bbox, buildingID, limit, startIndex, texture) 
     }catch(e){
         reject (e.message);
     }
-}
-);
+});
 
 module.exports =  { exportData };

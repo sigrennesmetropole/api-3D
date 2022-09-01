@@ -8,6 +8,8 @@
 
 const Controller = require('./Controller');
 const service = require('../services/DataService');
+//const config = require('../config');
+
 const getBuildings = async (request, response) => {
   await Controller.handleRequest(request, response, service.getBuildings);
 };
@@ -20,9 +22,24 @@ const getbuildingById = async (request, response) => {
   await Controller.handleRequest(request, response, service.getbuildingById);
 };
 
+const getAddedBuildings = async (request, response) => {
+  await Controller.handleRequest(request, response, service.getBuildings, {'dbView': process.env.DB_VIEW_ADDED_BUILDINGS});
+};
+
+const getDeletedBuildings = async (request, response) => {
+  await Controller.handleRequest(request, response, service.getDeletedBuildings);
+};
+
+const getModifiedBuildings = async (request, response) => {
+  await Controller.handleRequest(request, response, service.getBuildings, {'dbView': process.env.DB_VIEW_MODIFIED_BUILDINGS});
+};
+
 
 module.exports = {
   getBuildings,
   getRaster,
   getbuildingById,
+  getAddedBuildings,
+  getDeletedBuildings,
+  getModifiedBuildings
 };

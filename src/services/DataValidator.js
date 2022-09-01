@@ -37,4 +37,27 @@ const getBBoxHeightAndWidth = (bbox) => {
     };
 }
 
-module.exports = { isBBoxLessThanMaxSizeElseReject, getBBoxFromCodeInseeElseReject, getBBoxHeightAndWidth }
+const getBBoxFromAny = (bbox, codeInsee, reject) => {
+    if (!!codeInsee & !!bbox){
+        reject(Service.rejectResponse(
+          {description: "Invalid input : <bbox> and <code insee> are mutually exclusive", code: 400},
+          400,
+        ));
+        return;
+      }
+      if (!!bbox){
+        bbox  = bbox.split(',');
+        isBBoxLessThanMaxSizeElseReject(bbox, reject);
+        return bbox
+      } else if (!!codeInsee){
+        return getBBoxFromCodeInseeElseReject(codeInsee, reject);
+      }
+        return [1330000, 7203000, 1368000, 7246000];
+}
+
+module.exports = {
+    isBBoxLessThanMaxSizeElseReject,
+    getBBoxFromCodeInseeElseReject,
+    getBBoxHeightAndWidth,
+    getBBoxFromAny
+}

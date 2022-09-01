@@ -346,7 +346,7 @@ paths:
                 title: Mnt2018
                 description: Fetch mnt2018
                 links:
-                - href: http://data.example.org/collections/mnt2018/coverage/tiles
+                - href: http://data.example.org/collections/mnt2018/coverage
                   rel: items
                   type: image/tiff;application=geotiff
                   title: Mnt2018
@@ -421,14 +421,10 @@ paths:
         in: query
         name: bbox
         required: false
-        description: xmin, ymin, xmax, ymax
+        description: coordonnées xmin, ymin, xmax, ymax séparées par une virgule (Ex '1330000,7203000,1368000,7246000') 
         schema:
-          items:
-            type: number
-          maxItems: 4
-          minItems: 4
-          type: array
-        style: spaceDelimited
+          type: string
+        allowReserved: true
       - explode: true
         in: query
         name: codeInsee
@@ -575,23 +571,305 @@ paths:
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
-  /collections/mnt2018/coverage/tiles: #HERE
+  /collections/added_building/items:
+    get:
+      description: |-
+        Added buildings TODO
+      operationId: getAddedBuildings
+      parameters:
+      - description: The f parameter indicates the output format that the
+          server shall provide as part of the response document.  The default format
+          is JSON.
+        explode: false
+        in: query
+        name: f
+        required: false
+        schema:
+          default: application/json
+          enum:
+          #- application/zip
+          - application/json
+          - application/gml+xml;version=3.2
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: bbox
+        required: false
+        description: coordonnées xmin, ymin, xmax, ymax séparées par une virgule (Ex '1330000,7203000,1368000,7246000') 
+        schema:
+          type: string
+        allowReserved: true
+      - explode: true
+        in: query
+        name: codeInsee
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: startIndex
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: date
+        required: false
+        schema:
+          format: date
+          type: string
+        #format: date
+        #example : "2022-01-01"
+      responses:
+        "200":
+          content:
+            # application/zip:
+            #   schema:
+            #     type: object
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Buildings'
+            application/gml+xml;version=3.2:
+              schema:
+                type: object
+          description: Cityjson or citygml file response. No textures.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/exception'
+            text/html:
+              schema:
+                type: string
+          description: Invalid parameter response.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/exception'
+            text/html:
+              schema:
+                type: string
+          description: Not found response.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/exception'
+            text/html:
+              schema:
+                type: string
+          description: A server error occurred.
+      summary: fetch buildings
+      tags:
+      - Data
+      x-eov-operation-handler: controllers/DataController
+  /collections/modifed_building/items:
+    get:
+      description: |-
+        Modified buildings TODO
+      operationId: getModifiedBuildings
+      parameters:
+      - description: The f parameter indicates the output format that the
+          server shall provide as part of the response document.  The default format
+          is JSON.
+        explode: false
+        in: query
+        name: f
+        required: false
+        schema:
+          default: application/json
+          enum:
+          #- application/zip
+          - application/json
+          - application/gml+xml;version=3.2
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: bbox
+        required: false
+        description: coordonnées xmin, ymin, xmax, ymax séparées par une virgule (Ex '1330000,7203000,1368000,7246000') 
+        schema:
+          type: string
+        allowReserved: true
+      - explode: true
+        in: query
+        name: codeInsee
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: startIndex
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: date
+        required: false
+        schema:
+          format: date
+          type: string
+        #format: date
+        #example : "2022-01-01"
+      responses:
+        "200":
+          content:
+            # application/zip:
+            #   schema:
+            #     type: object
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Buildings'
+            application/gml+xml;version=3.2:
+              schema:
+                type: object
+          description: Cityjson or citygml file response. No textures.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/exception'
+            text/html:
+              schema:
+                type: string
+          description: Invalid parameter response.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/exception'
+            text/html:
+              schema:
+                type: string
+          description: Not found response.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/exception'
+            text/html:
+              schema:
+                type: string
+          description: A server error occurred.
+      summary: fetch buildings
+      tags:
+      - Data
+      x-eov-operation-handler: controllers/DataController
+  /collections/deleted_building/items:
+    get:
+      description: |-
+        deleted buildings TODO
+      operationId: getDeletedBuildings
+      parameters:
+      - explode: true
+        in: query
+        name: codeInsee
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: startIndex
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: date
+        required: false
+        schema:
+          format: date
+          type: string
+        #format: date
+        #example : "2022-01-01"
+      responses:
+        "200":
+          content:
+            # application/zip:
+            #   schema:
+            #     type: object
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deleted_Buildings'
+            # application/gml+xml;version=3.2:
+            #   schema:
+            #     type: object
+          description: Json file response.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/exception'
+            text/html:
+              schema:
+                type: string
+          description: Invalid parameter response.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/exception'
+            text/html:
+              schema:
+                type: string
+          description: Not found response.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/exception'
+            text/html:
+              schema:
+                type: string
+          description: A server error occurred.
+      summary: fetch buildings
+      tags:
+      - Data
+      x-eov-operation-handler: controllers/DataController
+  /collections/mnt2018/coverage:
     get:
       description: Fetch mnt raster tile from bbox or insee code.
       operationId: getRaster
       parameters:
-      - explode: false
+      - explode: true
         in: query
         name: bbox
         required: false
-        description: xmin, ymin, xmax, ymax
+        description: coordonnées xmin, ymin, xmax, ymax séparées par une virgule (Ex '1330000,7203000,1368000,7246000') 
         schema:
-          items:
-            type: number
-          maxItems: 4
-          minItems: 4
-          type: array
-        style: spaceDelimited
+          type: string
+        allowReserved: true
       - explode: true
         in: query
         name: codeInsee
@@ -655,18 +933,14 @@ components:
         type: string
       style: form
     bbox:
-      explode: false #HERE
+      explode: true
       in: query
       name: bbox
       required: false
-      description: xmin, ymin, xmax, ymax
+      description: coordonnées xmin, ymin, xmax, ymax séparées par une virgule (Ex '1330000,7203000,1368000,7246000') 
       schema:
-        items:
-          type: number
-        maxItems: 4
-        minItems: 4
-        type: array
-      style: spaceDelimited
+        type: string
+      allowReserved: true
     codeInsee:
       explode: true
       in: query
@@ -700,6 +974,18 @@ components:
       schema:
         type: string
       style: simple
+    date:
+      description: date
+      explode: false
+      in: path
+      name: date
+      required: true
+      schema:
+        format: date
+        type: string
+      #example: "2020-01-01"
+      style: simple
+
   responses:
     MapTile:
       content:
@@ -1256,3 +1542,16 @@ components:
         presentLoDs:
           $ref: '#/components/schemas/Buildings_metadata_presentLoDs'
       type: object
+    Deleted_Buildings:
+      type: object
+      properties:
+        id:
+          type: string
+        date:
+          type: string
+      example:
+      - id: '350001_050218'
+        date: '2022-08-03'
+      - id: '350001_050344'
+        date: '2022-08-02'
+

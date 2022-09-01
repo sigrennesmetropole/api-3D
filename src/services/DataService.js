@@ -33,7 +33,6 @@ const getBuildings = ({ f, bbox, codeInsee, limit, startIndex, texture, dbView, 
     bbox = dataValidator.getBBoxFromAny(bbox, codeInsee, reject);
     let sqlSelect;
     if (!!dbView) { //dbView is set in DataController.js as an extra param
-      console.trace()
       sqlSelect = makeQueryString(dbView, date);
       texture='non';
     };

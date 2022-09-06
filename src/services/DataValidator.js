@@ -44,15 +44,16 @@ const getBBoxFromAny = (bbox, codeInsee, reject) => {
           400,
         ));
         return;
-      }
-      if (!!bbox){
+    }
+    if (!!bbox){
         bbox  = bbox.split(',');
         isBBoxLessThanMaxSizeElseReject(bbox, reject);
         return bbox
-      } else if (!!codeInsee){
+    }
+    if (!!codeInsee){
         return getBBoxFromCodeInseeElseReject(codeInsee, reject);
-      }
-        return [1330000, 7203000, 1368000, 7246000];
+    }
+    return [1330000, 7203000, 1368000, 7246000];
 }
 
 module.exports = {

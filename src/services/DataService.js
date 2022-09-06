@@ -28,15 +28,14 @@ const JSZip = require("jszip");
 * returns Buildings
 * */
 
-const getBuildings = ({ f, bbox, codeInsee, limit, startIndex, texture, dbView, date }) => new Promise(
+const getBuildings = ({ f, bbox, codeInsee, limit, startIndex, texture, dbView, date}) => new Promise(
   async (resolve, reject) => {
-    bbox = dataValidator.getBBoxFromAny(bbox, codeInsee, reject);
     let sqlSelect;
-    if (!!dbView) { //dbView is set in DataController.js as an extra param
-      console.trace()
-      sqlSelect = makeQueryString(dbView, date);
-      texture='non';
-    };
+    if (!!bbox) bbox = dataValidator.getBBoxFromAny(bbox, codeInsee, reject);
+    if (!!dbView | !!codeInsee) {
+      sqlSelect = makeQueryString(dbView, date, codeInsee)
+      texture = 'non';
+    }
     try {
       let id = uuid.v4();
       let format = f === 'application/json' ? ".cityjson" : ".citygml";
@@ -156,10 +155,18 @@ const getDeletedBuildings = ({ codeInsee, limit, startIndex, date }) => new Prom
   },
 );
 
-const makeQueryString = (dbView, date) => {
-  subQuery = `SELECT bati_id FROM ${process.env.DB_SCHEMA_EVOLUTION}.${dbView}`;
-  if (!!date) subQuery = subQuery + ` WHERE date_ope BETWEEN '${date}' AND now()`;
-  return `"SELECT cityobject_id FROM cityobject_genericattrib WHERE gmlid in (${subQuery})"`; //les quotes sont chelou là
+const makeQueryString = (dbView, date, codeInsee) => {
+  let subQuery;
+  if (!!dbView) {
+    subQuery = `SELECT bati_id FROM ${process.env.DB_SCHEMA_EVOLUTION}.${dbView}`;
+    if (!!date) subQuery = subQuery + ` WHERE date_ope BETWEEN '${date}' AND now()`;
+  }
+  if (!!codeInsee) {
+    let whereCodeInsee = `attrname='BUILDINGID' and strval LIKE '${codeInsee}_%'`
+    if (!!subQuery) return `"SELECT cityobject_id FROM cityobject_genericattrib WHERE (${whereCodeInsee}) AND (gmlid in (${subQuery}))"`
+    return `"SELECT cityobject_id FROM cityobject_genericattrib WHERE ${whereCodeInsee}"`
+  }
+  return `"SELECT cityobject_id FROM cityobject_genericattrib WHERE gmlid in (${subQuery})"`;
 };
 
 async function traitementRetourPG(result, id, limit, startIndex, reject, resolve) {

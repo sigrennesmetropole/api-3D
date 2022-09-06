@@ -26,6 +26,13 @@ services:
         PROXY_HOST: ${PROXY_HOST}
         PROXY_PORT: ${PROXY_PORT}
         BBOX_MAX_SIZE: ${BBOX_MAX_SIZE:-10}
+        DB_SCHEMA_EVOLUTION: ${DB_SCHEMA_EVOLUTION}
+        DB_VIEW_ADDED_BUILDINGS: ${DB_VIEW_ADDED_BUILDINGS}
+        DB_VIEW_MODIFIED_BUILDINGS: ${DB_VIEW_MODIFIED_BUILDINGS}
+        DB_VIEW_DELETED_BUILDINGS: ${DB_VIEW_DELETED_BUILDINGS}
+        PG_MAX_NB_CONNECTIONS: ${PG_MAX_NB_CONNECTIONS}
+        PG_CONNECT_TIMEOUT: ${PG_CONNECT_TIMEOUT}
+        PG_ROWS_LIMIT : ${PG_ROWS_LIMIT}
         3faad540-1cc3-4224-a326-2bf1e8f550bc: 3d_rennesmetropole_terrain_maillage.zip
         72bca5d3-ee31-4a83-8a92-837e8d048cc3: 3d_rennesmetropole_terrain_raster.zip
         0d75bd55-be52-4493-9bd7-f623c49f6531: 3d_rennesmetropole_batis_cityjson.zip

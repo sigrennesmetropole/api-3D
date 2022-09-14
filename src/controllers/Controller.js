@@ -28,7 +28,7 @@ class Controller {
           filename = 'mnt.tif';
           break;
       }
-      response.set('content-disposition', `inline; filename=${filename}`) //HERE
+      response.set('content-disposition', `attachment; filename=${filename}`) //HERE
       response.type(payload.type);
       response.end( responsePayload, 'binary' );
     }else if (responsePayload instanceof Object) {

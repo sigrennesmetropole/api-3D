@@ -674,7 +674,7 @@ paths:
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
-  /collections/modifed_building/items:
+  /collections/modified_building/items:
     get:
       description: |-
         Modified buildings TODO

@@ -31,10 +31,12 @@ const JSZip = require("jszip");
 const getBuildings = ({ f, bbox, codeInsee, limit, startIndex, texture, dbView, date}) => new Promise(
   async (resolve, reject) => {
     let sqlSelect;
-    if (!!bbox) bbox = dataValidator.getBBoxFromAny(bbox, codeInsee, reject);
-    if (!!dbView | !!codeInsee) {
+
+    if (!!dbView) {
       sqlSelect = makeQueryString(dbView, date, codeInsee)
       texture = 'non';
+    } else if (!!bbox || !!codeInsee){
+      bbox = dataValidator.getBBoxFromAny(bbox, codeInsee, reject);
     }
     try {
       let id = uuid.v4();
@@ -156,17 +158,25 @@ const getDeletedBuildings = ({ codeInsee, limit, startIndex, date }) => new Prom
 );
 
 const makeQueryString = (dbView, date, codeInsee) => {
-  let subQuery;
-  if (!!dbView) {
-    subQuery = `SELECT bati_id FROM ${process.env.DB_SCHEMA_EVOLUTION}.${dbView}`;
-    if (!!date) subQuery = subQuery + ` WHERE date_ope BETWEEN '${date}' AND now()`;
+  let requete  = `"SELECT cityobject_id FROM citydb.cityobject_genericattrib WHERE attrname='BUILDINGID' and strval IN (SELECT bati_id FROM ${process.env.DB_SCHEMA_EVOLUTION}.${dbView}`;
+  let where = false;
+  if(!!codeInsee){
+    requete += " WHERE ";
+    where = true;
+    requete += "bati_id like '" + codeInsee + "_%'";
   }
-  if (!!codeInsee) {
-    let whereCodeInsee = `attrname='BUILDINGID' and strval LIKE '${codeInsee}_%'`
-    if (!!subQuery) return `"SELECT cityobject_id FROM cityobject_genericattrib WHERE (${whereCodeInsee}) AND (gmlid in (${subQuery}))"`
-    return `"SELECT cityobject_id FROM cityobject_genericattrib WHERE ${whereCodeInsee}"`
+  if(!!date){
+    if(where){
+      requete += " AND ";
+    }else{
+      requete += " WHERE ";
+      where = true;
+    }
+    requete += "(date_ope BETWEEN + <date>+' AND now())";
   }
-  return `"SELECT cityobject_id FROM cityobject_genericattrib WHERE gmlid in (${subQuery})"`;
+
+  requete += ')"';
+  return requete;
 };
 
 async function traitementRetourPG(result, id, limit, startIndex, reject, resolve) {

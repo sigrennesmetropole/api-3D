@@ -20,8 +20,8 @@ const exportData = (uuid, format, bbox, buildingID, limit, startIndex, texture, 
         if (!!limit) options = options + ' --count=' + limit;
         if (!!startIndex) options = options + ' --start-index=' + startIndex;
         if (!!sqlSelect) options = options + ' --sql-select=' + sqlSelect;
-        // console.log(process.env.IMPORTER_EXPORTER_PATH + '/bin/impexp export'
-        // + options)
+        console.log(process.env.IMPORTER_EXPORTER_PATH + '/bin/impexp export'
+        + options)
         exec(process.env.IMPORTER_EXPORTER_PATH + '/bin/impexp export'
         + options
         , (error, stdout, stderr) => {

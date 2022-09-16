@@ -625,6 +625,7 @@ paths:
         in: query
         name: date
         required: false
+        description: Recherche par date (De la date en parametre jusqu'a aujourd'hui. format :YYYY-MM-DD)
         schema:
           format: date
           type: string
@@ -728,6 +729,7 @@ paths:
         in: query
         name: date
         required: false
+        description: Recherche par date (De la date en parametre jusqu'a aujourd'hui. format :YYYY-MM-DD)
         schema:
           format: date
           type: string
@@ -808,6 +810,7 @@ paths:
         in: query
         name: date
         required: false
+        description: Recherche par date (De la date en parametre jusqu'a aujourd'hui. format :YYYY-MM-DD)
         schema:
           format: date
           type: string

@@ -31,12 +31,20 @@ const JSZip = require("jszip");
 const getBuildings = ({ f, bbox, codeInsee, limit, startIndex, texture, dbView, date}) => new Promise(
   async (resolve, reject) => {
     let sqlSelect;
-
     if (!!dbView) {
       sqlSelect = makeQueryString(dbView, date, codeInsee)
       texture = 'non';
-    } else if (!!bbox || !!codeInsee){
-      bbox = dataValidator.getBBoxFromAny(bbox, codeInsee, reject);
+    } else if (!!bbox & !!!codeInsee){
+      bbox  = bbox.split(',');
+      dataValidator.isBBoxLessThanMaxSizeElseReject(bbox, reject);
+    } else if (!!!bbox & !!codeInsee) {
+      dataValidator.getCommuneDataElseReject(codeInsee, reject);
+      sqlSelect = makeQueryString(false, false, codeInsee)
+    } else {
+      reject(Service.rejectResponse(
+        {description: "Invalid input : <bbox> or <code insee> must be set", code: 400},
+        400
+      ));
     }
     try {
       let id = uuid.v4();
@@ -158,25 +166,30 @@ const getDeletedBuildings = ({ codeInsee, limit, startIndex, date }) => new Prom
 );
 
 const makeQueryString = (dbView, date, codeInsee) => {
-  let requete  = `"SELECT cityobject_id FROM citydb.cityobject_genericattrib WHERE attrname='BUILDINGID' and strval IN (SELECT bati_id FROM ${process.env.DB_SCHEMA_EVOLUTION}.${dbView}`;
-  let where = false;
-  if(!!codeInsee){
-    requete += " WHERE ";
-    where = true;
-    requete += "bati_id like '" + codeInsee + "_%'";
-  }
-  if(!!date){
-    if(where){
-      requete += " AND ";
-    }else{
+  let requete  = `"SELECT cityobject_id FROM citydb.cityobject_genericattrib WHERE attrname='BUILDINGID'`;
+  if (!!dbView) {
+    requete += `and strval IN (SELECT bati_id FROM ${process.env.DB_SCHEMA_EVOLUTION}.${dbView}`;
+    let where = false;
+    if(!!codeInsee){
       requete += " WHERE ";
       where = true;
+      requete += "bati_id like '" + codeInsee + "_%'";
     }
-    requete += "(date_ope BETWEEN '"+date+"' AND now())";
+    if(!!date){
+      if(where){
+        requete += " AND ";
+      }else{
+        requete += " WHERE ";
+        where = true;
+      }
+      requete += "(date_ope BETWEEN '"+date+"' AND now())";
+    }
+    requete += ')"';
+    return requete;
   }
-
-  requete += ')"';
-  return requete;
+  if (!!codeInsee) {
+    return `"SELECT cityobject_id FROM citydb.cityobject_genericattrib WHERE attrname='BUILDINGID' and strval LIKE '${codeInsee}_%'"`;
+  }
 };
 
 async function traitementRetourPG(result, id, limit, startIndex, reject, resolve) {

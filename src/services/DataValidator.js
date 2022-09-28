@@ -65,6 +65,7 @@ const getBBoxFromAny = (bbox, codeInsee, reject) => {
     return;
 }
 
+
 module.exports = {
     isBBoxLessThanMaxSizeElseReject,
     getBBoxFromCodeInseeElseReject,

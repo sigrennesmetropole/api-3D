@@ -2,6 +2,20 @@ var BBox = require('bbox');
 const fs = require('fs');
 const Service = require('./Service');
 
+const getCommuneDataElseReject = (codeInsee, reject) => {
+    let communes = JSON.parse(fs.readFileSync(__dirname+'/bbox_codeinsee.json'));
+    for (let i = 0; i<communes.length; i++) {
+        if (communes[i].code_insee == codeInsee) {
+            return communes[i]
+        }
+    }
+    reject(Service.rejectResponse(
+        {description: "Invalid input : <code_insee> not found", code: 400},
+        400,
+    ));
+    return;
+}
+
 const isBBoxLessThanMaxSizeElseReject = (bbox, reject) => {
     if(!!bbox){
         var fixed = BBox.create(bbox[0],bbox[1],bbox[2],bbox[3]);
@@ -17,17 +31,8 @@ const isBBoxLessThanMaxSizeElseReject = (bbox, reject) => {
 }
 
 const getBBoxFromCodeInseeElseReject = (codeInsee, reject) => {
-    let communes = JSON.parse(fs.readFileSync(__dirname+'/bbox_codeinsee.json'));
-    for (let i = 0; i<communes.length; i++) {
-        if (communes[i].code_insee == codeInsee) {
-            return [communes[i].xmin, communes[i].ymin, communes[i].xmax, communes[i].ymax].map(Number);
-        }
-    }
-    reject(Service.rejectResponse(
-        {description: "Invalid input : <code_insee> not found", code: 400},
-        400,
-    ));
-    return;
+    let commune = getCommuneDataElseReject(codeInsee, reject);
+    return [commune.xmin, commune.ymin, commune.xmax, commune.ymax].map(Number);
 }
 
 const getBBoxHeightAndWidth = (bbox) => {
@@ -53,12 +58,18 @@ const getBBoxFromAny = (bbox, codeInsee, reject) => {
     if (!!codeInsee){
         return getBBoxFromCodeInseeElseReject(codeInsee, reject);
     }
-    return [1330000, 7203000, 1368000, 7246000];
+    reject(Service.rejectResponse(
+        {description: "Invalid input : <bbox> or <code insee> must be set", code: 400},
+        400,
+    ));
+    return;
 }
+
 
 module.exports = {
     isBBoxLessThanMaxSizeElseReject,
     getBBoxFromCodeInseeElseReject,
     getBBoxHeightAndWidth,
-    getBBoxFromAny
+    getBBoxFromAny,
+    getCommuneDataElseReject
 }

@@ -38,8 +38,8 @@ const getBuildings = ({ f, bbox, codeInsee, limit, startIndex, texture, dbView, 
       bbox  = bbox.split(',');
       dataValidator.isBBoxLessThanMaxSizeElseReject(bbox, reject);
     } else if (!!!bbox & !!codeInsee) {
-      dataValidator.getCommuneDataElseReject(codeInsee, reject);
-      sqlSelect = makeQueryString(false, false, codeInsee)
+      bbox = dataValidator.getBBoxFromCodeInseeElseReject(codeInsee, reject);
+      //sqlSelect = makeQueryString(false, false, codeInsee)
     } else {
       reject(Service.rejectResponse(
         {description: "Invalid input : <bbox> or <code insee> must be set", code: 400},

@@ -434,3 +434,5 @@
 {"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T12:42:38.417Z"}
 {"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-19T13:12:50.950Z"}
 {"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-08-31T07:12:56.081Z"}
+{"level":"info","message":"Express server running","service":"user-service","timestamp":"2022-09-29T13:44:49.111Z"}
+{"level":"info","message":"Appel du path /collections/buildings/items","parametres":{"codeInsee":"35001","f":"application/json","texture":"non"},"service":"user-service","timestamp":"2022-09-29T13:45:29.857Z"}

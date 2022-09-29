@@ -168,7 +168,7 @@ const getDeletedBuildings = ({ codeInsee, limit, startIndex, date }) => new Prom
 const makeQueryString = (dbView, date, codeInsee) => {
   let requete  = `"SELECT cityobject_id FROM citydb.cityobject_genericattrib WHERE attrname='BUILDINGID'`;
   if (!!dbView) {
-    requete += `and strval IN (SELECT bati_id FROM ${process.env.DB_SCHEMA_EVOLUTION}.${dbView}`;
+    requete += ` and strval IN (SELECT bati_id FROM ${process.env.DB_SCHEMA_EVOLUTION}.${dbView}`;
     let where = false;
     if(!!codeInsee){
       requete += " WHERE ";

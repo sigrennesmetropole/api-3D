@@ -38,8 +38,8 @@ const getBuildings = ({ f, bbox, codeInsee, limit, startIndex, texture, dbView, 
       bbox  = bbox.split(',');
       dataValidator.isBBoxLessThanMaxSizeElseReject(bbox, reject);
     } else if (!!!bbox & !!codeInsee) {
-      dataValidator.getCommuneDataElseReject(codeInsee, reject);
-      sqlSelect = makeQueryString(false, false, codeInsee)
+      bbox = dataValidator.getBBoxFromCodeInseeElseReject(codeInsee, reject);
+      //sqlSelect = makeQueryString(false, false, codeInsee)
     } else {
       reject(Service.rejectResponse(
         {description: "Invalid input : <bbox> or <code insee> must be set", code: 400},
@@ -168,7 +168,7 @@ const getDeletedBuildings = ({ codeInsee, limit, startIndex, date }) => new Prom
 const makeQueryString = (dbView, date, codeInsee) => {
   let requete  = `"SELECT cityobject_id FROM citydb.cityobject_genericattrib WHERE attrname='BUILDINGID'`;
   if (!!dbView) {
-    requete += `and strval IN (SELECT bati_id FROM ${process.env.DB_SCHEMA_EVOLUTION}.${dbView}`;
+    requete += ` and strval IN (SELECT bati_id FROM ${process.env.DB_SCHEMA_EVOLUTION}.${dbView}`;
     let where = false;
     if(!!codeInsee){
       requete += " WHERE ";

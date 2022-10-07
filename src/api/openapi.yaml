@@ -21,13 +21,13 @@ info:
   - Open API Feature
   - OGC
 servers:
-  - url: https://api-3d.sig.rennesmetropole.fr
+  - url: https://api-3d.sig.rennesmetropole.fr/api
     description: Serveur de production
-  - url: https://api3d.imfr.cgi.com/recette
+  - url: https://api3d.imfr.cgi.com/recette/api
     description: Serveur de recette
-  - url: https://api3d.imfr.cgi.com/integration
+  - url: https://api3d.imfr.cgi.com/integration/api
     description: Serveur d'integration
-  - url: /
+  - url: /api
     description: Serveur local
 tags:
 - description: essential characteristics of this API

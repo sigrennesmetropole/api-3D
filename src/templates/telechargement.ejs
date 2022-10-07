@@ -20,83 +20,92 @@
                 <p class="text-sm-left">Rennes Métropole met à disposition ses données 3D en téléchargement ou en flux. Les fichiers en téléchargement représentent des données millésimées arrêtées à une date définie. Les fichiers téléchargés peuvent être mis à jour par l'utilisateur des maquettes par les flux qui sont mis à disposition.
                     Par exemple, la maquette texturée des bâtiments a une durée de vie de 3 ans. Elle peut être complété par le flux qui informe des bâtiments supprimés depuis la création de cette maquette et les flux qui fournissent les nouveaux bâtiments et les bâtiments modifiés depuis cette même date. Il est à noter que les données 3D provenant de ces flux sont non-texturés.
                 </p>
-            <div class="row">
-                <div class="col col-12 text-center p-3 border border-dark">
-                    <h4><a class="link-dark" href="api-docs/" target="_blank">Lien vers l'API</a></h4></div>
+            <div id="desc_api_rest" style="margin-bottom: 3rem;"> 
+                <h2>API REST</h2>
+                <div> 
+                    <div class="row">
+                        <div class="col col-12 text-center p-3 " style="text-align: left!important;">
+                            <h5><a class="link-dark" href="api-docs/" target="_blank">Ouvrir dans un autre onglet</a></h5>
+                            <iframe src="/api/api-docs/" style="width: 100%;height: 800px;"></iframe>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="accordion accordion-flush" id="myAccordion">
-                <% for(var i=0; i < metadata.length; i++) { %>
-                   <div class="accordion-item">
-                    <h2 class="accordion-header" id="heading<%= i %>">
-                        <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse<%= i %>"><i class=" p-3 bi bi-hdd-fill"></i><%= metadata[i].title %></button>
-                    </h2>
-                    <div id="collapse<%= i %>" class="accordion-collapse collapse" data-bs-parent="#myAccordion">
-                        <div class="row">
-                            <div class="col col-1 card-body justify-content-center">
-                                <p class="h3">Description</p>
-                                <%= metadata[i].abstract %>
-                            </div>
-                            <div class="col col-3">
-                                <p class="h3 text-center">Aperçu</p>
-                                <div class="ng-scope"> <img data-gn-img-modal="img" class="gn-img-thumbnail img-thumbnail" alt="" data-ng-src="<%= metadata[i].apercu %>" src="<%= metadata[i].apercu %>">
-                                    <div class="gn-img-thumbnail-caption ng-binding ng-hide" data-ng-show="img.label"> </div>
+        <div id="desc_download" style="margin-bottom: 3rem;">
+            <h2>Fichiers en téléchargement</h2>
+            <div class="accordion accordion-flush" id="myAccordion">
+                    <% for(var i=0; i < metadata.length; i++) { %>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading<%= i %>">
+                            <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse<%= i %>"><i class=" p-3 bi bi-hdd-fill"></i><%= metadata[i].title %></button>
+                        </h2>
+                        <div id="collapse<%= i %>" class="accordion-collapse collapse" data-bs-parent="#myAccordion">
+                            <div class="row">
+                                <div class="col col-1 card-body justify-content-center">
+                                    <p class="h3">Description</p>
+                                    <%= metadata[i].abstract %>
+                                </div>
+                                <div class="col col-3">
+                                    <p class="h3 text-center">Aperçu</p>
+                                    <div class="ng-scope"> <img data-gn-img-modal="img" class="gn-img-thumbnail img-thumbnail" alt="" data-ng-src="<%= metadata[i].apercu %>" src="<%= metadata[i].apercu %>">
+                                        <div class="gn-img-thumbnail-caption ng-binding ng-hide" data-ng-show="img.label"> </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col col-12">
-                                <p class="h3">Téléchargements et liens</p>
-                                <div class="row list-group-item mt-3">
-                                    <div class="col" style="height: 40px;"> 
-                                        <i class="bi bi-globe"></i> 
-                                        <span class="h5"><%= metadata[i].title %></span> 
-                                        <a href="files/<%= metadata[i].file %>" class="float-end btn btn-light">
-                                            Télécharger
-                                        </a>
+                            <div class="row">
+                                <div class="col col-12">
+                                    <p class="h3">Téléchargements et liens</p>
+                                    <div class="row list-group-item mt-3">
+                                        <div class="col" style="height: 40px;"> 
+                                            <i class="bi bi-globe"></i> 
+                                            <span class="h5"><%= metadata[i].title %></span> 
+                                            <a href="files/<%= metadata[i].file %>" class="float-end btn btn-light">
+                                                Télécharger
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col col-8">
+                                    <p class="h3">À propos de cette ressource</p>
+                                    <table class="table table-striped">
+                                        <tbody> 
+                                            <tr class="ng-scope">
+                                                <th data-translate="" class="ng-scope">Date de révision</th>
+                                                <td><%= metadata[i].date_revision %></td>
+                                            </tr>
+                                            <tr class="ng-scope">
+                                                <th data-translate="" class="ng-scope">Licence</th>
+                                                <td><%= metadata[i].licence %></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <a href="<%= metadata[i].lien%>" target="_blank">Voir la métadonnée source</a>
+                                </div>
+                                <div class="col col-4">
+                                    <p class="h3">Contact</p>
+                                    <div class="gn-contact flex-row ng-scope">
+                                        <div class="flex-noshrink"> <i class="fa fa-envelope"></i> </div>
+                                        <div class="flex-spacer"></div> <address>
+                                            <div class="ng-scope">
+                                                <ul>
+                                                    <li class="ng-binding ng-scope"> Point de contact :<br />
+                                                        <div> <strong class="ng-binding"><%= metadata[i].contact.name %></strong> </div>
+                                                        <%= metadata[i].contact.adresse.rue %> <%= metadata[i].contact.adresse.codepostal %> - <%= metadata[i].contact.adresse.ville %> 
+                                                        <br /><span class="ng-scope"><span class="ng-scope"> <i class="bi bi-envelope-fill"></i> <a href="mailto:<%= metadata[i].contact.email %>"><%= metadata[i].contact.email %></a><br />
+                                                                <i class="bi bi-telephone-fill"></i> <%= metadata[i].contact.phone %></li>
+                                                </ul>
+                                            </div>
+                                        </address>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-4">
-                            <div class="col col-8">
-                                <p class="h3">À propos de cette ressource</p>
-                                <table class="table table-striped">
-                                    <tbody> 
-                                        <tr class="ng-scope">
-                                            <th data-translate="" class="ng-scope">Date de révision</th>
-                                            <td><%= metadata[i].date_revision %></td>
-                                        </tr>
-                                        <tr class="ng-scope">
-                                            <th data-translate="" class="ng-scope">Licence</th>
-                                            <td><%= metadata[i].licence %></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <a href="<%= metadata[i].lien%>" target="_blank">Voir la métadonnée source</a>
-                            </div>
-                            <div class="col col-4">
-                                <p class="h3">Contact</p>
-                                <div class="gn-contact flex-row ng-scope">
-                                    <div class="flex-noshrink"> <i class="fa fa-envelope"></i> </div>
-                                    <div class="flex-spacer"></div> <address>
-                                        <div class="ng-scope">
-                                            <ul>
-                                                <li class="ng-binding ng-scope"> Point de contact :<br />
-                                                    <div> <strong class="ng-binding"><%= metadata[i].contact.name %></strong> </div>
-                                                    <%= metadata[i].contact.adresse.rue %> <%= metadata[i].contact.adresse.codepostal %> - <%= metadata[i].contact.adresse.ville %> 
-                                                    <br /><span class="ng-scope"><span class="ng-scope"> <i class="bi bi-envelope-fill"></i> <a href="mailto:<%= metadata[i].contact.email %>"><%= metadata[i].contact.email %></a><br />
-                                                            <i class="bi bi-telephone-fill"></i> <%= metadata[i].contact.phone %></li>
-                                            </ul>
-                                        </div>
-                                    </address>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-                </div>
-                <% } %>
+                    <% } %>
+            </div>
         </div>
     </div>
     <footer class="footer mt-5 py-3 bg-light">

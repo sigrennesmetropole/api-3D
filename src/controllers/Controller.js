@@ -28,13 +28,23 @@ class Controller {
           filename = 'mnt.tif';
           break;
       }
-      response.set('content-disposition', `attachment; filename=${filename}`) //HERE
+      response.set('content-disposition', `attachment; filename=${filename}`)
       response.type(payload.type);
       response.end( responsePayload, 'binary' );
+    } else if (responsePayload instanceof Object && request.path ==="/collections/buildings/items") {
+      response.type('application/octet-stream');
+      response.set('content-disposition', `attachment; filename=buildings.${responsePayload.type.toLowerCase()}`)
+      response.end(Buffer.from(JSON.stringify(responsePayload)), 'binary');
     }else if (responsePayload instanceof Object) {
       response.json(responsePayload);
     } else {
-      response.end(responsePayload);
+      if (responsePayload.slice(2,5) === 'xml') {
+        response.type('application/octet-stream');
+        response.set('content-disposition', `attachment; filename=buildings.citygml`)
+        response.end(Buffer.from(responsePayload), 'binary');
+      } else {
+        response.end(responsePayload);
+      }
     }
   }
 

@@ -1,2 +1,4 @@
 **/node_modules
 src/tests/test.py
+combined.log
+error.log

@@ -34,6 +34,11 @@ const getModifiedBuildings = async (request, response) => {
   await Controller.handleRequest(request, response, service.getBuildings, {'dbView': process.env.DB_VIEW_MODIFIED_BUILDINGS});
 };
 
+const getVegetation = async (request, response) => {
+  await Controller.handleRequest(request, response, service.getFeaturesfromWFS, {'typeName': 'pnat_hab:arbres'});
+};
+
+
 
 module.exports = {
   getBuildings,
@@ -41,5 +46,6 @@ module.exports = {
   getbuildingById,
   getAddedBuildings,
   getDeletedBuildings,
-  getModifiedBuildings
+  getModifiedBuildings,
+  getVegetation
 };

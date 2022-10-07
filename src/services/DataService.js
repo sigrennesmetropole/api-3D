@@ -2,6 +2,7 @@
 const Service = require('./Service');
 const exporter = require('../clients/impexp/exp');
 const wms = require('../clients/geoserver/wms');
+const wfs = require('../clients/geoserver/wfs');
 const postgres = require('../clients/postgres/postgres');
 const uuid = require('uuid');
 const fs = require('fs');
@@ -38,8 +39,8 @@ const getBuildings = ({ f, bbox, codeInsee, limit, startIndex, texture, dbView, 
       bbox  = bbox.split(',');
       dataValidator.isBBoxLessThanMaxSizeElseReject(bbox, reject);
     } else if (!!!bbox & !!codeInsee) {
-      bbox = dataValidator.getBBoxFromCodeInseeElseReject(codeInsee, reject);
-      //sqlSelect = makeQueryString(false, false, codeInsee)
+      dataValidator.getCommuneDataElseReject(codeInsee, reject);
+      sqlSelect = makeQueryString(false, false, codeInsee)
     } else {
       reject(Service.rejectResponse(
         {description: "Invalid input : <bbox> or <code insee> must be set", code: 400},
@@ -95,6 +96,36 @@ const getRaster = ({ bbox, codeInsee }) => new Promise(
       ));
     }
   }
+);
+/**
+* fetch features from WFS service
+*
+* bbox List  (optional)
+* codeInsee String  (optional)
+* returns json
+* */
+const getFeaturesfromWFS = ({ typeName, bbox, codeInsee }) => new Promise(
+
+  async (resolve, reject) => {
+    bbox = dataValidator.getBBoxFromAny(bbox, codeInsee, reject); //a verifier si c'est la bonne chose à faire
+    try {
+      wfs.exportVectorWFS(version='1.1.0', typeName, bbox, srs='EPSG%3A3948', f='application%2Fjson')
+      .then((result) => {
+          resolve(Service.fileResponse(result, 200, 'application/json'));
+        }, (raison) => {
+          reject(Service.rejectResponse(
+            {description: "Erreur lors de l'appel de Geoserver", code: 500},
+            500
+          ));
+        });
+    } catch {
+      reject(Service.rejectResponse(
+        {description: "Erreur lors de l'appel de Geoserver", code: 500},
+            500
+      ));
+    }
+  }
+
 );
 /**
 * fetch a single building from his id
@@ -279,4 +310,5 @@ module.exports = {
   getRaster,
   getbuildingById,
   getDeletedBuildings,
+  getFeaturesfromWFS
 };

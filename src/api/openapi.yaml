@@ -860,6 +860,65 @@ paths:
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
+  /collections/vegetation/items:
+    get:
+      description: |-
+        deleted vege TODO
+      operationId: getVegetation
+      parameters:
+      - explode: true
+        in: query
+        name: bbox
+        required: false
+        description: coordonnées xmin, ymin, xmax, ymax séparées par une virgule (Ex '1330000,7203000,1368000,7246000') 
+        schema:
+          type: string
+        allowReserved: true
+      - explode: true
+        in: query
+        name: codeInsee
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vegetation'
+          description: Json file response.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/exception'
+            text/html:
+              schema:
+                type: string
+          description: Invalid parameter response.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/exception'
+            text/html:
+              schema:
+                type: string
+          description: Not found response.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/exception'
+            text/html:
+              schema:
+                type: string
+          description: A server error occurred.
+      summary: fetch buildings
+      tags:
+      - Data
+      x-eov-operation-handler: controllers/DataController
   /collections/mnt2018/coverage:
     get:
       description: Fetch mnt raster tile from bbox or insee code.
@@ -1557,4 +1616,41 @@ components:
         date: '2022-08-03'
       - id: '350001_050344'
         date: '2022-08-02'
+    Vegetation:
+      example:
+        type: FeatureCollection
+        feature:
+          type: Feature
+          id: arbres.6145
+          geometry:
+            type: Point
+            coordinantes:
+              -1360553.054598
+              -7228097.547001
+          geometry_name: geom
+          properties:
+            id: 6145
+            type: 1
+            facteur: "12.55496 12.55496 24.01666"
+            orientation: 45
+            altitude: 83.7
+          bbox:
+            -1360553.054598
+            -7228097.547001
+            -1360553.054598
+            -7228097.547001
+        totalFeatures: 2448284
+        numberMatched: 2448284
+        numberReturned: 1
+        timeStamp: "2022-10-07T10:06:24.001Z"
+        crs:
+          type: name
+          properties:
+            name: "urn:ogc:def:crs:EPSG::3948"
+        bbox: 
+          -1360553.054598
+          -7228060.155101
+          -1360678.159198
+          -7228097.547001
+
 

@@ -31,10 +31,12 @@ class Controller {
       response.set('content-disposition', `attachment; filename=${filename}`)
       response.type(payload.type);
       response.end( responsePayload, 'binary' );
-    } else if (responsePayload instanceof Object) {
+    } else if (responsePayload instanceof Object && request.path ==="/collections/buildings/items") {
       response.type('application/octet-stream');
       response.set('content-disposition', `attachment; filename=buildings.${responsePayload.type.toLowerCase()}`)
       response.end(Buffer.from(JSON.stringify(responsePayload)), 'binary');
+    }else if (responsePayload instanceof Object) {
+      response.json(responsePayload);
     } else {
       if (responsePayload.slice(2,5) === 'xml') {
         response.type('application/octet-stream');

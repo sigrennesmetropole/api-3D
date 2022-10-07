@@ -151,6 +151,66 @@ const getCollections = ({ f }) => new Promise(
                 "title": "mnt2018"
               }
             ]
+          }, {
+            "id": "vegetation",
+            "title": "vegetation",
+            "description": "Fetch vegetation",
+            "links": [
+              {
+                "href": "/collections/vegetation/items",
+                "rel": "http://www.opengis.net/def/rel/ogc/1.0/collection",
+                "type": "application/json",
+                "title": "vegetation"
+              }
+            ]
+          }, {
+            "id": "added_building",
+            "title": "added building",
+            "description": "Fetch added building",
+            "links": [
+              {
+                "href": "/collections/added_building/items?f=application%2Fjson",
+                "rel": "http://www.opengis.net/def/rel/ogc/1.0/collection",
+                "type": "application/json",
+                "title": "added_building"
+              },
+              {
+                "href": "/collections/added_building/items?f=application%2Fgml%2Bxml%3Bversion%3D3.2",
+                "rel": "http://www.opengis.net/def/rel/ogc/1.0/collection",
+                "type": "application/gml+xml;version=3.2",
+                "title": "added_building"
+              }
+            ]
+          }, {
+            "id": "modified_building",
+            "title": "modified building",
+            "description": "Fetch modified building",
+            "links": [
+              {
+                "href": "/collections/modified_building/items?f=application%2Fjson",
+                "rel": "http://www.opengis.net/def/rel/ogc/1.0/collection",
+                "type": "application/json",
+                "title": "modified_building"
+              },
+              {
+                "href": "/collections/modified_building/items?f=application%2Fgml%2Bxml%3Bversion%3D3.2",
+                "rel": "http://www.opengis.net/def/rel/ogc/1.0/collection",
+                "type": "application/gml+xml;version=3.2",
+                "title": "modified_building"
+              }
+            ]
+          }, {
+            "id": "deleted_building",
+            "title": "deleted building",
+            "description": "Fetch deleted building",
+            "links": [
+              {
+                "href": "/collections/deleted_building/items",
+                "rel": "http://www.opengis.net/def/rel/ogc/1.0/collection",
+                "type": "application/json",
+                "title": "deleted_building"
+              }
+            ]
           }
         ]
       }

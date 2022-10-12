@@ -33,8 +33,8 @@ services:
         PG_MAX_NB_CONNECTIONS: ${PG_MAX_NB_CONNECTIONS}
         PG_CONNECT_TIMEOUT: ${PG_CONNECT_TIMEOUT}
         PG_ROWS_LIMIT: ${PG_ROWS_LIMIT}
-        COUCHE_ARBRES: pnat_hab:arbres
-        COUCHE_MOBILIER: pnat_hab:arbres        
+        COUCHE_ARBRES: ${COUCHE_ARBRES}
+        COUCHE_MOBILIER: ${COUCHE_MOBILIER}       
         3faad540-1cc3-4224-a326-2bf1e8f550bc: 3d_rennesmetropole_terrain_maillage.zip
         72bca5d3-ee31-4a83-8a92-837e8d048cc3: 3d_rennesmetropole_terrain_raster.zip
         0d75bd55-be52-4493-9bd7-f623c49f6531: 3d_rennesmetropole_batis_cityjson.zip

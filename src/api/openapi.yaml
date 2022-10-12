@@ -874,13 +874,13 @@ paths:
         schema:
           type: string
         allowReserved: true
-      - explode: true
-        in: query
-        name: codeInsee
-        required: false
-        schema:
-          type: string
-        style: form
+      # - explode: true
+      #   in: query
+      #   name: codeInsee
+      #   required: false
+      #   schema:
+      #     type: string
+      #   style: form
       responses:
         "200":
           content:
@@ -932,13 +932,13 @@ paths:
         schema:
           type: string
         allowReserved: true
-      - explode: true
-        in: query
-        name: codeInsee
-        required: false
-        schema:
-          type: string
-        style: form
+      # - explode: true
+      #   in: query
+      #   name: codeInsee
+      #   required: false
+      #   schema:
+      #     type: string
+      #   style: form
       responses:
         "200":
           content:

@@ -42,24 +42,24 @@ const getBBoxHeightAndWidth = (bbox) => {
     };
 }
 
-const getBBoxFromAny = (bbox, codeInsee, reject) => {
-    if (!!codeInsee & !!bbox){
-        reject(Service.rejectResponse(
-          {description: "Invalid input : <bbox> and <code insee> are mutually exclusive", code: 400},
-          400,
-        ));
-        return;
-    }
+const getBBoxFromAny = (bbox, reject) => {
+    // if (!!codeInsee & !!bbox){
+    //     reject(Service.rejectResponse(
+    //       {description: "Invalid input : <bbox> and <code insee> are mutually exclusive", code: 400},
+    //       400,
+    //     ));
+    //     return;
+    // }
     if (!!bbox){
         bbox  = bbox.split(',');
         isBBoxLessThanMaxSizeElseReject(bbox, reject);
         return bbox
     }
-    if (!!codeInsee){
-        return getBBoxFromCodeInseeElseReject(codeInsee, reject);
-    }
+    // if (!!codeInsee){
+    //     return getBBoxFromCodeInseeElseReject(codeInsee, reject);
+    // }
     reject(Service.rejectResponse(
-        {description: "Invalid input : <bbox> or <code insee> must be set", code: 400},
+        {description: "Invalid input : <bbox> must be set", code: 400},
         400,
     ));
     return;

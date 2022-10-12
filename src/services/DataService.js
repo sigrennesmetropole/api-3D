@@ -75,9 +75,9 @@ const getBuildings = ({ f, bbox, codeInsee, limit, startIndex, texture, dbView, 
 * codeInsee String  (optional)
 * returns File
 * */
-const getRaster = ({ bbox, codeInsee }) => new Promise(
+const getRaster = ({ bbox }) => new Promise(
   async (resolve, reject) => {
-    bbox = dataValidator.getBBoxFromAny(bbox, codeInsee, reject);
+    bbox = dataValidator.getBBoxFromAny(bbox, reject);
     try {
       let {height, width} = dataValidator.getBBoxHeightAndWidth(bbox);
       wms.exportRasterWMS(version='1.1.0', workspace='raster', layers='mnt2018', bbox, witdh=Math.floor(width*2), height=Math.floor(height*2), srs='EPSG%3A3948', format='image%2Fgeotiff')
@@ -104,10 +104,10 @@ const getRaster = ({ bbox, codeInsee }) => new Promise(
 * codeInsee String  (optional)
 * returns json
 * */
-const getFeaturesfromWFS = ({ typeName, bbox, codeInsee }) => new Promise(
+const getFeaturesfromWFS = ({ typeName, bbox }) => new Promise(
 
   async (resolve, reject) => {
-    bbox = dataValidator.getBBoxFromAny(bbox, codeInsee, reject); //a verifier si c'est la bonne chose à faire
+    bbox = dataValidator.getBBoxFromAny(bbox, reject); //a verifier si c'est la bonne chose à faire
     try {
       wfs.exportVectorWFS(version='1.1.0', typeName, bbox, srs='EPSG%3A3948', f='application%2Fjson')
       .then((result) => {

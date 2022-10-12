@@ -3,7 +3,6 @@ const path = require('path');
 const camelCase = require('camelcase');
 const config = require('../config');
 const logger = require('../logger');
-const { trace } = require('console');
 
 class Controller {
   static sendResponse(response, payload, request) {
@@ -27,11 +26,15 @@ class Controller {
         case "getRaster":
           filename = 'mnt.tif';
           break;
+        case "getVegetation":
+        case "getMobilier":
+          filename = 'wms.json';
+          break;
       }
       response.set('content-disposition', `attachment; filename=${filename}`)
       response.type(payload.type);
       response.end( responsePayload, 'binary' );
-    } else if (responsePayload instanceof Object && request.path === "/api/collections/buildings/items") {
+    } else if (responsePayload instanceof Object && request.openapi.schema.operationId === "getBuildings") {
       response.type('application/octet-stream');
       response.set('content-disposition', `attachment; filename=buildings.${responsePayload.type.toLowerCase()}`)
       response.end(Buffer.from(JSON.stringify(responsePayload)), 'binary');

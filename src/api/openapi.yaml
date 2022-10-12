@@ -863,7 +863,7 @@ paths:
   /collections/vegetation/items:
     get:
       description: |-
-        deleted vege TODO
+        vegetation TODO
       operationId: getVegetation
       parameters:
       - explode: true
@@ -919,6 +919,65 @@ paths:
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
+  /collections/mobilier/items:
+    get:
+      description: |-
+        mobilier TODO
+      operationId: getMobilier
+      parameters:
+      - explode: true
+        in: query
+        name: bbox
+        required: false
+        description: coordonnées xmin, ymin, xmax, ymax séparées par une virgule (Ex '1330000,7203000,1368000,7246000') 
+        schema:
+          type: string
+        allowReserved: true
+      # - explode: true
+      #   in: query
+      #   name: codeInsee
+      #   required: false
+      #   schema:
+      #     type: string
+      #   style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vegetation'
+          description: Json file response.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/exception'
+            text/html:
+              schema:
+                type: string
+          description: Invalid parameter response.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/exception'
+            text/html:
+              schema:
+                type: string
+          description: Not found response.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/exception'
+            text/html:
+              schema:
+                type: string
+          description: A server error occurred.
+      summary: fetch buildings
+      tags:
+      - Data
+      x-eov-operation-handler: controllers/DataController    
   /collections/mnt2018/coverage:
     get:
       description: Fetch mnt raster tile from bbox or insee code.

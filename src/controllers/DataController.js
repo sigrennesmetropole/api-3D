@@ -35,7 +35,11 @@ const getModifiedBuildings = async (request, response) => {
 };
 
 const getVegetation = async (request, response) => {
-  await Controller.handleRequest(request, response, service.getFeaturesfromWFS, {'typeName': 'pnat_hab:arbres'});
+  await Controller.handleRequest(request, response, service.getFeaturesfromWFS, {'typeName': process.env.COUCHE_ARBRES});
+};
+
+const getMobilier = async (request, response) => {
+  await Controller.handleRequest(request, response, service.getFeaturesfromWFS, {'typeName': process.env.COUCHE_MOBILIER});
 };
 
 
@@ -47,5 +51,6 @@ module.exports = {
   getAddedBuildings,
   getDeletedBuildings,
   getModifiedBuildings,
-  getVegetation
+  getVegetation,
+  getMobilier
 };

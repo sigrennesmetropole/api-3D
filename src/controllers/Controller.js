@@ -28,7 +28,7 @@ class Controller {
           break;
         case "getVegetation":
         case "getMobilier":
-          filename = 'wms.json';
+          filename = 'wfs.json';
           break;
       }
       response.set('content-disposition', `attachment; filename=${filename}`)

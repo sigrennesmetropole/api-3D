@@ -31,7 +31,7 @@ class Controller {
       response.set('content-disposition', `attachment; filename=${filename}`)
       response.type(payload.type);
       response.end( responsePayload, 'binary' );
-    } else if (responsePayload instanceof Object && request.path ==="/collections/buildings/items") {
+    } else if (responsePayload instanceof Object && request.path === "/api/collections/buildings/items") {
       response.type('application/octet-stream');
       response.set('content-disposition', `attachment; filename=buildings.${responsePayload.type.toLowerCase()}`)
       response.end(Buffer.from(JSON.stringify(responsePayload)), 'binary');

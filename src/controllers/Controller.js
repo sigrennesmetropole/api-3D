@@ -27,8 +27,10 @@ class Controller {
           filename = 'mnt.tif';
           break;
         case "getVegetation":
+          filename = 'vegetation.json';
+          break;
         case "getMobilier":
-          filename = 'wms.json';
+          filename = 'street_furniture.json';
           break;
       }
       response.set('content-disposition', `attachment; filename=${filename}`)

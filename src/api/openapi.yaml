@@ -25,10 +25,10 @@ servers:
     description: Serveur de production
   - url: https://api3d.imfr.cgi.com/recette/api
     description: Serveur de recette
-  - url: https://api3d.imfr.cgi.com/integration/api
-    description: Serveur d'integration
-  - url: /api
-    description: Serveur local
+  # - url: https://api3d.imfr.cgi.com/integration/api
+  #   description: Serveur d'integration
+  # - url: /api
+  #   description: Serveur local
 tags:
 - description: essential characteristics of this API
   name: Capabilities
@@ -449,7 +449,7 @@ paths:
       - explode: true
         in: query
         name: texture
-        required: false
+        required: true
         schema:
           default: oui
           enum:
@@ -533,7 +533,7 @@ paths:
       - explode: true
         in: query
         name: texture
-        required: false
+        required: true
         schema:
           default: oui
           enum:

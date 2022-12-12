@@ -33,12 +33,13 @@ class Controller {
           filename = 'street_furniture.json';
           break;
       }
+      filename = filename.replace("cityjson", "json")
       response.set('content-disposition', `attachment; filename=${filename}`)
       response.type(payload.type);
       response.end( responsePayload, 'binary' );
     } else if (responsePayload instanceof Object && request.openapi.schema.operationId === "getBuildings") {
       response.type('application/octet-stream');
-      response.set('content-disposition', `attachment; filename=buildings.${responsePayload.type.toLowerCase()}`)
+      response.set('content-disposition', `attachment; filename=buildings.${responsePayload.type.toLowerCase().replace("cityjson", "json")}`)
       response.end(Buffer.from(JSON.stringify(responsePayload)), 'binary');
     }else if (responsePayload instanceof Object) {
       response.json(responsePayload);

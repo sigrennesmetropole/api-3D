@@ -242,8 +242,8 @@ async function traitementRetourPG(result, id, limit, startIndex, reject, resolve
 }
 
 async function traitementRetourExporter(id, format, limit, startIndex, texture, reject, resolve) {
+  let fileExtention = texture === 'oui' ? '.zip' : format;
   try{
-    let fileExtention = texture === 'oui' ? '.zip' : format;
     let data = await new JSZip.external.Promise(function (resolve, reject) {
       fs.readFile(process.env['EXPORTER_SAVE_PATH'] + id + fileExtention, function(err, data) {
           if (err) {
@@ -275,8 +275,7 @@ async function traitementRetourExporter(id, format, limit, startIndex, texture, 
       }
       resolve(Service.fileResponse(data, 200, 'application/zip'));
     } else {
-      let file = fs.readFileSync(process.env['EXPORTER_SAVE_PATH'] + id + format, 'utf8');
-      fs.unlinkSync(process.env['EXPORTER_SAVE_PATH'] + id + format);
+      let file = fs.readFileSync(process.env['EXPORTER_SAVE_PATH'] + id + format, 'utf8');   
       if (format === '.cityjson') {
         let json = JSON.parse(file);
         let size = Object.keys(json.CityObjects).length;
@@ -302,6 +301,8 @@ async function traitementRetourExporter(id, format, limit, startIndex, texture, 
       {description: "Erreur lors de l'appel de l'exporteur", code: 500},
       500
     ));
+  } finally {
+    fs.unlinkSync(process.env['EXPORTER_SAVE_PATH'] + id + fileExtention);
   }
 }; 
 

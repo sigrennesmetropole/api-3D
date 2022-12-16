@@ -21,8 +21,7 @@ info:
   - Open API Feature
   - OGC
 servers:
-  - url: https://api-3d.sig.rennesmetropole.fr/api
-    description: Serveur de production
+  - url: /api
 tags:
 - description: essential characteristics of this API
   name: Capabilities

@@ -39,4 +39,30 @@ const exportVectorWFS = (version, typeName, bbox, srs, f) => new Promise(
     }
 );
 
-module.exports =  { exportVectorWFS };
+const exportRasterWFS = (version, layers, bbox, witdh, height, crs, format) => new Promise(
+    async (resolve, reject) => {
+        try{
+            let url = 'https://public.sig.rennesmetropole.fr/geoserver/raster/ows?SERVICE=WCS' 
+            + '&VERSION=' + version 
+            + '&REQUEST=GetCoverage' 
+            + '&coverage=' + layers
+            + '&CRS=' + crs 
+            + '&BBOX=' + bbox.toString()
+            + '&WIDTH=' + witdh 
+            + '&HEIGHT=' + height 
+            + '&format=' + format;
+
+            axios.get(url, config)
+                .then(res => {
+                    resolve(res.data);
+                })
+                .catch(error => {
+                    reject(error.message);
+                });
+        }catch(e){
+            reject(e.message);
+        }
+    }
+);
+
+module.exports =  { exportVectorWFS, exportRasterWFS};

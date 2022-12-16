@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 const Service = require('./Service');
 const exporter = require('../clients/impexp/exp');
-const wms = require('../clients/geoserver/wms');
 const wfs = require('../clients/geoserver/wfs');
 const postgres = require('../clients/postgres/postgres');
 const uuid = require('uuid');
@@ -80,10 +79,11 @@ const getRaster = ({ bbox }) => new Promise(
     bbox = dataValidator.getBBoxFromAny(bbox, reject);
     try {
       let {height, width} = dataValidator.getBBoxHeightAndWidth(bbox);
-      wms.exportRasterWMS(version='1.1.0', workspace='raster', layers='mnt2018', bbox, witdh=Math.floor(width*2), height=Math.floor(height*2), srs='EPSG%3A3948', format='image%2Fgeotiff')
+      wfs.exportRasterWFS(version='1.0.0', layers='mnt2018', bbox, witdh=Math.floor(width*2), height=Math.floor(height*2), crs='EPSG:3948', format='image/geotiff')
         .then((result) => {
           resolve(Service.fileResponse(result, 200, "image/geotiff"));
         }, (raison) => {
+          console.log(raison);
           reject(Service.rejectResponse(
             {description: "Erreur lors de l'appel de Geoserver", code: 500},
             500

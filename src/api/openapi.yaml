@@ -1,15 +1,10 @@
 openapi: 3.0.2
 info:
   contact:
-    email: sigsupport@rennesmetropole.fr
+    email: sig@rennesmetropole.fr
     name: Rennes Metropole - Service Information Géographique
     url: https://public.sig.rennesmetropole.fr/
-  description: <p>L'API REST permet un accès en flux aux données permettant la création de scène 3D sur le territoire de Rennes Métropole.<p/> 
-        <ul>
-          <li>La maquette des bâtiments est millésimée et remise à jour tous les trois ans. Entre temps, quelques ajustements des bâtiments peuvent être enregistrés en base de données. Dans ce cas les bâtiments modifiés ne peuvent pas bénéficier de la texture.</li>
-          <li>Les éléments de décors (végétation, mobilier urbains) servent à rendre la scène plus réaliste. Toutefois, ces données sont théoriques et ne correspondent pas exactement à la réalité. Ces couches de données ponctuelles nécessite un travail de représentation à l'aide des catalogues de représentations téléchargeables sur la page <a target="_blank" href="https://api-3d.sig.rennesmetropole.fr"> des fichiers téléchargeables</a>.</li>
-          <li>Le Modèle Numérique de Terrain (MNT) permet de connaître l'altitude du terrain à un endroit donné.</li>
-        </ul>
+  description: '''TODO Description'''
   license:
     name: Licence ODbL 1.0
     url: https://opendatacommons.org/licenses/odbl/
@@ -28,22 +23,22 @@ info:
 servers:
   - url: /api
 tags:
-- description: Propriétés générales de l'API
+- description: essential characteristics of this API
   name: Capabilities
-- description: Accès aux données
+- description: Data methods
   name: Data
-- description: Accès aux données de type raster
+- description: Raster Data methods
   name: Coverage
 paths:
   /:
     get:
-      description: La page d'accueil propose une description de l'API.
-                                
+      description: The landing page provides links to the API definition and the conformance
+        statements for this API.
       operationId: getLandingPage
       parameters:
-      - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
-                                                                                    
-                  
+      - description: The optional f parameter indicates the output format that the
+          server shall provide as part of the response document.  The default format
+          is JSON.
         explode: false
         in: query
         name: f
@@ -65,10 +60,10 @@ paths:
               schema:
                 type: string
           description: |-
-                                                                 
-            La page d'accueil fournit des liens vers les définitions de l'API (relations `service-desc` et `service-doc`) 
-            et les déclaration de conformité (chemin `/conformance`, relation `conformance`).
-                                         
+            The landing page provides links to the API definition
+            (link relations `service-desc` and `service-doc`),
+            and the Conformance declaration (path `/conformance`,
+            link relation `conformance`).
         "500":
           content:
             application/json:
@@ -77,20 +72,20 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur levée.
-      summary: Page d'accueil
+          description: A server error occurred.
+      summary: Landing page
       tags:
       - Capabilities
       x-eov-operation-handler: controllers/CapabilitiesController
   /conformance:
     get:
-      description: Liste des standards auxquels l'API est conforme..
-                               
+      description: A list of all conformance classes specified in a standard that
+        the server conforms to.
       operationId: getConformanceDeclaration
       parameters:
-      - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
-                                                                                    
-                  
+      - description: The optional f parameter indicates the output format that the
+          server shall provide as part of the response document.  The default format
+          is JSON.
         explode: false
         in: query
         name: f
@@ -119,12 +114,12 @@ paths:
               schema:
                 type: string
           description: |-
-            Les URIs des classes des standards supportés par le serveur.
-            Déclarations de conformités du serveur aux standards qu'il implémente dans le but de se rendre au mieux interopérable par le standard OGC API Features.
-                                                                     
-                                                                        
-                                                             
-                                                  
+            The URIs of all conformance classes supported by the server.
+
+            To support "generic" clients that want to access multiple
+            OGC API Features implementations - and not "just" a specific
+            API / server, the server declares the conformance
+            classes it implements and conforms to.
         "500":
           content:
             application/json:
@@ -133,8 +128,8 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur levée.
-      summary: Déclarations de conformités
+          description: A server error occurred.
+      summary: API conformance definition
       tags:
       - Capabilities
       x-eov-operation-handler: controllers/CapabilitiesController
@@ -142,9 +137,9 @@ paths:
     get:
       operationId: getCollections
       parameters:
-      - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
-                                                                                    
-                  
+      - description: The optional f parameter indicates the output format that the
+          server shall provide as part of the response document.  The default format
+          is JSON.
         explode: false
         in: query
         name: f
@@ -162,66 +157,65 @@ paths:
             application/json:
               example:
                 links:
-                - href: /collections?f=application%2Fjso
-                  rel: data
+                - href: http://data.example.org/collections.json
+                  rel: self
                   type: application/json
-                  title: The JSON representation of the list of all data collections served from this endpoint
-                                                                
-                                
-                                 
-                                              
-                                                                    
-                                  
-                                       
-                                                                                  
-                                                                  
-                                
-                                                      
-                                                   
-                                
+                  title: this document
+                - href: http://data.example.org/collections.html
+                  rel: alternate
+                  type: text/html
+                  title: this document as HTML
+                - href: http://schemas.example.org/1.0/buildings.xsd
+                  rel: describedBy
+                  type: application/xml
+                  title: GML application schema for Acme Corporation building data
+                - href: http://download.example.org/buildings.gpkg
+                  rel: enclosure
+                  type: application/geopackage+sqlite3
+                  title: Bulk download (GeoPackage)
+                  length: 472546
                 collections:
                 - id: buildings
                   title: Buildings
-                  description: Fetch buildings.
+                  description: Buildings in the city of Bonn.
                   links:
-                  - href: /collections/buildings?f=application%2Fjson
-                    rel: http://www.opengis.net/def/rel/ogc/1.0/collection
-                    type: application/json
+                  - href: http://data.example.org/collections/buildings/items
+                    rel: items
+                    type: application/geo+json
                     title: Buildings
-                  - href: /collections/buildings?f=application%2Fgml%2Bxml%3Bversion%3D3.2
-                    rel: http://www.opengis.net/def/rel/ogc/1.0/collection
-                    type: application/gml+xml;version=3.2
+                  - href: http://data.example.org/collections/buildings/items.html
+                    rel: items
+                    type: text/html
                     title: Buildings
-                                                                            
-                                
-                                   
-                                  
-                                                                               
-                                
-                                             
-                                  
+                  - href: https://creativecommons.org/publicdomain/zero/1.0/
+                    rel: license
+                    type: text/html
+                    title: CC0-1.0
+                  - href: https://creativecommons.org/publicdomain/zero/1.0/rdf
+                    rel: license
+                    type: application/rdf+xml
+                    title: CC0-1.0
               schema:
                 $ref: '#/components/schemas/collections'
             text/html:
               schema:
                 type: string
           description: |-
-            Description des jeux de données accessibles par cette API.
+            The feature collections shared by this API.
 
-            Cette route permet d'obtenir les informations et les méthodes d'accès aux différents jeux de données (collection) fournies par l'API.
-            La réponse présente une liste de jeux de données et pour chacun, leur description et leurs liens d'accès (chemin `/collections/{collectionId}/items`,
-            liens de relation `items`).
+            The dataset is organized as one or more feature collections. This resource
+            provides information about and access to the collections.
 
-                                                                                      
-                                                                                     
-            Cette information comprend : 
-            * L'identifiant (id) du jeu de données qui est unique dans le catalogue;
-            * Le titre (title) du jeu de données
-            * Une description (description) du jeu de données
-            * Le format de sortie (type)
-                                                                   
-                                                                                                                                                                  
-                                                                                                                                                      
+            The response contains the list of collections. For each collection, a link
+            to the items in the collection (path `/collections/{collectionId}/items`,
+            link relation `items`) as well as key information about the collection.
+            This information includes:
+
+            * A local identifier for the collection that is unique for the dataset;
+            * A list of coordinate reference systems (CRS) in which geometries may be returned by the server. The first CRS is the default coordinate reference system (the default is always WGS 84 with axis order longitude/latitude);
+            * An optional title and description for the collection;
+            * An optional extent that can be used to provide an indication of the spatial and temporal extent of the collection - typically derived from the data;
+            * An optional indicator about the type of the items in the collection (the default value, if the indicator is not provided, is 'feature').
         "500":
           content:
             application/json:
@@ -230,8 +224,8 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur levée.
-      summary: Description des jeux de données 
+          description: A server error occurred.
+      summary: the feature collections in the dataset
       tags:
       - Capabilities
       x-eov-operation-handler: controllers/CapabilitiesController
@@ -239,9 +233,9 @@ paths:
     get:
       operationId: describeBuildings
       parameters:
-      - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
-                                                                                    
-                  
+      - description: The optional f parameter indicates the output format that the
+          server shall provide as part of the response document.  The default format
+          is JSON.
         explode: false
         in: query
         name: f
@@ -258,50 +252,44 @@ paths:
           content:
             application/json:
               example:
+                id: buildings
+                title: Buildings
+                description: Buildings in the city of Bonn.
                 links:
-                - href: /collections?f=application%2Fjso
-                  rel: data
-                  type: application/json
-                  title: The JSON representation of the list of all data collections served from this endpoint
-                collections:
-                - id: buildings
+                - href: http://data.example.org/collections/buildings/items
+                  rel: items
+                  type: application/geo+json
                   title: Buildings
-                  description: Fetch buildings.
-                  links:
-                  - href: /collections/buildings?f=application%2Fjson
-                    rel: http://www.opengis.net/def/rel/ogc/1.0/collection
-                    type: application/json
-                    title: Buildings
-                  - href: /collections/buildings?f=application%2Fgml%2Bxml%3Bversion%3D3.2
-                    rel: http://www.opengis.net/def/rel/ogc/1.0/collection
-                    type: application/gml+xml;version=3.2
-                    title: Buildings
-                                                                          
-                              
-                                 
-                                
-                                                                             
-                              
-                                           
-                                
+                - href: http://data.example.org/collections/buildings/items.html
+                  rel: items
+                  type: text/html
+                  title: Buildings
+                - href: https://creativecommons.org/publicdomain/zero/1.0/
+                  rel: license
+                  type: text/html
+                  title: CC0-1.0
+                - href: https://creativecommons.org/publicdomain/zero/1.0/rdf
+                  rel: license
+                  type: application/rdf+xml
+                  title: CC0-1.0
               schema:
                 $ref: '#/components/schemas/collection'
             text/html:
               schema:
                 type: string
           description: |-
-            Description du jeu de données d'id `buildings`.
+            Information about the feature collection with id `collectionId`.
 
-            Cette route permet d'obtenir les informations dont le système de coordonnées de référence (SCR) et les méthodes d'accès aux données du jeu de données (collection) 'Buildings'.
-            La réponse présente la liste des points d'accès au jeu de données et pour chacun, sa description et son lien d'accès (chemin `/collections/{collectionId}/items`).
-                                                                             
-                     
+            The response contains a link to the items in the collection
+            (path `/collections/{collectionId}/items`, link relation `items`)
+            as well as key information about the collection. This information
+            includes:
 
-            Cette information comprend : 
-            * Le titre (title) du point d'entrée de données
-            * Le lien d'accès au point d'entrée (href)
-            * la classe de relation (rel) du point d'entrée
-            * Le format de sortie (type)
+            * A local identifier for the collection that is unique for the dataset;
+            * A list of coordinate reference systems (CRS) in which geometries may be returned by the server. The first CRS is the default coordinate reference system (the default is always WGS 84 with axis order longitude/latitude);
+            * An optional title and description for the collection;
+            * An optional extent that can be used to provide an indication of the spatial and temporal extent of the collection - typically derived from the data;
+            * An optional indicator about the type of the items in the collection (the default value, if the indicator is not provided, is 'feature').
         "404":
           content:
             application/json:
@@ -310,7 +298,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Réponse absente.
+          description: Not found response.
         "500":
           content:
             application/json:
@@ -319,8 +307,8 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur levée.
-      summary: Description du jeu de données d'id `buildings`
+          description: A server error occurred.
+      summary: describe the feature collection with id `buildings`
       tags:
       - Capabilities
       x-eov-operation-handler: controllers/CapabilitiesController
@@ -328,9 +316,9 @@ paths:
     get:
       operationId: describeMnt2018
       parameters:
-      - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
-                                                                                    
-                  
+      - description: The optional f parameter indicates the output format that the
+          server shall provide as part of the response document.  The default format
+          is JSON.
         explode: false
         in: query
         name: f
@@ -348,32 +336,31 @@ paths:
             application/json:
               example:
                 id: mnt2018
-                title: Modèle Numérique de Terrain (MNT) 2018
+                title: Mnt2018
                 description: Fetch mnt2018
                 links:
-                - href: /collections/mnt2018/coverage
-                  rel: http://www.opengis.net/def/rel/ogc/1.0/coverage
-                            
+                - href: http://data.example.org/collections/mnt2018/coverage
+                  rel: items
                   type: image/tiff;application=geotiff
-                  title: mnt2018
+                  title: Mnt2018
               schema:
                 $ref: '#/components/schemas/collection'
             text/html:
               schema:
                 type: string
           description: |-
-            Description du jeu de données d'id `mnt2018`.
+            Information about the feature collection with id `collectionId`.
 
-            Cette route permet d'obtenir les informations dont le système de coordonnées de référence (SCR) et les méthodes d'accès aux données du jeu de données (collection) 'mnt2018'.
-            La réponse présente la liste des points d'accès au jeu de données et pour chacun, sa description et son lien d'accès (chemin `/collections/{collectionId}/items`).
-                                                                             
-                     
+            The response contains a link to the items in the collection
+            (path `/collections/{collectionId}/items`, link relation `items`)
+            as well as key information about the collection. This information
+            includes:
 
-            Cette information comprend : 
-            * Le titre (title) du point d'entrée de données
-            * Le lien d'accès au point d'entrée (href)
-            * la classe de relation (rel) du point d'entrée
-            * Le format de sortie (type)
+            * A local identifier for the collection that is unique for the dataset;
+            * A list of coordinate reference systems (CRS) in which geometries may be returned by the server. The first CRS is the default coordinate reference system (the default is always WGS 84 with axis order longitude/latitude);
+            * An optional title and description for the collection;
+            * An optional extent that can be used to provide an indication of the spatial and temporal extent of the collection - typically derived from the data;
+            * An optional indicator about the type of the items in the collection (the default value, if the indicator is not provided, is 'feature').
         "404":
           content:
             application/json:
@@ -382,7 +369,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Réponse absente.
+          description: Not found response.
         "500":
           content:
             application/json:
@@ -391,26 +378,26 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur levée.
-      summary: Description du jeu de données d'id `mnt2018`
+          description: A server error occurred.
+      summary: describe the feature collection with id `mnt2018`
       tags:
       - Capabilities
       x-eov-operation-handler: controllers/CapabilitiesController
   /collections/buildings/items:
     get:
       description: |-
-        Le jeu de données d'id `buildings` représente les bâtiments 3D.
-        Les bâtiments existent sur toutes les communes du territoire métropolitain rennais. Il est possible de les charger avec ou sans texture. 
-        Leur obtention est limitée à une géométrie par appel (BBOX de moins de 10km² ou code insee d'une commune)
-                                                                                
-                                                                           
+        Fetch features of the feature collection with id `buildings`.
 
-                                                           
+        Every feature in a dataset belongs to a collection. A dataset may
+        consist of multiple feature collections. A feature collection is often a
+        collection of features of a similar type, based on a common schema.
+
+        Use content negotiation to request HTML or GeoJSON.
       operationId: getBuildings
       parameters:
-      - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
-                                                                                    
-                  
+      - description: The optional f parameter indicates the output format that the
+          server shall provide as part of the response document.  The default format
+          is JSON.
         explode: false
         in: query
         name: f
@@ -427,7 +414,7 @@ paths:
         in: query
         name: bbox
         required: false
-        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000'). 
+        description: coordonnées xmin, ymin, xmax, ymax séparées par une virgule (Ex '1330000,7203000,1368000,7246000') 
         schema:
           type: string
         allowReserved: true
@@ -435,7 +422,6 @@ paths:
         in: query
         name: codeInsee
         required: false
-        description: code insee d'une commune de Rennes Métropole. 
         schema:
           type: string
         style: form
@@ -443,7 +429,6 @@ paths:
         in: query
         name: limit
         required: false
-        description: Limite du nombre de résultats. 
         schema:
           type: integer
         style: form
@@ -475,7 +460,7 @@ paths:
             application/gml+xml;version=3.2:
               schema:
                 type: object
-          description: Fichier cityjson ou citygml. Si les textures sont demande le fichier zip retourné contient le modèle 3D et les textures des bâtiments.
+          description: Cityjson or citygml file response. if textures = oui, a zip file containing textures and the cityjson or citygml file.
         "400":
           content:
             application/json:
@@ -484,7 +469,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Paramètre incorrect.
+          description: Invalid parameter response.
         "404":
           content:
             application/json:
@@ -493,7 +478,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Réponse absente.
+          description: Not found response.
         "500":
           content:
             application/json:
@@ -502,23 +487,23 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur levée.
-      summary: Obtention des objets 3D "bâtiments"
+          description: A server error occurred.
+      summary: fetch buildings
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
   /collections/buildings/items/{buildingID}:
     get:
       description: |-
-        Récupération de l'objet 3D d'un bâtiment identifié. Il est possible de les charger avec ou sans texture. 
-                            
-        
-                                                           
+        Fetch the feature with id `featureId` in the feature collection
+        with id `batiments`.
+
+        Use content negotiation to request HTML or GeoJSON.
       operationId: getbuildingById
       parameters:
-      - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
-                                                                                    
-                  
+      - description: The optional f parameter indicates the output format that the
+          server shall provide as part of the response document.  The default format
+          is JSON.
         explode: false
         in: query
         name: f
@@ -530,7 +515,7 @@ paths:
           - application/gml+xml;version=3.2
           type: string
         style: form
-      - description: Identifiant du bâtiment
+      - description: local identifier of a building
         explode: false
         in: path
         name: buildingID
@@ -556,7 +541,7 @@ paths:
             application/gml+xml;version=3.2:
               schema:
                 type: object
-          description: Fichier cityjson ou citygml. Si les textures sont demande le fichier zip retourné contient le modèle 3D et les textures du bâtiment.
+          description: Reponse au format CityJson
         "404":
           content:
             application/json:
@@ -565,7 +550,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Réponse absente.
+          description: Not found response.
         "500":
           content:
             application/json:
@@ -574,22 +559,20 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur levée.
-      summary: Obtention du modèle 3D d'un bâtiment à partir de son identifiant.
+          description: A server error occurred.
+      summary: fetch a single building from his id
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
   /collections/added_building/items:
     get:
       description: |-
-        Récupération des objets 3D des bâtiments ajoutés depuis le dernier millésime de la maquette 3D. 
-        Ces bâtiments ne disposent pas de texture. 
-        Il est possible de charger les bâtiments nouveaux depuis une date ultérieure au millésime. 
+        Added buildings TODO
       operationId: getAddedBuildings
       parameters:
-      - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
-                                                                                    
-                  
+      - description: The f parameter indicates the output format that the
+          server shall provide as part of the response document.  The default format
+          is JSON.
         explode: false
         in: query
         name: f
@@ -606,7 +589,7 @@ paths:
         in: query
         name: bbox
         required: false
-        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').
+        description: coordonnées xmin, ymin, xmax, ymax séparées par une virgule (Ex '1330000,7203000,1368000,7246000') 
         schema:
           type: string
         allowReserved: true
@@ -614,7 +597,6 @@ paths:
         in: query
         name: codeInsee
         required: false
-        description: code insee d'une commune de Rennes Métropole. 
         schema:
           type: string
         style: form
@@ -622,7 +604,6 @@ paths:
         in: query
         name: limit
         required: false
-        description: Limite du nombre de résultats. 
         schema:
           type: integer
         style: form
@@ -637,7 +618,7 @@ paths:
         in: query
         name: date
         required: false
-        description: Recherche par date (bâtiments ajoutés depuis la date passée en paramètre). Format "AAAA-MM-JJ".
+        description: Recherche par date (De la date en parametre jusqu'a aujourd'hui. format :YYYY-MM-DD)
         schema:
           format: date
           type: string
@@ -655,7 +636,7 @@ paths:
             application/gml+xml;version=3.2:
               schema:
                 type: object
-          description: Fichier cityjson ou citygml sans texture.
+          description: Cityjson or citygml file response. No textures.
         "400":
           content:
             application/json:
@@ -664,7 +645,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Paramètre incorrect.
+          description: Invalid parameter response.
         "404":
           content:
             application/json:
@@ -673,7 +654,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Réponse absente.
+          description: Not found response.
         "500":
           content:
             application/json:
@@ -682,22 +663,20 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur levée.
-      summary: Obtention des objets 3D "bâtiments" ajoutés depuis le dernier millésime ou une date ultérieure
+          description: A server error occurred.
+      summary: fetch buildings
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
   /collections/modified_building/items:
     get:
       description: |-
-        Récupération des objets 3D des bâtiments modifiés depuis le dernier millésime de la maquette 3D. 
-        Ces bâtiments ne disposent pas de texture. 
-        Il est possible de charger les bâtiments nouveaux depuis une date ultérieure au millésime. 
+        Modified buildings TODO
       operationId: getModifiedBuildings
       parameters:
-      - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
-                                                                                    
-                  
+      - description: The f parameter indicates the output format that the
+          server shall provide as part of the response document.  The default format
+          is JSON.
         explode: false
         in: query
         name: f
@@ -714,7 +693,7 @@ paths:
         in: query
         name: bbox
         required: false
-        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').
+        description: coordonnées xmin, ymin, xmax, ymax séparées par une virgule (Ex '1330000,7203000,1368000,7246000') 
         schema:
           type: string
         allowReserved: true
@@ -722,7 +701,6 @@ paths:
         in: query
         name: codeInsee
         required: false
-        description: code insee d'une commune de Rennes Métropole. 
         schema:
           type: string
         style: form
@@ -730,7 +708,6 @@ paths:
         in: query
         name: limit
         required: false
-        description: Limite du nombre de résultats. 
         schema:
           type: integer
         style: form
@@ -745,7 +722,7 @@ paths:
         in: query
         name: date
         required: false
-        description: Recherche par date (bâtiments modifiés depuis la date passée en paramètre). Format "AAAA-MM-JJ".
+        description: Recherche par date (De la date en parametre jusqu'a aujourd'hui. format :YYYY-MM-DD)
         schema:
           format: date
           type: string
@@ -763,7 +740,7 @@ paths:
             application/gml+xml;version=3.2:
               schema:
                 type: object
-          description: Fichier cityjson ou citygml sans texture.
+          description: Cityjson or citygml file response. No textures.
         "400":
           content:
             application/json:
@@ -772,7 +749,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Paramètre incorrect.
+          description: Invalid parameter response.
         "404":
           content:
             application/json:
@@ -781,7 +758,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Réponse absente.
+          description: Not found response.
         "500":
           content:
             application/json:
@@ -790,23 +767,21 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur levée.
-      summary: Obtention des objets 3D "bâtiments" modifiés depuis le dernier millésime ou une date ultérieure
+          description: A server error occurred.
+      summary: fetch buildings
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
   /collections/deleted_building/items:
     get:
       description: |-
-        Récupération de la liste des bâtiments supprimés depuis le dernier millésime de la maquette 3D. 
-        La liste indique les identifiants des bâtiments du millésime qui n'ont plus lieu d'être.
+        deleted buildings TODO
       operationId: getDeletedBuildings
       parameters:
       - explode: true
         in: query
         name: codeInsee
         required: false
-        description: code insee d'une commune de Rennes Métropole. 
         schema:
           type: string
         style: form
@@ -814,7 +789,6 @@ paths:
         in: query
         name: limit
         required: false
-        description: Limite du nombre de résultats. 
         schema:
           type: integer
         style: form
@@ -829,7 +803,7 @@ paths:
         in: query
         name: date
         required: false
-        description: Recherche par date (bâtiments supprimés depuis la date passée en paramètre). Format "AAAA-MM-JJ".
+        description: Recherche par date (De la date en parametre jusqu'a aujourd'hui. format :YYYY-MM-DD)
         schema:
           format: date
           type: string
@@ -847,7 +821,7 @@ paths:
             # application/gml+xml;version=3.2:
             #   schema:
             #     type: object
-          description: Fichier JSON.
+          description: Json file response.
         "400":
           content:
             application/json:
@@ -856,7 +830,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Paramètre incorrect.
+          description: Invalid parameter response.
         "404":
           content:
             application/json:
@@ -865,7 +839,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Réponse absente.
+          description: Not found response.
         "500":
           content:
             application/json:
@@ -874,23 +848,22 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur levée.
-      summary: Obtention des identifiants des bâtiments modifiés depuis le dernier millésime ou une date ultérieure
+          description: A server error occurred.
+      summary: fetch buildings
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
   /collections/vegetation/items:
     get:
       description: |-
-        Végétation théorique. Cette couche de données ne représente pas la réalité en temps réelle, mais est utile pour décorer une scène 3D.
-        Les données retournées sont des points qu'il convient de représenter en 3D. Un catalogue de représentations est disponible sur la page "téléchargements" de l'API 3D.
+        vegetation TODO
       operationId: getVegetation
       parameters:
       - explode: true
         in: query
         name: bbox
         required: false
-        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').
+        description: coordonnées xmin, ymin, xmax, ymax séparées par une virgule (Ex '1330000,7203000,1368000,7246000') 
         schema:
           type: string
         allowReserved: true
@@ -898,7 +871,6 @@ paths:
       #   in: query
       #   name: codeInsee
       #   required: false
-      #   description: code insee d'une commune de Rennes Métropole. 
       #   schema:
       #     type: string
       #   style: form
@@ -908,7 +880,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Vegetation'
-          description: Fichier Json.
+          description: Json file response.
         "400":
           content:
             application/json:
@@ -917,7 +889,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Paramètre incorrect.
+          description: Invalid parameter response.
         "404":
           content:
             application/json:
@@ -926,7 +898,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Réponse absente.
+          description: Not found response.
         "500":
           content:
             application/json:
@@ -935,23 +907,22 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur levée.
-      summary: Obtention d'une couche de données ponctuelles permettant la représentation de la végétation théorique.
+          description: A server error occurred.
+      summary: fetch buildings
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
   /collections/mobilier/items:
     get:
       description: |-
-        Mobilier urbain théorique. Cette couche de données ne représente pas la réalité en temps réelle, mais est utile pour décorer une scène 3D.
-        Les données retournées sont des points qu'il convient de représenter en 3D. Un catalogue de représentations est disponible sur la page "téléchargements" de l'API 3D.
+        mobilier TODO
       operationId: getMobilier
       parameters:
       - explode: true
         in: query
         name: bbox
         required: false
-        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').
+        description: coordonnées xmin, ymin, xmax, ymax séparées par une virgule (Ex '1330000,7203000,1368000,7246000') 
         schema:
           type: string
         allowReserved: true
@@ -959,7 +930,6 @@ paths:
       #   in: query
       #   name: codeInsee
       #   required: false
-      #   description: code insee d'une commune de Rennes Métropole. 
       #   schema:
       #     type: string
       #   style: form
@@ -969,7 +939,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Vegetation'
-          description: Fichier Json.
+          description: Json file response.
         "400":
           content:
             application/json:
@@ -978,7 +948,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Paramètre incorrect.
+          description: Invalid parameter response.
         "404":
           content:
             application/json:
@@ -987,7 +957,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Réponse absente.
+          description: Not found response.
         "500":
           content:
             application/json:
@@ -996,22 +966,21 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur levée.
-      summary: Obtention d'une couche de données ponctuelles permettant la représentation du mobilier urbain théorique.
+          description: A server error occurred.
+      summary: fetch buildings
       tags:
       - Data
-      x-eov-operation-handler: controllers/DataController 
+      x-eov-operation-handler: controllers/DataController    
   /collections/mnt2018/coverage:
     get:
-      description: Obtention du Modèle Numérique de Terrain (MNT) qui permet de connaitre le relief du terrain.
-        Il convient d'interpréter les niveaux de gris de l'image obtenue pour représenter le relief en 3D.
+      description: Fetch mnt raster tile from bbox or insee code.
       operationId: getRaster
       parameters:
       - explode: true
         in: query
         name: bbox
         required: false
-        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').
+        description: coordonnées xmin, ymin, xmax, ymax séparées par une virgule (Ex '1330000,7203000,1368000,7246000') 
         schema:
           type: string
         allowReserved: true
@@ -1019,7 +988,6 @@ paths:
       #   in: query
       #   name: codeInsee
       #   required: false
-      #   description: code insee d'une commune de Rennes Métropole. 
       #   schema:
       #     type: string
       #   style: form
@@ -1030,7 +998,7 @@ paths:
               schema:
                 format: binary
                 type: string
-          description: Fichier image geolocalisé en niveaux de gris.
+          description: A map tile image returned as a response.
         "400":
           content:
             application/json:
@@ -1039,7 +1007,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Paramètre incorrect.
+          description: Invalid parameter response.
         "404":
           content:
             application/json:
@@ -1048,7 +1016,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Réponse absente.
+          description: Not found response.
         "500":
           content:
             application/json:
@@ -1057,16 +1025,16 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur levée.
-      summary: Obtention d'une tuile raster du Modèle Numérique de Terrain (MNT)
+          description: A server error occurred.
+      summary: fetch raster tile from bbox or insee code
       tags:
       - Coverage
       x-eov-operation-handler: controllers/DataController
 components:
   parameters:
     f:
-      description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
-                                                                                    
+      description: The optional f parameter indicates the output format that the server
+        shall provide as part of the response document.  The default format is JSON.
       explode: false
       in: query
       name: f
@@ -1083,7 +1051,7 @@ components:
       in: query
       name: bbox
       required: false
-      description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').
+      description: coordonnées xmin, ymin, xmax, ymax séparées par une virgule (Ex '1330000,7203000,1368000,7246000') 
       schema:
         type: string
       allowReserved: true
@@ -1092,7 +1060,6 @@ components:
       in: query
       name: codeInsee
       required: false
-      description: code insee d'une commune de Rennes Métropole. 
       schema:
         type: string
       style: form
@@ -1101,7 +1068,6 @@ components:
       in: query
       name: limit
       required: false
-      description: Limite du nombre de résultats. 
       schema:
         type: integer
       style: form
@@ -1114,7 +1080,7 @@ components:
         type: integer
       style: form
     buildingID:
-      description: Identifiant du bâtiment
+      description: local identifier of a building
       explode: false
       in: path
       name: buildingID
@@ -1123,7 +1089,7 @@ components:
         type: string
       style: simple
     date:
-      description: Date au format "AAAA-MM-JJ"
+      description: date
       explode: false
       in: path
       name: date

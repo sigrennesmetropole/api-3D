@@ -71,7 +71,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur levée.
+          description: Erreur du serveur rencontrée.
       summary: Page d'accueil
       tags:
       - Capabilities
@@ -191,21 +191,18 @@ paths:
               schema:
                 type: string
           description: |-
-            The feature collections shared by this API.
+            Description des jeux de données accessibles par cette API.
 
-            The dataset is organized as one or more feature collections. This resource
-            provides information about and access to the collections.
+            Cette route permet d'obtenir les informations et les méthodes d'accès aux différents jeux de données (collection) fournies par l'API.
+            La réponse présente une liste de jeux de données et pour chacun, leur description et leurs liens d'accès (chemin `/collections/{collectionId}/items`,
+            liens de relation `items`).
 
-            The response contains the list of collections. For each collection, a link
-            to the items in the collection (path `/collections/{collectionId}/items`,
-            link relation `items`) as well as key information about the collection.
-            This information includes:
 
-            * A local identifier for the collection that is unique for the dataset;
-            * A list of coordinate reference systems (CRS) in which geometries may be returned by the server. The first CRS is the default coordinate reference system (the default is always WGS 84 with axis order longitude/latitude);
-            * An optional title and description for the collection;
-            * An optional extent that can be used to provide an indication of the spatial and temporal extent of the collection - typically derived from the data;
-            * An optional indicator about the type of the items in the collection (the default value, if the indicator is not provided, is 'feature').
+            Cette information comprend : 
+            * L'identifiant (id) du jeu de données qui est unique dans le catalogue;
+            * Le titre (title) du jeu de données
+            * Une description (description) du jeu de données
+            * Le format de sortie (type)
         "500":
           content:
             application/json:
@@ -215,7 +212,7 @@ paths:
               schema:
                 type: string
           description: Erreur du serveur rencontrée.
-      summary: the feature collections in the dataset
+      summary: Description des jeux de données 
       tags:
       - Capabilities
       x-eov-operation-handler: controllers/CapabilitiesController
@@ -266,18 +263,18 @@ paths:
               schema:
                 type: string
           description: |-
-            Information about the feature collection with id `collectionId`.
+            Description du jeu de données d'id `buildings`.
 
-            The response contains a link to the items in the collection
-            (path `/collections/{collectionId}/items`, link relation `items`)
-            as well as key information about the collection. This information
-            includes:
+            Cette route permet d'obtenir les informations dont le système de coordonnées de référence (SCR) et les méthodes d'accès aux données du jeu de données (collection) 'Buildings'.
+            La réponse présente la liste des points d'accès au jeu de données et pour chacun, sa description et son lien d'accès (chemin `/collections/{collectionId}/items`).
+                                                                             
+                     
 
-            * A local identifier for the collection that is unique for the dataset;
-            * A list of coordinate reference systems (CRS) in which geometries may be returned by the server. The first CRS is the default coordinate reference system (the default is always WGS 84 with axis order longitude/latitude);
-            * An optional title and description for the collection;
-            * An optional extent that can be used to provide an indication of the spatial and temporal extent of the collection - typically derived from the data;
-            * An optional indicator about the type of the items in the collection (the default value, if the indicator is not provided, is 'feature').
+            Cette information comprend : 
+            * Le titre (title) du point d'entrée de données
+            * Le lien d'accès au point d'entrée (href)
+            * la classe de relation (rel) du point d'entrée
+            * Le format de sortie (type)
         "404":
           content:
             application/json:
@@ -286,7 +283,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Not found response.
+          description: Réponse absente.
         "500":
           content:
             application/json:
@@ -296,7 +293,7 @@ paths:
               schema:
                 type: string
           description: Erreur du serveur rencontrée.
-      summary: describe the feature collection with id `buildings`
+      summary: Description du jeu de données d'id `buildings`
       tags:
       - Capabilities
       x-eov-operation-handler: controllers/CapabilitiesController
@@ -322,7 +319,7 @@ paths:
             application/json:
               example:
                 id: mnt2018
-                title: Mnt2018
+                title: Modèle Numérique de Terrain (MNT) 2018
                 description: Fetch mnt2018
                 links:
                 - href: http://data.example.org/collections/mnt2018/coverage
@@ -335,18 +332,18 @@ paths:
               schema:
                 type: string
           description: |-
-            Information about the feature collection with id `collectionId`.
+            Description du jeu de données d'id `mnt2018`.
 
-            The response contains a link to the items in the collection
-            (path `/collections/{collectionId}/items`, link relation `items`)
-            as well as key information about the collection. This information
-            includes:
+            Cette route permet d'obtenir les informations dont le système de coordonnées de référence (SCR) et les méthodes d'accès aux données du jeu de données (collection) 'mnt2018'.
+            La réponse présente la liste des points d'accès au jeu de données et pour chacun, sa description et son lien d'accès (chemin `/collections/{collectionId}/items`).
+                                                                             
+                     
 
-            * A local identifier for the collection that is unique for the dataset;
-            * A list of coordinate reference systems (CRS) in which geometries may be returned by the server. The first CRS is the default coordinate reference system (the default is always WGS 84 with axis order longitude/latitude);
-            * An optional title and description for the collection;
-            * An optional extent that can be used to provide an indication of the spatial and temporal extent of the collection - typically derived from the data;
-            * An optional indicator about the type of the items in the collection (the default value, if the indicator is not provided, is 'feature').
+            Cette information comprend : 
+            * Le titre (title) du point d'entrée de données
+            * Le lien d'accès au point d'entrée (href)
+            * la classe de relation (rel) du point d'entrée
+            * Le format de sortie (type)
         "404":
           content:
             application/json:
@@ -355,7 +352,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Not found response.
+          description: Réponse absente.
         "500":
           content:
             application/json:
@@ -365,20 +362,16 @@ paths:
               schema:
                 type: string
           description: Erreur du serveur rencontrée.
-      summary: describe the feature collection with id `mnt2018`
+      summary: Description du jeu de données d'id `mnt2018`
       tags:
       - Capabilities
       x-eov-operation-handler: controllers/CapabilitiesController
   /collections/buildings/items:
     get:
       description: |-
-        Fetch features of the feature collection with id `buildings`.
-
-        Every feature in a dataset belongs to a collection. A dataset may
-        consist of multiple feature collections. A feature collection is often a
-        collection of features of a similar type, based on a common schema.
-
-        Use content negotiation to request HTML or GeoJSON.
+        Le jeu de données d'id `buildings` représente les bâtiments 3D.
+        Les bâtiments existent sur toutes les communes du territoire métropolitain rennais. Il est possible de les charger avec ou sans texture. 
+        Leur obtention est limitée à une géométrie par appel (BBOX de moins de 10km² ou code insee d'une commune)
       operationId: getBuildings
       parameters:
       - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
@@ -398,7 +391,7 @@ paths:
         in: query
         name: bbox
         required: false
-        description: coordonnées xmin, ymin, xmax, ymax séparées par une virgule (Ex '1330000,7203000,1368000,7246000') 
+        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').  
         schema:
           type: string
         allowReserved: true
@@ -406,6 +399,7 @@ paths:
         in: query
         name: codeInsee
         required: false
+        description: code insee d'une commune de Rennes Métropole. 
         schema:
           type: string
         style: form
@@ -413,6 +407,7 @@ paths:
         in: query
         name: limit
         required: false
+        description: Limite du nombre de résultats.
         schema:
           type: integer
         style: form
@@ -444,7 +439,7 @@ paths:
             application/gml+xml;version=3.2:
               schema:
                 type: object
-          description: Cityjson or citygml file response. if textures = oui, a zip file containing textures and the cityjson or citygml file.
+          description: Fichier cityjson ou citygml. Si les textures sont demande le fichier zip retourné contient le modèle 3D et les textures des bâtiments.
         "400":
           content:
             application/json:
@@ -453,7 +448,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Invalid parameter response.
+          description: Paramètre incorrect.
         "404":
           content:
             application/json:
@@ -462,7 +457,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Not found response.
+          description: Réponse absente.
         "500":
           content:
             application/json:
@@ -472,17 +467,14 @@ paths:
               schema:
                 type: string
           description: Erreur du serveur rencontrée.
-      summary: fetch buildings
+      summary: Obtention des objets 3D bâtiments
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
   /collections/buildings/items/{buildingID}:
     get:
       description: |-
-        Fetch the feature with id `featureId` in the feature collection
-        with id `batiments`.
-
-        Use content negotiation to request HTML or GeoJSON.
+        Récupération de l'objet 3D d'un bâtiment identifié. Il est possible de les charger avec ou sans texture. 
       operationId: getbuildingById
       parameters:
       - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
@@ -497,7 +489,7 @@ paths:
           - application/gml+xml;version=3.2
           type: string
         style: form
-      - description: local identifier of a building
+      - description: Identifiant du bâtiment
         explode: false
         in: path
         name: buildingID
@@ -523,7 +515,7 @@ paths:
             application/gml+xml;version=3.2:
               schema:
                 type: object
-          description: Reponse au format CityJson
+          description: Fichier cityjson ou citygml. Si les textures sont demande le fichier zip retourné contient le modèle 3D et les textures du bâtiment.
         "404":
           content:
             application/json:
@@ -532,7 +524,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Not found response.
+          description: Réponse absente.
         "500":
           content:
             application/json:
@@ -542,7 +534,7 @@ paths:
               schema:
                 type: string
           description: Erreur du serveur rencontrée.
-      summary: fetch a single building from his id
+      summary: Obtention du modèle 3D d'un bâtiment à partir de son identifiant.
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
@@ -569,7 +561,7 @@ paths:
         in: query
         name: bbox
         required: false
-        description: coordonnées xmin, ymin, xmax, ymax séparées par une virgule (Ex '1330000,7203000,1368000,7246000') 
+        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').  
         schema:
           type: string
         allowReserved: true
@@ -634,7 +626,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Not found response.
+          description: Réponse absente.
         "500":
           content:
             application/json:
@@ -671,7 +663,7 @@ paths:
         in: query
         name: bbox
         required: false
-        description: coordonnées xmin, ymin, xmax, ymax séparées par une virgule (Ex '1330000,7203000,1368000,7246000') 
+        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').  
         schema:
           type: string
         allowReserved: true
@@ -736,7 +728,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Not found response.
+          description: Réponse absente.
         "500":
           content:
             application/json:
@@ -817,7 +809,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Not found response.
+          description: Réponse absente.
         "500":
           content:
             application/json:
@@ -841,7 +833,7 @@ paths:
         in: query
         name: bbox
         required: false
-        description: coordonnées xmin, ymin, xmax, ymax séparées par une virgule (Ex '1330000,7203000,1368000,7246000') 
+        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').  
         schema:
           type: string
         allowReserved: true
@@ -876,7 +868,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Not found response.
+          description: Réponse absente.
         "500":
           content:
             application/json:
@@ -900,7 +892,7 @@ paths:
         in: query
         name: bbox
         required: false
-        description: coordonnées xmin, ymin, xmax, ymax séparées par une virgule (Ex '1330000,7203000,1368000,7246000') 
+        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').  
         schema:
           type: string
         allowReserved: true
@@ -935,7 +927,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Not found response.
+          description: Réponse absente.
         "500":
           content:
             application/json:
@@ -958,7 +950,7 @@ paths:
         in: query
         name: bbox
         required: false
-        description: coordonnées xmin, ymin, xmax, ymax séparées par une virgule (Ex '1330000,7203000,1368000,7246000') 
+        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').  
         schema:
           type: string
         allowReserved: true
@@ -994,7 +986,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Not found response.
+          description: Réponse absente.
         "500":
           content:
             application/json:
@@ -1028,7 +1020,7 @@ components:
       in: query
       name: bbox
       required: false
-      description: coordonnées xmin, ymin, xmax, ymax séparées par une virgule (Ex '1330000,7203000,1368000,7246000') 
+      description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').  
       schema:
         type: string
       allowReserved: true
@@ -1102,7 +1094,7 @@ components:
         text/html:
           schema:
             type: string
-      description: Not found response.
+      description: Réponse absente.
     "500":
       content:
         application/json:

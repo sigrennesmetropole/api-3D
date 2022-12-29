@@ -78,13 +78,10 @@ paths:
       x-eov-operation-handler: controllers/CapabilitiesController
   /conformance:
     get:
-      description: A list of all conformance classes specified in a standard that
-        the server conforms to.
+      description: Liste des standards auxquels l'API est conforme.
       operationId: getConformanceDeclaration
       parameters:
-      - description: The optional f parameter indicates the output format that the
-          server shall provide as part of the response document.  The default format
-          is JSON.
+      - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
         explode: false
         in: query
         name: f
@@ -113,12 +110,8 @@ paths:
               schema:
                 type: string
           description: |-
-            The URIs of all conformance classes supported by the server.
-
-            To support "generic" clients that want to access multiple
-            OGC API Features implementations - and not "just" a specific
-            API / server, the server declares the conformance
-            classes it implements and conforms to.
+            Les URIs des classes des standards supportés par le serveur.
+            Déclarations de conformités du serveur aux standards qu'il implémente dans le but de se rendre au mieux interopérable par le standard OGC API Features.
         "500":
           content:
             application/json:
@@ -127,8 +120,8 @@ paths:
             text/html:
               schema:
                 type: string
-          description: A server error occurred.
-      summary: API conformance definition
+          description: Erreur du serveur rencontrée.
+      summary: Déclaration des conformités aux standards
       tags:
       - Capabilities
       x-eov-operation-handler: controllers/CapabilitiesController
@@ -136,9 +129,7 @@ paths:
     get:
       operationId: getCollections
       parameters:
-      - description: The optional f parameter indicates the output format that the
-          server shall provide as part of the response document.  The default format
-          is JSON.
+      - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
         explode: false
         in: query
         name: f
@@ -223,7 +214,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: A server error occurred.
+          description: Erreur du serveur rencontrée.
       summary: the feature collections in the dataset
       tags:
       - Capabilities
@@ -232,9 +223,7 @@ paths:
     get:
       operationId: describeBuildings
       parameters:
-      - description: The optional f parameter indicates the output format that the
-          server shall provide as part of the response document.  The default format
-          is JSON.
+      - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
         explode: false
         in: query
         name: f
@@ -306,7 +295,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: A server error occurred.
+          description: Erreur du serveur rencontrée.
       summary: describe the feature collection with id `buildings`
       tags:
       - Capabilities
@@ -315,9 +304,7 @@ paths:
     get:
       operationId: describeMnt2018
       parameters:
-      - description: The optional f parameter indicates the output format that the
-          server shall provide as part of the response document.  The default format
-          is JSON.
+      - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
         explode: false
         in: query
         name: f
@@ -377,7 +364,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: A server error occurred.
+          description: Erreur du serveur rencontrée.
       summary: describe the feature collection with id `mnt2018`
       tags:
       - Capabilities
@@ -394,9 +381,7 @@ paths:
         Use content negotiation to request HTML or GeoJSON.
       operationId: getBuildings
       parameters:
-      - description: The optional f parameter indicates the output format that the
-          server shall provide as part of the response document.  The default format
-          is JSON.
+      - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
         explode: false
         in: query
         name: f
@@ -486,7 +471,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: A server error occurred.
+          description: Erreur du serveur rencontrée.
       summary: fetch buildings
       tags:
       - Data
@@ -500,9 +485,7 @@ paths:
         Use content negotiation to request HTML or GeoJSON.
       operationId: getbuildingById
       parameters:
-      - description: The optional f parameter indicates the output format that the
-          server shall provide as part of the response document.  The default format
-          is JSON.
+      - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
         explode: false
         in: query
         name: f
@@ -558,7 +541,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: A server error occurred.
+          description: Erreur du serveur rencontrée.
       summary: fetch a single building from his id
       tags:
       - Data
@@ -569,9 +552,7 @@ paths:
         Added buildings TODO
       operationId: getAddedBuildings
       parameters:
-      - description: The f parameter indicates the output format that the
-          server shall provide as part of the response document.  The default format
-          is JSON.
+      - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
         explode: false
         in: query
         name: f
@@ -662,7 +643,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: A server error occurred.
+          description: Erreur du serveur rencontrée.
       summary: fetch buildings
       tags:
       - Data
@@ -673,9 +654,7 @@ paths:
         Modified buildings TODO
       operationId: getModifiedBuildings
       parameters:
-      - description: The f parameter indicates the output format that the
-          server shall provide as part of the response document.  The default format
-          is JSON.
+      - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
         explode: false
         in: query
         name: f
@@ -766,7 +745,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: A server error occurred.
+          description: Erreur du serveur rencontrée.
       summary: fetch buildings
       tags:
       - Data
@@ -847,7 +826,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: A server error occurred.
+          description: Erreur du serveur rencontrée.
       summary: fetch buildings
       tags:
       - Data
@@ -906,7 +885,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: A server error occurred.
+          description: Erreur du serveur rencontrée.
       summary: fetch buildings
       tags:
       - Data
@@ -965,7 +944,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: A server error occurred.
+          description: Erreur du serveur rencontrée.
       summary: fetch buildings
       tags:
       - Data
@@ -1024,7 +1003,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: A server error occurred.
+          description: Erreur du serveur rencontrée.
       summary: fetch raster tile from bbox or insee code
       tags:
       - Coverage
@@ -1032,8 +1011,7 @@ paths:
 components:
   parameters:
     f:
-      description: The optional f parameter indicates the output format that the server
-        shall provide as part of the response document.  The default format is JSON.
+      description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
       explode: false
       in: query
       name: f
@@ -1133,7 +1111,7 @@ components:
         text/html:
           schema:
             type: string
-      description: A server error occurred.
+      description: Erreur du serveur rencontrée.
     LandingPage:
       content:
         application/json:

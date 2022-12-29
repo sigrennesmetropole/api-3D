@@ -1,7 +1,7 @@
 openapi: 3.0.2
 info:
   contact:
-    email: sig@rennesmetropole.fr
+    email: sigsupport@rennesmetropole.fr
     name: Rennes Metropole - Service Information Géographique
     url: https://public.sig.rennesmetropole.fr/
   description: L'API REST permet un accès en flux aux données permettant la création de scène 3D sur le territoire de Rennes Métropole. 
@@ -28,22 +28,19 @@ info:
 servers:
   - url: /api
 tags:
-- description: essential characteristics of this API
+- description: Propriétés générales de l'API
   name: Capabilities
-- description: Data methods
+- description: Accès aux données
   name: Data
-- description: Raster Data methods
+- description: Accès aux données de type raster
   name: Coverage
 paths:
   /:
     get:
-      description: The landing page provides links to the API definition and the conformance
-        statements for this API.
+      description: La page d'accueil propose une description générale de l'API.
       operationId: getLandingPage
       parameters:
-      - description: The optional f parameter indicates the output format that the
-          server shall provide as part of the response document.  The default format
-          is JSON.
+      - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
         explode: false
         in: query
         name: f
@@ -65,10 +62,7 @@ paths:
               schema:
                 type: string
           description: |-
-            The landing page provides links to the API definition
-            (link relations `service-desc` and `service-doc`),
-            and the Conformance declaration (path `/conformance`,
-            link relation `conformance`).
+            La page d'accueil fournit des liens vers les définitions de l'API (relations `service-desc` et `service-doc`) et les déclaration de conformité (chemin `/conformance`, relation `conformance`).
         "500":
           content:
             application/json:
@@ -77,8 +71,8 @@ paths:
             text/html:
               schema:
                 type: string
-          description: A server error occurred.
-      summary: Landing page
+          description: Erreur du serveur levée.
+      summary: Page d'accueil
       tags:
       - Capabilities
       x-eov-operation-handler: controllers/CapabilitiesController

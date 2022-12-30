@@ -196,8 +196,6 @@ paths:
             Cette route permet d'obtenir les informations et les méthodes d'accès aux différents jeux de données (collection) fournies par l'API.
             La réponse présente une liste de jeux de données et pour chacun, leur description et leurs liens d'accès (chemin `/collections/{collectionId}/items`,
             liens de relation `items`).
-
-
             Cette information comprend : 
             * L'identifiant (id) du jeu de données qui est unique dans le catalogue;
             * Le titre (title) du jeu de données
@@ -263,12 +261,10 @@ paths:
               schema:
                 type: string
           description: |-
-            Description du jeu de données d'id `buildings`.
+            Description du jeu de données `buildings`.
 
             Cette route permet d'obtenir les informations dont le système de coordonnées de référence (SCR) et les méthodes d'accès aux données du jeu de données (collection) 'Buildings'.
             La réponse présente la liste des points d'accès au jeu de données et pour chacun, sa description et son lien d'accès (chemin `/collections/{collectionId}/items`).
-                                                                             
-                     
 
             Cette information comprend : 
             * Le titre (title) du point d'entrée de données
@@ -293,7 +289,7 @@ paths:
               schema:
                 type: string
           description: Erreur du serveur rencontrée.
-      summary: Description du jeu de données d'id `buildings`
+      summary: Description du jeu de données `buildings`
       tags:
       - Capabilities
       x-eov-operation-handler: controllers/CapabilitiesController
@@ -332,12 +328,10 @@ paths:
               schema:
                 type: string
           description: |-
-            Description du jeu de données d'id `mnt2018`.
+            Description du jeu de données `mnt2018`.
 
             Cette route permet d'obtenir les informations dont le système de coordonnées de référence (SCR) et les méthodes d'accès aux données du jeu de données (collection) 'mnt2018'.
             La réponse présente la liste des points d'accès au jeu de données et pour chacun, sa description et son lien d'accès (chemin `/collections/{collectionId}/items`).
-                                                                             
-                     
 
             Cette information comprend : 
             * Le titre (title) du point d'entrée de données
@@ -362,14 +356,14 @@ paths:
               schema:
                 type: string
           description: Erreur du serveur rencontrée.
-      summary: Description du jeu de données d'id `mnt2018`
+      summary: Description du jeu de données `mnt2018`
       tags:
       - Capabilities
       x-eov-operation-handler: controllers/CapabilitiesController
   /collections/buildings/items:
     get:
       description: |-
-        Le jeu de données d'id `buildings` représente les bâtiments 3D.
+        Le jeu de données `buildings` représente les bâtiments 3D.
         Les bâtiments existent sur toutes les communes du territoire métropolitain rennais. Il est possible de les charger avec ou sans texture. 
         Leur obtention est limitée à une géométrie par appel (BBOX de moins de 10km² ou code insee d'une commune)
       operationId: getBuildings
@@ -541,7 +535,9 @@ paths:
   /collections/added_building/items:
     get:
       description: |-
-        Added buildings TODO
+        Récupération des objets 3D des bâtiments ajoutés depuis le dernier millésime de la maquette 3D. 
+        Ces bâtiments ne disposent pas de texture. 
+        Il est possible de charger les bâtiments nouveaux depuis une date ultérieure au millésime. 
       operationId: getAddedBuildings
       parameters:
       - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
@@ -569,6 +565,7 @@ paths:
         in: query
         name: codeInsee
         required: false
+        description: code insee d'une commune de Rennes Métropole. 
         schema:
           type: string
         style: form
@@ -576,6 +573,7 @@ paths:
         in: query
         name: limit
         required: false
+        description: Limite du nombre de résultats. 
         schema:
           type: integer
         style: form
@@ -590,7 +588,7 @@ paths:
         in: query
         name: date
         required: false
-        description: Recherche par date (De la date en parametre jusqu'a aujourd'hui. format :YYYY-MM-DD)
+        description: Recherche par date (bâtiments ajoutés depuis la date passée en paramètre). Format "AAAA-MM-JJ".
         schema:
           format: date
           type: string
@@ -608,7 +606,7 @@ paths:
             application/gml+xml;version=3.2:
               schema:
                 type: object
-          description: Cityjson or citygml file response. No textures.
+          description: Fichier cityjson ou citygml sans texture.
         "400":
           content:
             application/json:
@@ -617,7 +615,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Invalid parameter response.
+          description: Paramètre incorrect.
         "404":
           content:
             application/json:
@@ -636,14 +634,16 @@ paths:
               schema:
                 type: string
           description: Erreur du serveur rencontrée.
-      summary: fetch buildings
+      summary: Obtention des objets 3D "bâtiments" ajoutés depuis le dernier millésime ou une date ultérieure
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
   /collections/modified_building/items:
     get:
       description: |-
-        Modified buildings TODO
+        Récupération des objets 3D des bâtiments modifiés depuis le dernier millésime de la maquette 3D. 
+        Ces bâtiments ne disposent pas de texture. 
+        Il est possible de charger les bâtiments nouveaux depuis une date ultérieure au millésime. 
       operationId: getModifiedBuildings
       parameters:
       - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
@@ -671,6 +671,7 @@ paths:
         in: query
         name: codeInsee
         required: false
+        description: code insee d'une commune de Rennes Métropole. 
         schema:
           type: string
         style: form
@@ -678,6 +679,7 @@ paths:
         in: query
         name: limit
         required: false
+        description: Limite du nombre de résultats. 
         schema:
           type: integer
         style: form
@@ -692,7 +694,7 @@ paths:
         in: query
         name: date
         required: false
-        description: Recherche par date (De la date en parametre jusqu'a aujourd'hui. format :YYYY-MM-DD)
+        description: Recherche par date (bâtiments modifiés depuis la date passée en paramètre). Format "AAAA-MM-JJ".
         schema:
           format: date
           type: string
@@ -710,7 +712,7 @@ paths:
             application/gml+xml;version=3.2:
               schema:
                 type: object
-          description: Cityjson or citygml file response. No textures.
+          description: Fichier cityjson ou citygml sans texture.
         "400":
           content:
             application/json:
@@ -719,7 +721,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Invalid parameter response.
+          description: Paramètre incorrect.
         "404":
           content:
             application/json:
@@ -738,20 +740,22 @@ paths:
               schema:
                 type: string
           description: Erreur du serveur rencontrée.
-      summary: fetch buildings
+      summary: Obtention des objets 3D "bâtiments" modifiés depuis le dernier millésime ou une date ultérieure
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
   /collections/deleted_building/items:
     get:
       description: |-
-        deleted buildings TODO
+        Récupération de la liste des bâtiments supprimés depuis le dernier millésime de la maquette 3D. 
+        La liste indique les identifiants des bâtiments du millésime qui n'ont plus lieu d'être.
       operationId: getDeletedBuildings
       parameters:
       - explode: true
         in: query
         name: codeInsee
         required: false
+        description: code insee d'une commune de Rennes Métropole.
         schema:
           type: string
         style: form
@@ -759,6 +763,7 @@ paths:
         in: query
         name: limit
         required: false
+        description: Limite du nombre de résultats. 
         schema:
           type: integer
         style: form
@@ -773,7 +778,7 @@ paths:
         in: query
         name: date
         required: false
-        description: Recherche par date (De la date en parametre jusqu'a aujourd'hui. format :YYYY-MM-DD)
+        description: Recherche par date (bâtiments supprimés depuis la date passée en paramètre). Format "AAAA-MM-JJ".
         schema:
           format: date
           type: string
@@ -791,7 +796,7 @@ paths:
             # application/gml+xml;version=3.2:
             #   schema:
             #     type: object
-          description: Json file response.
+          description: Fichier JSON.
         "400":
           content:
             application/json:
@@ -800,7 +805,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Invalid parameter response.
+          description: Paramètre incorrect.
         "404":
           content:
             application/json:
@@ -819,14 +824,15 @@ paths:
               schema:
                 type: string
           description: Erreur du serveur rencontrée.
-      summary: fetch buildings
+      summary: Obtention des identifiants des bâtiments modifiés depuis le dernier millésime ou une date ultérieure
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
   /collections/vegetation/items:
     get:
       description: |-
-        vegetation TODO
+        Végétation théorique. Cette couche de données ne représente pas la réalité en temps réelle, mais est utile pour décorer une scène 3D.
+        Les données retournées sont des points qu'il convient de représenter en 3D. Un catalogue de représentations est disponible sur la page "téléchargements" de l'API 3D.
       operationId: getVegetation
       parameters:
       - explode: true
@@ -841,6 +847,7 @@ paths:
       #   in: query
       #   name: codeInsee
       #   required: false
+      #   description: code insee d'une commune de Rennes Métropole. 
       #   schema:
       #     type: string
       #   style: form
@@ -850,7 +857,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Vegetation'
-          description: Json file response.
+          description: Fichier Json.
         "400":
           content:
             application/json:
@@ -859,7 +866,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Invalid parameter response.
+          description: Paramètre incorrect.
         "404":
           content:
             application/json:
@@ -878,14 +885,15 @@ paths:
               schema:
                 type: string
           description: Erreur du serveur rencontrée.
-      summary: fetch buildings
+      summary: Obtention d'une couche de données ponctuelles permettant la représentation de la végétation théorique.
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
   /collections/mobilier/items:
     get:
       description: |-
-        mobilier TODO
+        Mobilier urbain théorique. Cette couche de données ne représente pas la réalité en temps réelle, mais est utile pour décorer une scène 3D.
+        Les données retournées sont des points qu'il convient de représenter en 3D. Un catalogue de représentations est disponible sur la page "téléchargements" de l'API 3D.
       operationId: getMobilier
       parameters:
       - explode: true
@@ -900,6 +908,7 @@ paths:
       #   in: query
       #   name: codeInsee
       #   required: false
+      #   description: code insee d'une commune de Rennes Métropole. 
       #   schema:
       #     type: string
       #   style: form
@@ -909,7 +918,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Vegetation'
-          description: Json file response.
+          description: Fichier Json.
         "400":
           content:
             application/json:
@@ -918,7 +927,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Invalid parameter response.
+          description: Paramètre incorrect.
         "404":
           content:
             application/json:
@@ -937,13 +946,15 @@ paths:
               schema:
                 type: string
           description: Erreur du serveur rencontrée.
-      summary: fetch buildings
+      summary: Obtention d'une couche de données ponctuelles permettant la représentation du mobilier urbain théorique.
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController    
   /collections/mnt2018/coverage:
     get:
-      description: Fetch mnt raster tile from bbox or insee code.
+      description:  |-
+        Obtention du Modèle Numérique de Terrain (MNT) qui permet de connaitre le relief du terrain.
+        Il convient d'interpréter les niveaux de gris de l'image obtenue pour représenter le relief en 3D.
       operationId: getRaster
       parameters:
       - explode: true
@@ -958,6 +969,7 @@ paths:
       #   in: query
       #   name: codeInsee
       #   required: false
+      #   description: code insee d'une commune de Rennes Métropole. 
       #   schema:
       #     type: string
       #   style: form
@@ -968,7 +980,7 @@ paths:
               schema:
                 format: binary
                 type: string
-          description: A map tile image returned as a response.
+          description: Fichier image geolocalisé en niveaux de gris.
         "400":
           content:
             application/json:
@@ -977,7 +989,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Invalid parameter response.
+          description: Paramètre incorrect.
         "404":
           content:
             application/json:
@@ -996,7 +1008,7 @@ paths:
               schema:
                 type: string
           description: Erreur du serveur rencontrée.
-      summary: fetch raster tile from bbox or insee code
+      summary: Obtention d'une tuile raster du Modèle Numérique de Terrain (MNT)
       tags:
       - Coverage
       x-eov-operation-handler: controllers/DataController
@@ -1029,6 +1041,7 @@ components:
       in: query
       name: codeInsee
       required: false
+      description: code insee d'une commune de Rennes Métropole. 
       schema:
         type: string
       style: form
@@ -1037,6 +1050,7 @@ components:
       in: query
       name: limit
       required: false
+      description: Limite du nombre de résultats. 
       schema:
         type: integer
       style: form
@@ -1049,7 +1063,7 @@ components:
         type: integer
       style: form
     buildingID:
-      description: local identifier of a building
+      description: Identifiant du bâtiment
       explode: false
       in: path
       name: buildingID
@@ -1058,7 +1072,7 @@ components:
         type: string
       style: simple
     date:
-      description: date
+      description: Date au format "AAAA-MM-JJ"
       explode: false
       in: path
       name: date

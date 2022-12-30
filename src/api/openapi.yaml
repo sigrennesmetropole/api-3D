@@ -216,24 +216,16 @@ paths:
               example:
                 id: buildings
                 title: Buildings
-                description: Buildings in the city of Bonn.
+                description: Fetch buildings.
                 links:
-                - href: http://data.example.org/collections/buildings/items
-                  rel: items
-                  type: application/geo+json
+                - href: /collections/buildings?f=application%2Fjson
+                  rel: http://www.opengis.net/def/rel/ogc/1.0/collection
+                  type: application/json
                   title: Buildings
-                - href: http://data.example.org/collections/buildings/items.html
-                  rel: items
-                  type: text/html
+                - href: /collections/buildings?f=application%2Fgml%2Bxml%3Bversion%3D3.2
+                  rel: http://www.opengis.net/def/rel/ogc/1.0/collection
+                  type: application/gml+xml;version=3.2
                   title: Buildings
-                - href: https://creativecommons.org/publicdomain/zero/1.0/
-                  rel: license
-                  type: text/html
-                  title: CC0-1.0
-                - href: https://creativecommons.org/publicdomain/zero/1.0/rdf
-                  rel: license
-                  type: application/rdf+xml
-                  title: CC0-1.0
               schema:
                 $ref: '#/components/schemas/collection'
             text/html:
@@ -297,10 +289,10 @@ paths:
                 title: Modèle Numérique de Terrain (MNT) 2018
                 description: Fetch mnt2018
                 links:
-                - href: http://data.example.org/collections/mnt2018/coverage
-                  rel: items
+                - href: /collections/mnt2018/coverage
+                  rel: http://www.opengis.net/def/rel/ogc/1.0/coverage
                   type: image/tiff;application=geotiff
-                  title: Mnt2018
+                  title: mnt2018
               schema:
                 $ref: '#/components/schemas/collection'
             text/html:

@@ -1,20 +1,14 @@
 openapi: 3.0.2
 info:
   title: RENNES METROPOLE - API 3D
-  description: <p>L'API 3D permet un accès en flux aux données 3D produites par Rennes Métropole couvrant son territoire. </p>
-    <p>
-    La <b>base de données des bâtiments 3D</b> est constituée du socle millésimé et des ajustements de bâtiments. Le socle est mis à jour tous les trois ans. Les ajustements (destructions, modifications, ajouts) sont effectués pendant la période d'exploitation du millésime et ne bénéficient pas, eux, de texture.
-    </p>
-    
-    <p>
-    Les <b>données de végétation</b> et de <b>mobilier urbains</b> peuvent servir à enrichir des expériences de visualisations construites sur la base des bâtiments 3D. Toutefois, ces données sont théoriques et ne correspondent pas exactement à la réalité. Ces couches de données ponctuelles nécessite un travail de représentation à l'aide des catalogues disponibles sur la page <a target="_blank" href="https://api-3d.sig.rennesmetropole.fr"> des fichiers téléchargeables</a>.
-    </p>
-    
-    <p>
-    Le <b>Modèle Numérique de Terrain (MNT)</b> permet de connaître l'altitude du terrain à un endroit donné. Cette donnée raster en niveaux de gris permet de reconstruire un modèle 3D du terrain.
-    </p>
-    <p>Cette API se veut conforme au standard OGC API - Features v1.0.0 et au standard OGC API - Coverage (draft). </p>
+  description: L'API REST permet un accès en flux aux données permettant la création de scène 3D sur le territoire de Rennes Métropole. 
+        <ul>
+          <li>La maquette des bâtiments est millésimée et remise à jour tous les trois ans. Entre temps, quelques ajustements des bâtiments peuvent être enregistrés en base de données. Dans ce cas les bâtiments modifiés ne peuvent pas bénéficier de la texture.</li>
+          <li>Les éléments de décors (végétation, mobilier urbains) servent à rendre la scène plus réaliste. Toutefois, ces données sont théoriques et ne correspondent pas exactement à la réalité. Ces couches de données ponctuelles nécessite un travail de représentation à l'aide des catalogues de représentations téléchargeables sur la page <a target="_blank" href="https://api-3d.sig.rennesmetropole.fr"> des fichiers téléchargeables</a>.</li>
+          <li>Le Modèle Numérique de Terrain (MNT) permet de connaître l'altitude du terrain à un endroit donné.</li>
+        </ul>
   contact:
+    email: sigsupport@rennesmetropole.fr
     name: Rennes Metropole - Service Information Géographique
     url: https://public.sig.rennesmetropole.fr/
   license:
@@ -43,7 +37,7 @@ tags:
 paths:
   /:
     get:
-      description: Page d'accueil proposant une description de l'API.
+      description: La page d'accueil propose une description générale de l'API.
       operationId: getLandingPage
       parameters:
       - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
@@ -341,7 +335,7 @@ paths:
     get:
       description: |-
         Le jeu de données `buildings` représente les bâtiments 3D.
-        Les bâtiments existent sur toutes les communes du territoire métropolitain. Il est possible de les obtenir avec ou sans texture. 
+        Les bâtiments existent sur toutes les communes du territoire métropolitain rennais. Il est possible de les charger avec ou sans texture. 
         Il est nécessaire de préciser un périmètre géographique (BBOX de moins de 10km² ou code insee d'une commune).
       operationId: getBuildings
       parameters:
@@ -410,7 +404,7 @@ paths:
             application/gml+xml;version=3.2:
               schema:
                 type: object
-          description: Données CityJSON ou CityGML. Si les textures sont demandées, le fichier compressé retourné contient le modèle 3D et les textures des bâtiments.
+          description: Fichier cityjson ou citygml. Si les textures sont demandées le fichier zip retourné contient le modèle 3D et les textures des bâtiments.
         "400":
           content:
             application/json:
@@ -438,14 +432,14 @@ paths:
               schema:
                 type: string
           description: Erreur du serveur rencontrée.
-      summary: Obtention des données 3D bâtiments
+      summary: Obtention des objets 3D bâtiments
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
   /collections/buildings/items/{buildingID}:
     get:
       description: |-
-        Récupération des données 3D d'un bâtiment à partir de son identifiant. Il est possible de l'obtenir avec ou sans texture. 
+        Récupération de l'objet 3D d'un bâtiment identifié. Il est possible de les charger avec ou sans texture. 
       operationId: getbuildingById
       parameters:
       - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
@@ -486,7 +480,7 @@ paths:
             application/gml+xml;version=3.2:
               schema:
                 type: object
-          description: Données CityJSON ou CityGML. Si les textures sont demandées le fichier compressé retourné contient le modèle 3D et les textures du bâtiment.
+          description: Fichier cityjson ou citygml. Si les textures sont demandées le fichier zip retourné contient le modèle 3D et les textures du bâtiment.
         "404":
           content:
             application/json:
@@ -505,16 +499,16 @@ paths:
               schema:
                 type: string
           description: Erreur du serveur rencontrée.
-      summary: Obtention des données 3D d'un bâtiment à partir de son identifiant.
+      summary: Obtention de l'objet 3D d'un bâtiment à partir de son identifiant.
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
   /collections/added_building/items:
     get:
       description: |-
-        Récupération des données 3D des bâtiments ajoutés depuis le dernier millésime du socle 3D. 
+        Récupération des objets 3D des bâtiments ajoutés depuis le dernier millésime de la maquette 3D. 
         Ces bâtiments ne disposent pas de texture. 
-        Il est possible d'obtenir les bâtiments nouveaux depuis une date ultérieure au millésime. 
+        Il est possible de charger les bâtiments nouveaux depuis une date ultérieure au millésime. 
       operationId: getAddedBuildings
       parameters:
       - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
@@ -583,7 +577,7 @@ paths:
             application/gml+xml;version=3.2:
               schema:
                 type: object
-          description: Données CityJSON ou CityGML sans texture.
+          description: Fichier cityjson ou citygml sans texture.
         "400":
           content:
             application/json:
@@ -611,16 +605,16 @@ paths:
               schema:
                 type: string
           description: Erreur du serveur rencontrée.
-      summary: Obtention des données 3D "bâtiments" ajoutés depuis le dernier millésime ou une date ultérieure
+      summary: Obtention des objets 3D "bâtiments" ajoutés depuis le dernier millésime ou une date ultérieure
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
   /collections/modified_building/items:
     get:
       description: |-
-        Récupération des données 3D des bâtiments modifiés depuis le dernier millésime du socle 3D. 
+        Récupération des objets 3D des bâtiments modifiés depuis le dernier millésime de la maquette 3D. 
         Ces bâtiments ne disposent pas de texture. 
-        Il est possible d'obtenir les bâtiments modifiés depuis une date ultérieure au millésime. 
+        Il est possible de charger les bâtiments nouveaux depuis une date ultérieure au millésime. 
       operationId: getModifiedBuildings
       parameters:
       - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
@@ -689,7 +683,7 @@ paths:
             application/gml+xml;version=3.2:
               schema:
                 type: object
-          description: Données CityJSON ou CityGML sans texture.
+          description: Fichier cityjson ou citygml sans texture.
         "400":
           content:
             application/json:
@@ -717,7 +711,7 @@ paths:
               schema:
                 type: string
           description: Erreur du serveur rencontrée.
-      summary: Obtention des données 3D "bâtiments" modifiés depuis le dernier millésime ou une date ultérieure
+      summary: Obtention des objets 3D "bâtiments" modifiés depuis le dernier millésime ou une date ultérieure
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
@@ -725,6 +719,7 @@ paths:
     get:
       description: |-
         Récupération de la liste des bâtiments supprimés depuis le dernier millésime de la maquette 3D. 
+        La liste indique les identifiants des bâtiments du millésime qui n'ont plus lieu d'être.
       operationId: getDeletedBuildings
       parameters:
       - explode: true
@@ -772,7 +767,7 @@ paths:
             # application/gml+xml;version=3.2:
             #   schema:
             #     type: object
-          description: Données JSON.
+          description: Fichier JSON.
         "400":
           content:
             application/json:
@@ -807,7 +802,7 @@ paths:
   /collections/vegetation/items:
     get:
       description: |-
-        Végétation théorique.<br/>
+        Végétation théorique. Cette couche de données ne représente pas la réalité en temps réelle, mais est utile pour décorer une scène 3D.
         Les données retournées sont des points qu'il convient de représenter en 3D. Un catalogue de représentations est disponible sur la page "téléchargements" de l'API 3D.
       operationId: getVegetation
       parameters:
@@ -833,7 +828,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Vegetation'
-          description: Données Json.
+          description: Fichier Json.
         "400":
           content:
             application/json:
@@ -868,7 +863,7 @@ paths:
   /collections/mobilier/items:
     get:
       description: |-
-        Mobilier urbain théorique. <br/>
+        Mobilier urbain théorique. Cette couche de données ne représente pas la réalité en temps réelle, mais est utile pour décorer une scène 3D.
         Les données retournées sont des points qu'il convient de représenter en 3D. Un catalogue de représentations est disponible sur la page "téléchargements" de l'API 3D.
       operationId: getMobilier
       parameters:
@@ -894,7 +889,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Vegetation'
-          description: Données Json.
+          description: Fichier Json.
         "400":
           content:
             application/json:
@@ -929,7 +924,7 @@ paths:
   /collections/mnt2018/coverage:
     get:
       description:  |-
-        Obtention du Modèle Numérique de Terrain (MNT) qui permet de connaitre le relief du terrain. <br/>
+        Obtention du Modèle Numérique de Terrain (MNT) qui permet de connaitre le relief du terrain.
         Il convient d'interpréter les niveaux de gris de l'image obtenue pour représenter le relief en 3D.
       operationId: getRaster
       parameters:
@@ -956,7 +951,7 @@ paths:
               schema:
                 format: binary
                 type: string
-          description: Raster geolocalisé en niveaux de gris.
+          description: Fichier image geolocalisé en niveaux de gris.
         "400":
           content:
             application/json:
@@ -984,7 +979,7 @@ paths:
               schema:
                 type: string
           description: Erreur du serveur rencontrée.
-      summary: Obtention d'une partie du raster du Modèle Numérique de Terrain (MNT)
+      summary: Obtention d'une tuile raster du Modèle Numérique de Terrain (MNT)
       tags:
       - Coverage
       x-eov-operation-handler: controllers/DataController
@@ -1653,5 +1648,4 @@ components:
           -7228060.155101
           -1360678.159198
           -7228097.547001
-
 

@@ -1,19 +1,25 @@
 openapi: 3.0.2
 info:
+  title: RENNES METROPOLE - API 3D
+  description: <p>L'API 3D permet un accès en flux aux données 3D produites par Rennes Métropole couvrant son territoire. </p>
+    <p>
+    La <b>base de données des bâtiments 3D</b> est constituée du socle millésimé et des ajustements de bâtiments. Le socle est mis à jour tous les trois ans. Les ajustements (destructions, modifications, ajouts) sont effectués pendant la période d'exploitation du millésime et ne bénéficient pas, eux, de texture.
+    </p>
+    
+    <p>
+    Les <b>données de végétation</b> et de <b>mobilier urbains</b> peuvent servir à enrichir des expériences de visualisations construites sur la base des bâtiments 3D. Toutefois, ces données sont théoriques et ne correspondent pas exactement à la réalité. Ces couches de données ponctuelles nécessite un travail de représentation à l'aide des catalogues disponibles sur la page <a target="_blank" href="https://api-3d.sig.rennesmetropole.fr"> des fichiers téléchargeables</a>.
+    </p>
+    
+    <p>
+    Le <b>Modèle Numérique de Terrain (MNT)</b> permet de connaître l'altitude du terrain à un endroit donné. Cette donnée raster en niveaux de gris permet de reconstruire un modèle 3D du terrain.
+    </p>
+    <p>Cette API se veut conforme au standard OGC API - Features v1.0.0 et au standard OGC API - Coverage (draft). </p>
   contact:
-    email: sigsupport@rennesmetropole.fr
     name: Rennes Metropole - Service Information Géographique
     url: https://public.sig.rennesmetropole.fr/
-  description: L'API REST permet un accès en flux aux données permettant la création de scène 3D sur le territoire de Rennes Métropole. 
-        <ul>
-          <li>La maquette des bâtiments est millésimée et remise à jour tous les trois ans. Entre temps, quelques ajustements des bâtiments peuvent être enregistrés en base de données. Dans ce cas les bâtiments modifiés ne peuvent pas bénéficier de la texture.</li>
-          <li>Les éléments de décors (végétation, mobilier urbains) servent à rendre la scène plus réaliste. Toutefois, ces données sont théoriques et ne correspondent pas exactement à la réalité. Ces couches de données ponctuelles nécessite un travail de représentation à l'aide des catalogues de représentations téléchargeables sur la page <a target="_blank" href="https://api-3d.sig.rennesmetropole.fr"> des fichiers téléchargeables</a>.</li>
-          <li>Le Modèle Numérique de Terrain (MNT) permet de connaître l'altitude du terrain à un endroit donné.</li>
-        </ul>
   license:
     name: Licence ODbL 1.0
     url: https://opendatacommons.org/licenses/odbl/
-  title: RENNES METROPOLE - API 3D
   version: 1.0.0
   x-keywords:
   - geospatial
@@ -37,7 +43,7 @@ tags:
 paths:
   /:
     get:
-      description: La page d'accueil propose une description générale de l'API.
+      description: Page d'accueil proposant une description de l'API.
       operationId: getLandingPage
       parameters:
       - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
@@ -62,7 +68,8 @@ paths:
               schema:
                 type: string
           description: |-
-            La page d'accueil fournit des liens vers les définitions de l'API (relations `service-desc` et `service-doc`) et les déclaration de conformité (chemin `/conformance`, relation `conformance`).
+            La page d'accueil fournit des liens vers les définitions de l'API (relations `service-desc` et `service-doc`) 
+            et les déclaration de conformité (chemin `/conformance`, relation `conformance`).
         "500":
           content:
             application/json:
@@ -71,14 +78,14 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur rencontrée.
+          description: Erreur du serveur levée.
       summary: Page d'accueil
       tags:
       - Capabilities
       x-eov-operation-handler: controllers/CapabilitiesController
   /conformance:
     get:
-      description: Liste des standards auxquels l'API est conforme.
+      description: Liste des standards auxquels l'API est conforme..
       operationId: getConformanceDeclaration
       parameters:
       - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
@@ -120,8 +127,8 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur rencontrée.
-      summary: Déclaration des conformités aux standards
+          description: Erreur du serveur levée.
+      summary: Déclarations de conformités
       tags:
       - Capabilities
       x-eov-operation-handler: controllers/CapabilitiesController
@@ -147,7 +154,7 @@ paths:
             application/json:
               example:
                 links:
-                - href: /collections?f=application%2Fjson
+                - href: /collections?f=application%2Fjso
                   rel: data
                   type: application/json
                   title: The JSON representation of the list of all data collections served from this endpoint
@@ -175,6 +182,7 @@ paths:
             Cette route permet d'obtenir les informations et les méthodes d'accès aux différents jeux de données (collection) fournies par l'API.
             La réponse présente une liste de jeux de données et pour chacun, leur description et leurs liens d'accès (chemin `/collections/{collectionId}/items`,
             liens de relation `items`).
+
             Cette information comprend : 
             * L'identifiant (id) du jeu de données qui est unique dans le catalogue;
             * Le titre (title) du jeu de données
@@ -188,7 +196,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur rencontrée.
+          description: Erreur du serveur levée.
       summary: Description des jeux de données 
       tags:
       - Capabilities
@@ -214,25 +222,31 @@ paths:
           content:
             application/json:
               example:
-                id: buildings
-                title: Buildings
-                description: Fetch buildings.
                 links:
-                - href: /collections/buildings?f=application%2Fjson
-                  rel: http://www.opengis.net/def/rel/ogc/1.0/collection
+                - href: /collections?f=application%2Fjso
+                  rel: data
                   type: application/json
+                  title: The JSON representation of the list of all data collections served from this endpoint
+                collections:
+                - id: buildings
                   title: Buildings
-                - href: /collections/buildings?f=application%2Fgml%2Bxml%3Bversion%3D3.2
-                  rel: http://www.opengis.net/def/rel/ogc/1.0/collection
-                  type: application/gml+xml;version=3.2
-                  title: Buildings
+                  description: Fetch buildings.
+                  links:
+                  - href: /collections/buildings?f=application%2Fjson
+                    rel: http://www.opengis.net/def/rel/ogc/1.0/collection
+                    type: application/json
+                    title: Buildings
+                  - href: /collections/buildings?f=application%2Fgml%2Bxml%3Bversion%3D3.2
+                    rel: http://www.opengis.net/def/rel/ogc/1.0/collection
+                    type: application/gml+xml;version=3.2
+                    title: Buildings
               schema:
                 $ref: '#/components/schemas/collection'
             text/html:
               schema:
                 type: string
           description: |-
-            Description du jeu de données `buildings`.
+            Description du jeu de données d'id `buildings`.
 
             Cette route permet d'obtenir les informations dont le système de coordonnées de référence (SCR) et les méthodes d'accès aux données du jeu de données (collection) 'Buildings'.
             La réponse présente la liste des points d'accès au jeu de données et pour chacun, sa description et son lien d'accès (chemin `/collections/{collectionId}/items`).
@@ -259,8 +273,8 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur rencontrée.
-      summary: Description du jeu de données `buildings`
+          description: Erreur du serveur levée.
+      summary: Description du jeu de données d'id `buildings`
       tags:
       - Capabilities
       x-eov-operation-handler: controllers/CapabilitiesController
@@ -299,7 +313,7 @@ paths:
               schema:
                 type: string
           description: |-
-            Description du jeu de données `mnt2018`.
+            Description du jeu de données d'id `mnt2018`.
 
             Cette route permet d'obtenir les informations dont le système de coordonnées de référence (SCR) et les méthodes d'accès aux données du jeu de données (collection) 'mnt2018'.
             La réponse présente la liste des points d'accès au jeu de données et pour chacun, sa description et son lien d'accès (chemin `/collections/{collectionId}/items`).
@@ -326,17 +340,18 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur rencontrée.
-      summary: Description du jeu de données `mnt2018`
+          description: Erreur du serveur levée.
+      summary: Description du jeu de données d'id `mnt2018`
       tags:
       - Capabilities
       x-eov-operation-handler: controllers/CapabilitiesController
   /collections/buildings/items:
     get:
       description: |-
-        Le jeu de données `buildings` représente les bâtiments 3D.
-        Les bâtiments existent sur toutes les communes du territoire métropolitain rennais. Il est possible de les charger avec ou sans texture. 
-        Il est nécessaire de préciser un périmètre géographique (BBOX de moins de 10km² ou code insee d'une commune).
+        Le jeu de données d'id `buildings` représente les bâtiments 3D.
+        Les bâtiments existent sur toutes les communes du territoire métropolitain. Il est possible de les charger avec ou sans texture. 
+        Leur obtention est limitée à une géométrie par appel (BBOX de moins de 10km² ou code insee d'une commune)
+
       operationId: getBuildings
       parameters:
       - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
@@ -356,7 +371,7 @@ paths:
         in: query
         name: bbox
         required: false
-        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').  
+        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000'). 
         schema:
           type: string
         allowReserved: true
@@ -372,7 +387,7 @@ paths:
         in: query
         name: limit
         required: false
-        description: Limite du nombre de résultats.
+        description: Limite du nombre de résultats. 
         schema:
           type: integer
         style: form
@@ -404,7 +419,7 @@ paths:
             application/gml+xml;version=3.2:
               schema:
                 type: object
-          description: Fichier cityjson ou citygml. Si les textures sont demandées le fichier zip retourné contient le modèle 3D et les textures des bâtiments.
+          description: Données CityJSON ou CityGML. Si les textures sont demandées, le fichier compressé retourné contient le modèle 3D et les textures des bâtiments.
         "400":
           content:
             application/json:
@@ -431,15 +446,16 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur rencontrée.
-      summary: Obtention des objets 3D bâtiments
+          description: Erreur du serveur levée.
+      summary: Obtention des données 3D "bâtiments"
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
   /collections/buildings/items/{buildingID}:
     get:
       description: |-
-        Récupération de l'objet 3D d'un bâtiment identifié. Il est possible de les charger avec ou sans texture. 
+        Récupération de la donnée 3D d'un bâtiment à partir de son identifiant. Il est possible de l'obtenir avec ou sans texture. 
+        
       operationId: getbuildingById
       parameters:
       - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
@@ -480,7 +496,7 @@ paths:
             application/gml+xml;version=3.2:
               schema:
                 type: object
-          description: Fichier cityjson ou citygml. Si les textures sont demandées le fichier zip retourné contient le modèle 3D et les textures du bâtiment.
+          description: Données CityJSON ou CityGML. Si les textures sont demande le fichier zip retourné contient le modèle 3D et les textures du bâtiment.
         "404":
           content:
             application/json:
@@ -498,17 +514,17 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur rencontrée.
-      summary: Obtention de l'objet 3D d'un bâtiment à partir de son identifiant.
+          description: Erreur du serveur levée.
+      summary: Obtention des données 3D d'un bâtiment à partir de son identifiant.
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
   /collections/added_building/items:
     get:
       description: |-
-        Récupération des objets 3D des bâtiments ajoutés depuis le dernier millésime de la maquette 3D. 
+        Récupération des données 3D des bâtiments ajoutés depuis le dernier millésime du socle 3D. 
         Ces bâtiments ne disposent pas de texture. 
-        Il est possible de charger les bâtiments nouveaux depuis une date ultérieure au millésime. 
+        Il est possible d'obtenir les bâtiments nouveaux depuis une date ultérieure au millésime. 
       operationId: getAddedBuildings
       parameters:
       - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
@@ -528,7 +544,7 @@ paths:
         in: query
         name: bbox
         required: false
-        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').  
+        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').
         schema:
           type: string
         allowReserved: true
@@ -577,7 +593,7 @@ paths:
             application/gml+xml;version=3.2:
               schema:
                 type: object
-          description: Fichier cityjson ou citygml sans texture.
+          description: Données CityJSON ou CityGML sans texture.
         "400":
           content:
             application/json:
@@ -604,17 +620,17 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur rencontrée.
-      summary: Obtention des objets 3D "bâtiments" ajoutés depuis le dernier millésime ou une date ultérieure
+          description: Erreur du serveur levée.
+      summary: Obtention des données 3D "bâtiments" ajoutés depuis le dernier millésime ou une date ultérieure
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
   /collections/modified_building/items:
     get:
       description: |-
-        Récupération des objets 3D des bâtiments modifiés depuis le dernier millésime de la maquette 3D. 
+        Récupération des données 3D des bâtiments modifiés depuis le dernier millésime du socle 3D. 
         Ces bâtiments ne disposent pas de texture. 
-        Il est possible de charger les bâtiments nouveaux depuis une date ultérieure au millésime. 
+        Il est possible d'obtenir les bâtiments modifiés depuis une date ultérieure au millésime. 
       operationId: getModifiedBuildings
       parameters:
       - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
@@ -634,7 +650,7 @@ paths:
         in: query
         name: bbox
         required: false
-        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').  
+        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').
         schema:
           type: string
         allowReserved: true
@@ -683,7 +699,7 @@ paths:
             application/gml+xml;version=3.2:
               schema:
                 type: object
-          description: Fichier cityjson ou citygml sans texture.
+          description: Données CityJSON ou CityGML sans texture.
         "400":
           content:
             application/json:
@@ -710,23 +726,22 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur rencontrée.
-      summary: Obtention des objets 3D "bâtiments" modifiés depuis le dernier millésime ou une date ultérieure
+          description: Erreur du serveur levée.
+      summary: Obtention des données 3D "bâtiments" modifiés depuis le dernier millésime ou une date ultérieure
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
   /collections/deleted_building/items:
     get:
       description: |-
-        Récupération de la liste des bâtiments supprimés depuis le dernier millésime de la maquette 3D. 
-        La liste indique les identifiants des bâtiments du millésime qui n'ont plus lieu d'être.
+        Récupération de la liste des bâtiments supprimés depuis le dernier millésime de la maquette 3D.
       operationId: getDeletedBuildings
       parameters:
       - explode: true
         in: query
         name: codeInsee
         required: false
-        description: code insee d'une commune de Rennes Métropole.
+        description: code insee d'une commune de Rennes Métropole. 
         schema:
           type: string
         style: form
@@ -767,7 +782,7 @@ paths:
             # application/gml+xml;version=3.2:
             #   schema:
             #     type: object
-          description: Fichier JSON.
+          description: Données JSON.
         "400":
           content:
             application/json:
@@ -794,7 +809,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur rencontrée.
+          description: Erreur du serveur levée.
       summary: Obtention des identifiants des bâtiments modifiés depuis le dernier millésime ou une date ultérieure
       tags:
       - Data
@@ -802,7 +817,7 @@ paths:
   /collections/vegetation/items:
     get:
       description: |-
-        Végétation théorique. Cette couche de données ne représente pas la réalité en temps réelle, mais est utile pour décorer une scène 3D.
+        Végétation théorique.<br/>
         Les données retournées sont des points qu'il convient de représenter en 3D. Un catalogue de représentations est disponible sur la page "téléchargements" de l'API 3D.
       operationId: getVegetation
       parameters:
@@ -810,7 +825,7 @@ paths:
         in: query
         name: bbox
         required: false
-        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').  
+        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').
         schema:
           type: string
         allowReserved: true
@@ -828,7 +843,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Vegetation'
-          description: Fichier Json.
+          description: Données Json.
         "400":
           content:
             application/json:
@@ -855,7 +870,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur rencontrée.
+          description: Erreur du serveur levée.
       summary: Obtention d'une couche de données ponctuelles permettant la représentation de la végétation théorique.
       tags:
       - Data
@@ -863,7 +878,7 @@ paths:
   /collections/mobilier/items:
     get:
       description: |-
-        Mobilier urbain théorique. Cette couche de données ne représente pas la réalité en temps réelle, mais est utile pour décorer une scène 3D.
+        Mobilier urbain théorique. <br/>
         Les données retournées sont des points qu'il convient de représenter en 3D. Un catalogue de représentations est disponible sur la page "téléchargements" de l'API 3D.
       operationId: getMobilier
       parameters:
@@ -871,7 +886,7 @@ paths:
         in: query
         name: bbox
         required: false
-        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').  
+        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').
         schema:
           type: string
         allowReserved: true
@@ -889,7 +904,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Vegetation'
-          description: Fichier Json.
+          description: Données Json.
         "400":
           content:
             application/json:
@@ -916,15 +931,14 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur rencontrée.
+          description: Erreur du serveur levée.
       summary: Obtention d'une couche de données ponctuelles permettant la représentation du mobilier urbain théorique.
       tags:
       - Data
-      x-eov-operation-handler: controllers/DataController    
+      x-eov-operation-handler: controllers/DataController 
   /collections/mnt2018/coverage:
     get:
-      description:  |-
-        Obtention du Modèle Numérique de Terrain (MNT) qui permet de connaitre le relief du terrain.
+      description: Obtention du Modèle Numérique de Terrain (MNT) qui permet de connaitre le relief du terrain.<br/>
         Il convient d'interpréter les niveaux de gris de l'image obtenue pour représenter le relief en 3D.
       operationId: getRaster
       parameters:
@@ -932,7 +946,7 @@ paths:
         in: query
         name: bbox
         required: false
-        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').  
+        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').
         schema:
           type: string
         allowReserved: true
@@ -951,7 +965,7 @@ paths:
               schema:
                 format: binary
                 type: string
-          description: Fichier image geolocalisé en niveaux de gris.
+          description: Raster geolocalisé en niveaux de gris.
         "400":
           content:
             application/json:
@@ -978,8 +992,8 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur rencontrée.
-      summary: Obtention d'une tuile raster du Modèle Numérique de Terrain (MNT)
+          description: Erreur du serveur levée.
+      summary: Obtention d'une partie du raster du Modèle Numérique de Terrain (MNT)
       tags:
       - Coverage
       x-eov-operation-handler: controllers/DataController
@@ -1003,7 +1017,7 @@ components:
       in: query
       name: bbox
       required: false
-      description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').  
+      description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').
       schema:
         type: string
       allowReserved: true
@@ -1088,7 +1102,7 @@ components:
         text/html:
           schema:
             type: string
-      description: Erreur du serveur rencontrée.
+      description: Erreur du serveur levée.
     LandingPage:
       content:
         application/json:
@@ -1124,43 +1138,25 @@ components:
           example:
             links:
             - href: http://data.example.org/collections.json
-              rel: self
-              type: application/json
-              title: this document
-            - href: http://data.example.org/collections.html
-              rel: alternate
-              type: text/html
-              title: this document as HTML
-            - href: http://schemas.example.org/1.0/buildings.xsd
-              rel: describedBy
-              type: application/xml
-              title: GML application schema for Acme Corporation building data
-            - href: http://download.example.org/buildings.gpkg
-              rel: enclosure
-              type: application/geopackage+sqlite3
-              title: Bulk download (GeoPackage)
-              length: 472546
-            collections:
-            - id: buildings
-              title: Buildings
-              description: Buildings in the city of Bonn.
-              links:
-              - href: http://data.example.org/collections/buildings/items
-                rel: items
-                type: application/geo+json
-                title: Buildings
-              - href: http://data.example.org/collections/buildings/items.html
-                rel: items
-                type: text/html
-                title: Buildings
-              - href: https://creativecommons.org/publicdomain/zero/1.0/
-                rel: license
-                type: text/html
-                title: CC0-1.0
-              - href: https://creativecommons.org/publicdomain/zero/1.0/rdf
-                rel: license
-                type: application/rdf+xml
-                title: CC0-1.0
+            example:
+                links:
+                - href: /collections?f=application%2Fjso
+                  rel: data
+                  type: application/json
+                  title: The JSON representation of the list of all data collections served from this endpoint
+                collections:
+                - id: buildings
+                  title: Buildings
+                  description: Fetch buildings.
+                  links:
+                  - href: /collections/buildings?f=application%2Fjson
+                    rel: http://www.opengis.net/def/rel/ogc/1.0/collection
+                    type: application/json
+                    title: Buildings
+                  - href: /collections/buildings?f=application%2Fgml%2Bxml%3Bversion%3D3.2
+                    rel: http://www.opengis.net/def/rel/ogc/1.0/collection
+                    type: application/gml+xml;version=3.2
+                    title: Buildings
           schema:
             $ref: '#/components/schemas/collections'
         text/html:
@@ -1182,26 +1178,24 @@ components:
       content:
         application/json:
           example:
-            id: buildings
-            title: Buildings
-            description: Buildings in the city of Bonn.
             links:
-            - href: http://data.example.org/collections/buildings/items
-              rel: items
-              type: application/geo+json
+            - href: /collections?f=application%2Fjso
+              rel: data
+              type: application/json
+              title: The JSON representation of the list of all data collections served from this endpoint
+            collections:
+            - id: buildings
               title: Buildings
-            - href: http://data.example.org/collections/buildings/items.html
-              rel: items
-              type: text/html
-              title: Buildings
-            - href: https://creativecommons.org/publicdomain/zero/1.0/
-              rel: license
-              type: text/html
-              title: CC0-1.0
-            - href: https://creativecommons.org/publicdomain/zero/1.0/rdf
-              rel: license
-              type: application/rdf+xml
-              title: CC0-1.0
+              description: Fetch buildings.
+              links:
+              - href: /collections/buildings?f=application%2Fjson
+                rel: http://www.opengis.net/def/rel/ogc/1.0/collection
+                type: application/json
+                title: Buildings
+              - href: /collections/buildings?f=application%2Fgml%2Bxml%3Bversion%3D3.2
+                rel: http://www.opengis.net/def/rel/ogc/1.0/collection
+                type: application/gml+xml;version=3.2
+                title: Buildings
           schema:
             $ref: '#/components/schemas/collection'
         text/html:

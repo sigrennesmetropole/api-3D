@@ -68,8 +68,7 @@ paths:
               schema:
                 type: string
           description: |-
-            La page d'accueil fournit des liens vers les définitions de l'API (relations `service-desc` et `service-doc`) 
-            et les déclaration de conformité (chemin `/conformance`, relation `conformance`).
+            La page d'accueil fournit des liens vers les définitions de l'API (relations `service-desc` et `service-doc`) et les déclaration de conformité (chemin `/conformance`, relation `conformance`).
         "500":
           content:
             application/json:
@@ -78,14 +77,14 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur levée.
+          description: Erreur du serveur rencontrée.
       summary: Page d'accueil
       tags:
       - Capabilities
       x-eov-operation-handler: controllers/CapabilitiesController
   /conformance:
     get:
-      description: Liste des standards auxquels l'API est conforme..
+      description: Liste des standards auxquels l'API est conforme.
       operationId: getConformanceDeclaration
       parameters:
       - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
@@ -127,8 +126,8 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur levée.
-      summary: Déclarations de conformités
+          description: Erreur du serveur rencontrée.
+      summary: Déclaration des conformités aux standards
       tags:
       - Capabilities
       x-eov-operation-handler: controllers/CapabilitiesController
@@ -154,7 +153,7 @@ paths:
             application/json:
               example:
                 links:
-                - href: /collections?f=application%2Fjso
+                - href: /collections?f=application%2Fjson
                   rel: data
                   type: application/json
                   title: The JSON representation of the list of all data collections served from this endpoint
@@ -182,7 +181,6 @@ paths:
             Cette route permet d'obtenir les informations et les méthodes d'accès aux différents jeux de données (collection) fournies par l'API.
             La réponse présente une liste de jeux de données et pour chacun, leur description et leurs liens d'accès (chemin `/collections/{collectionId}/items`,
             liens de relation `items`).
-
             Cette information comprend : 
             * L'identifiant (id) du jeu de données qui est unique dans le catalogue;
             * Le titre (title) du jeu de données
@@ -196,7 +194,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur levée.
+          description: Erreur du serveur rencontrée.
       summary: Description des jeux de données 
       tags:
       - Capabilities
@@ -222,31 +220,25 @@ paths:
           content:
             application/json:
               example:
+                id: buildings
+                title: Buildings
+                description: Fetch buildings.
                 links:
-                - href: /collections?f=application%2Fjso
-                  rel: data
+                - href: /collections/buildings?f=application%2Fjson
+                  rel: http://www.opengis.net/def/rel/ogc/1.0/collection
                   type: application/json
-                  title: The JSON representation of the list of all data collections served from this endpoint
-                collections:
-                - id: buildings
                   title: Buildings
-                  description: Fetch buildings.
-                  links:
-                  - href: /collections/buildings?f=application%2Fjson
-                    rel: http://www.opengis.net/def/rel/ogc/1.0/collection
-                    type: application/json
-                    title: Buildings
-                  - href: /collections/buildings?f=application%2Fgml%2Bxml%3Bversion%3D3.2
-                    rel: http://www.opengis.net/def/rel/ogc/1.0/collection
-                    type: application/gml+xml;version=3.2
-                    title: Buildings
+                - href: /collections/buildings?f=application%2Fgml%2Bxml%3Bversion%3D3.2
+                  rel: http://www.opengis.net/def/rel/ogc/1.0/collection
+                  type: application/gml+xml;version=3.2
+                  title: Buildings
               schema:
                 $ref: '#/components/schemas/collection'
             text/html:
               schema:
                 type: string
           description: |-
-            Description du jeu de données d'id `buildings`.
+            Description du jeu de données `buildings`.
 
             Cette route permet d'obtenir les informations dont le système de coordonnées de référence (SCR) et les méthodes d'accès aux données du jeu de données (collection) 'Buildings'.
             La réponse présente la liste des points d'accès au jeu de données et pour chacun, sa description et son lien d'accès (chemin `/collections/{collectionId}/items`).
@@ -273,8 +265,8 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur levée.
-      summary: Description du jeu de données d'id `buildings`
+          description: Erreur du serveur rencontrée.
+      summary: Description du jeu de données `buildings`
       tags:
       - Capabilities
       x-eov-operation-handler: controllers/CapabilitiesController
@@ -313,7 +305,7 @@ paths:
               schema:
                 type: string
           description: |-
-            Description du jeu de données d'id `mnt2018`.
+            Description du jeu de données `mnt2018`.
 
             Cette route permet d'obtenir les informations dont le système de coordonnées de référence (SCR) et les méthodes d'accès aux données du jeu de données (collection) 'mnt2018'.
             La réponse présente la liste des points d'accès au jeu de données et pour chacun, sa description et son lien d'accès (chemin `/collections/{collectionId}/items`).
@@ -340,18 +332,17 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur levée.
-      summary: Description du jeu de données d'id `mnt2018`
+          description: Erreur du serveur rencontrée.
+      summary: Description du jeu de données `mnt2018`
       tags:
       - Capabilities
       x-eov-operation-handler: controllers/CapabilitiesController
   /collections/buildings/items:
     get:
       description: |-
-        Le jeu de données d'id `buildings` représente les bâtiments 3D.
-        Les bâtiments existent sur toutes les communes du territoire métropolitain. Il est possible de les charger avec ou sans texture. 
-        Leur obtention est limitée à une géométrie par appel (BBOX de moins de 10km² ou code insee d'une commune)
-
+        Le jeu de données `buildings` représente les bâtiments 3D.
+        Les bâtiments existent sur toutes les communes du territoire métropolitain. Il est possible de les obtenir avec ou sans texture. 
+        Il est nécessaire de préciser un périmètre géographique (BBOX de moins de 10km² ou code insee d'une commune).
       operationId: getBuildings
       parameters:
       - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
@@ -371,7 +362,7 @@ paths:
         in: query
         name: bbox
         required: false
-        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000'). 
+        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').  
         schema:
           type: string
         allowReserved: true
@@ -387,7 +378,7 @@ paths:
         in: query
         name: limit
         required: false
-        description: Limite du nombre de résultats. 
+        description: Limite du nombre de résultats.
         schema:
           type: integer
         style: form
@@ -446,16 +437,15 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur levée.
-      summary: Obtention des données 3D "bâtiments"
+          description: Erreur du serveur rencontrée.
+      summary: Obtention des données 3D bâtiments
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
   /collections/buildings/items/{buildingID}:
     get:
       description: |-
-        Récupération de la donnée 3D d'un bâtiment à partir de son identifiant. Il est possible de l'obtenir avec ou sans texture. 
-        
+        Récupération des données 3D d'un bâtiment à partir de son identifiant. Il est possible de l'obtenir avec ou sans texture. 
       operationId: getbuildingById
       parameters:
       - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
@@ -496,7 +486,7 @@ paths:
             application/gml+xml;version=3.2:
               schema:
                 type: object
-          description: Données CityJSON ou CityGML. Si les textures sont demande le fichier zip retourné contient le modèle 3D et les textures du bâtiment.
+          description: Données CityJSON ou CityGML. Si les textures sont demandées le fichier compressé retourné contient le modèle 3D et les textures du bâtiment.
         "404":
           content:
             application/json:
@@ -514,7 +504,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur levée.
+          description: Erreur du serveur rencontrée.
       summary: Obtention des données 3D d'un bâtiment à partir de son identifiant.
       tags:
       - Data
@@ -544,7 +534,7 @@ paths:
         in: query
         name: bbox
         required: false
-        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').
+        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').  
         schema:
           type: string
         allowReserved: true
@@ -620,7 +610,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur levée.
+          description: Erreur du serveur rencontrée.
       summary: Obtention des données 3D "bâtiments" ajoutés depuis le dernier millésime ou une date ultérieure
       tags:
       - Data
@@ -650,7 +640,7 @@ paths:
         in: query
         name: bbox
         required: false
-        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').
+        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').  
         schema:
           type: string
         allowReserved: true
@@ -726,7 +716,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur levée.
+          description: Erreur du serveur rencontrée.
       summary: Obtention des données 3D "bâtiments" modifiés depuis le dernier millésime ou une date ultérieure
       tags:
       - Data
@@ -734,14 +724,14 @@ paths:
   /collections/deleted_building/items:
     get:
       description: |-
-        Récupération de la liste des bâtiments supprimés depuis le dernier millésime de la maquette 3D.
+        Récupération de la liste des bâtiments supprimés depuis le dernier millésime de la maquette 3D. 
       operationId: getDeletedBuildings
       parameters:
       - explode: true
         in: query
         name: codeInsee
         required: false
-        description: code insee d'une commune de Rennes Métropole. 
+        description: code insee d'une commune de Rennes Métropole.
         schema:
           type: string
         style: form
@@ -809,7 +799,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur levée.
+          description: Erreur du serveur rencontrée.
       summary: Obtention des identifiants des bâtiments modifiés depuis le dernier millésime ou une date ultérieure
       tags:
       - Data
@@ -825,7 +815,7 @@ paths:
         in: query
         name: bbox
         required: false
-        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').
+        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').  
         schema:
           type: string
         allowReserved: true
@@ -870,7 +860,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur levée.
+          description: Erreur du serveur rencontrée.
       summary: Obtention d'une couche de données ponctuelles permettant la représentation de la végétation théorique.
       tags:
       - Data
@@ -886,7 +876,7 @@ paths:
         in: query
         name: bbox
         required: false
-        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').
+        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').  
         schema:
           type: string
         allowReserved: true
@@ -931,14 +921,15 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur levée.
+          description: Erreur du serveur rencontrée.
       summary: Obtention d'une couche de données ponctuelles permettant la représentation du mobilier urbain théorique.
       tags:
       - Data
-      x-eov-operation-handler: controllers/DataController 
+      x-eov-operation-handler: controllers/DataController    
   /collections/mnt2018/coverage:
     get:
-      description: Obtention du Modèle Numérique de Terrain (MNT) qui permet de connaitre le relief du terrain.<br/>
+      description:  |-
+        Obtention du Modèle Numérique de Terrain (MNT) qui permet de connaitre le relief du terrain. <br/>
         Il convient d'interpréter les niveaux de gris de l'image obtenue pour représenter le relief en 3D.
       operationId: getRaster
       parameters:
@@ -946,7 +937,7 @@ paths:
         in: query
         name: bbox
         required: false
-        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').
+        description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').  
         schema:
           type: string
         allowReserved: true
@@ -992,7 +983,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: Erreur du serveur levée.
+          description: Erreur du serveur rencontrée.
       summary: Obtention d'une partie du raster du Modèle Numérique de Terrain (MNT)
       tags:
       - Coverage
@@ -1017,7 +1008,7 @@ components:
       in: query
       name: bbox
       required: false
-      description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').
+      description: coordonnées xmin, ymin, xmax, ymax d'une BBOX séparées par une virgule. Limite de superficie de 10km². (Ex '1330000,7203000,1368000,7246000').  
       schema:
         type: string
       allowReserved: true
@@ -1102,7 +1093,7 @@ components:
         text/html:
           schema:
             type: string
-      description: Erreur du serveur levée.
+      description: Erreur du serveur rencontrée.
     LandingPage:
       content:
         application/json:
@@ -1138,25 +1129,43 @@ components:
           example:
             links:
             - href: http://data.example.org/collections.json
-            example:
-                links:
-                - href: /collections?f=application%2Fjso
-                  rel: data
-                  type: application/json
-                  title: The JSON representation of the list of all data collections served from this endpoint
-                collections:
-                - id: buildings
-                  title: Buildings
-                  description: Fetch buildings.
-                  links:
-                  - href: /collections/buildings?f=application%2Fjson
-                    rel: http://www.opengis.net/def/rel/ogc/1.0/collection
-                    type: application/json
-                    title: Buildings
-                  - href: /collections/buildings?f=application%2Fgml%2Bxml%3Bversion%3D3.2
-                    rel: http://www.opengis.net/def/rel/ogc/1.0/collection
-                    type: application/gml+xml;version=3.2
-                    title: Buildings
+              rel: self
+              type: application/json
+              title: this document
+            - href: http://data.example.org/collections.html
+              rel: alternate
+              type: text/html
+              title: this document as HTML
+            - href: http://schemas.example.org/1.0/buildings.xsd
+              rel: describedBy
+              type: application/xml
+              title: GML application schema for Acme Corporation building data
+            - href: http://download.example.org/buildings.gpkg
+              rel: enclosure
+              type: application/geopackage+sqlite3
+              title: Bulk download (GeoPackage)
+              length: 472546
+            collections:
+            - id: buildings
+              title: Buildings
+              description: Buildings in the city of Bonn.
+              links:
+              - href: http://data.example.org/collections/buildings/items
+                rel: items
+                type: application/geo+json
+                title: Buildings
+              - href: http://data.example.org/collections/buildings/items.html
+                rel: items
+                type: text/html
+                title: Buildings
+              - href: https://creativecommons.org/publicdomain/zero/1.0/
+                rel: license
+                type: text/html
+                title: CC0-1.0
+              - href: https://creativecommons.org/publicdomain/zero/1.0/rdf
+                rel: license
+                type: application/rdf+xml
+                title: CC0-1.0
           schema:
             $ref: '#/components/schemas/collections'
         text/html:
@@ -1178,24 +1187,26 @@ components:
       content:
         application/json:
           example:
+            id: buildings
+            title: Buildings
+            description: Buildings in the city of Bonn.
             links:
-            - href: /collections?f=application%2Fjso
-              rel: data
-              type: application/json
-              title: The JSON representation of the list of all data collections served from this endpoint
-            collections:
-            - id: buildings
+            - href: http://data.example.org/collections/buildings/items
+              rel: items
+              type: application/geo+json
               title: Buildings
-              description: Fetch buildings.
-              links:
-              - href: /collections/buildings?f=application%2Fjson
-                rel: http://www.opengis.net/def/rel/ogc/1.0/collection
-                type: application/json
-                title: Buildings
-              - href: /collections/buildings?f=application%2Fgml%2Bxml%3Bversion%3D3.2
-                rel: http://www.opengis.net/def/rel/ogc/1.0/collection
-                type: application/gml+xml;version=3.2
-                title: Buildings
+            - href: http://data.example.org/collections/buildings/items.html
+              rel: items
+              type: text/html
+              title: Buildings
+            - href: https://creativecommons.org/publicdomain/zero/1.0/
+              rel: license
+              type: text/html
+              title: CC0-1.0
+            - href: https://creativecommons.org/publicdomain/zero/1.0/rdf
+              rel: license
+              type: application/rdf+xml
+              title: CC0-1.0
           schema:
             $ref: '#/components/schemas/collection'
         text/html:

@@ -43,7 +43,7 @@ tags:
 paths:
   /:
     get:
-      description: La page d'accueil propose une description générale de l'API.
+      description: Page d'accueil proposant une description de l'API.
       operationId: getLandingPage
       parameters:
       - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
@@ -341,7 +341,7 @@ paths:
     get:
       description: |-
         Le jeu de données `buildings` représente les bâtiments 3D.
-        Les bâtiments existent sur toutes les communes du territoire métropolitain rennais. Il est possible de les charger avec ou sans texture. 
+        Les bâtiments existent sur toutes les communes du territoire métropolitain. Il est possible de les obtenir avec ou sans texture.
         Il est nécessaire de préciser un périmètre géographique (BBOX de moins de 10km² ou code insee d'une commune).
       operationId: getBuildings
       parameters:
@@ -410,7 +410,7 @@ paths:
             application/gml+xml;version=3.2:
               schema:
                 type: object
-          description: Fichier cityjson ou citygml. Si les textures sont demandées le fichier zip retourné contient le modèle 3D et les textures des bâtiments.
+          description: Données CityJSON ou CityGML. Si les textures sont demandées, le fichier compressé retourné contient le modèle 3D et les textures des bâtiments.
         "400":
           content:
             application/json:
@@ -438,14 +438,14 @@ paths:
               schema:
                 type: string
           description: Erreur du serveur rencontrée.
-      summary: Obtention des objets 3D bâtiments
+      summary: Obtention des données 3D bâtiments
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
   /collections/buildings/items/{buildingID}:
     get:
       description: |-
-        Récupération de l'objet 3D d'un bâtiment identifié. Il est possible de les charger avec ou sans texture. 
+        Récupération des données 3D d'un bâtiment à partir de son identifiant. Il est possible de l'obtenir avec ou sans texture. 
       operationId: getbuildingById
       parameters:
       - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
@@ -486,7 +486,7 @@ paths:
             application/gml+xml;version=3.2:
               schema:
                 type: object
-          description: Fichier cityjson ou citygml. Si les textures sont demandées le fichier zip retourné contient le modèle 3D et les textures du bâtiment.
+          description: Données CityJSON ou CityGML. Si les textures sont demandées le fichier compressé retourné contient le modèle 3D et les textures du bâtiment.
         "404":
           content:
             application/json:
@@ -505,16 +505,16 @@ paths:
               schema:
                 type: string
           description: Erreur du serveur rencontrée.
-      summary: Obtention de l'objet 3D d'un bâtiment à partir de son identifiant.
+      summary: Obtention des données 3D d'un bâtiment à partir de son identifiant.
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
   /collections/added_building/items:
     get:
       description: |-
-        Récupération des objets 3D des bâtiments ajoutés depuis le dernier millésime de la maquette 3D. 
+        Récupération des données 3D des bâtiments ajoutés depuis le dernier millésime du socle 3D. 
         Ces bâtiments ne disposent pas de texture. 
-        Il est possible de charger les bâtiments nouveaux depuis une date ultérieure au millésime. 
+        Il est possible d'obtenir les bâtiments nouveaux depuis une date ultérieure au millésime. 
       operationId: getAddedBuildings
       parameters:
       - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
@@ -583,7 +583,7 @@ paths:
             application/gml+xml;version=3.2:
               schema:
                 type: object
-          description: Fichier cityjson ou citygml sans texture.
+          description: Données CityJSON ou CityGML sans texture.
         "400":
           content:
             application/json:
@@ -611,7 +611,7 @@ paths:
               schema:
                 type: string
           description: Erreur du serveur rencontrée.
-      summary: Obtention des objets 3D "bâtiments" ajoutés depuis le dernier millésime ou une date ultérieure
+      summary: Obtention des données 3D "bâtiments" ajoutés depuis le dernier millésime ou une date ultérieure
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController

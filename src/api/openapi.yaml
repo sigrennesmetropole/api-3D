@@ -1,12 +1,19 @@
 openapi: 3.0.2
 info:
   title: RENNES METROPOLE - API 3D
-  description: L'API REST permet un accès en flux aux données permettant la création de scène 3D sur le territoire de Rennes Métropole. 
-        <ul>
-          <li>La maquette des bâtiments est millésimée et remise à jour tous les trois ans. Entre temps, quelques ajustements des bâtiments peuvent être enregistrés en base de données. Dans ce cas les bâtiments modifiés ne peuvent pas bénéficier de la texture.</li>
-          <li>Les éléments de décors (végétation, mobilier urbains) servent à rendre la scène plus réaliste. Toutefois, ces données sont théoriques et ne correspondent pas exactement à la réalité. Ces couches de données ponctuelles nécessite un travail de représentation à l'aide des catalogues de représentations téléchargeables sur la page <a target="_blank" href="https://api-3d.sig.rennesmetropole.fr"> des fichiers téléchargeables</a>.</li>
-          <li>Le Modèle Numérique de Terrain (MNT) permet de connaître l'altitude du terrain à un endroit donné.</li>
-        </ul>
+  description: <p>L'API 3D permet un accès en flux aux données 3D produites par Rennes Métropole couvrant son territoire. </p>
+    <p>
+    La <b>base de données des bâtiments 3D</b> est constituée du socle millésimé et des ajustements de bâtiments. Le socle est mis à jour tous les trois ans. Les ajustements (destructions, modifications, ajouts) sont effectués pendant la période d'exploitation du millésime et ne bénéficient pas, eux, de texture.
+    </p>
+    
+    <p>
+    Les <b>données de végétation</b> et de <b>mobilier urbains</b> peuvent servir à enrichir des expériences de visualisations construites sur la base des bâtiments 3D. Toutefois, ces données sont théoriques et ne correspondent pas exactement à la réalité. Ces couches de données ponctuelles nécessite un travail de représentation à l'aide des catalogues disponibles sur la page <a target="_blank" href="https://api-3d.sig.rennesmetropole.fr"> des fichiers téléchargeables</a>.
+    </p>
+    
+    <p>
+    Le <b>Modèle Numérique de Terrain (MNT)</b> permet de connaître l'altitude du terrain à un endroit donné. Cette donnée raster en niveaux de gris permet de reconstruire un modèle 3D du terrain.
+    </p>
+    <p>Cette API se veut conforme au standard OGC API - Features v1.0.0 et au standard OGC API - Coverage (draft). </p>
   contact:
     name: Rennes Metropole - Service Information Géographique
     url: https://public.sig.rennesmetropole.fr/

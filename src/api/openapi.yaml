@@ -618,9 +618,9 @@ paths:
   /collections/modified_building/items:
     get:
       description: |-
-        Récupération des objets 3D des bâtiments modifiés depuis le dernier millésime de la maquette 3D. 
+        Récupération des données 3D des bâtiments modifiés depuis le dernier millésime du socle 3D. 
         Ces bâtiments ne disposent pas de texture. 
-        Il est possible de charger les bâtiments nouveaux depuis une date ultérieure au millésime. 
+        Il est possible d'obtenir les bâtiments modifiés depuis une date ultérieure au millésime. 
       operationId: getModifiedBuildings
       parameters:
       - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
@@ -689,7 +689,7 @@ paths:
             application/gml+xml;version=3.2:
               schema:
                 type: object
-          description: Fichier cityjson ou citygml sans texture.
+          description: Données CityJSON ou CityGML sans texture.
         "400":
           content:
             application/json:
@@ -717,7 +717,7 @@ paths:
               schema:
                 type: string
           description: Erreur du serveur rencontrée.
-      summary: Obtention des objets 3D "bâtiments" modifiés depuis le dernier millésime ou une date ultérieure
+      summary: Obtention des données 3D "bâtiments" modifiés depuis le dernier millésime ou une date ultérieure
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController
@@ -725,7 +725,6 @@ paths:
     get:
       description: |-
         Récupération de la liste des bâtiments supprimés depuis le dernier millésime de la maquette 3D. 
-        La liste indique les identifiants des bâtiments du millésime qui n'ont plus lieu d'être.
       operationId: getDeletedBuildings
       parameters:
       - explode: true
@@ -773,7 +772,7 @@ paths:
             # application/gml+xml;version=3.2:
             #   schema:
             #     type: object
-          description: Fichier JSON.
+          description: Données JSON.
         "400":
           content:
             application/json:
@@ -808,7 +807,7 @@ paths:
   /collections/vegetation/items:
     get:
       description: |-
-        Végétation théorique. Cette couche de données ne représente pas la réalité en temps réelle, mais est utile pour décorer une scène 3D.
+        Végétation théorique. 
         Les données retournées sont des points qu'il convient de représenter en 3D. Un catalogue de représentations est disponible sur la page "téléchargements" de l'API 3D.
       operationId: getVegetation
       parameters:
@@ -834,7 +833,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Vegetation'
-          description: Fichier Json.
+          description: Données Json.
         "400":
           content:
             application/json:
@@ -869,7 +868,7 @@ paths:
   /collections/mobilier/items:
     get:
       description: |-
-        Mobilier urbain théorique. Cette couche de données ne représente pas la réalité en temps réelle, mais est utile pour décorer une scène 3D.
+        Mobilier urbain théorique. 
         Les données retournées sont des points qu'il convient de représenter en 3D. Un catalogue de représentations est disponible sur la page "téléchargements" de l'API 3D.
       operationId: getMobilier
       parameters:
@@ -895,7 +894,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Vegetation'
-          description: Fichier Json.
+          description: Données Json.
         "400":
           content:
             application/json:
@@ -957,7 +956,7 @@ paths:
               schema:
                 format: binary
                 type: string
-          description: Fichier image geolocalisé en niveaux de gris.
+          description: Raster geolocalisé en niveaux de gris.
         "400":
           content:
             application/json:
@@ -985,7 +984,7 @@ paths:
               schema:
                 type: string
           description: Erreur du serveur rencontrée.
-      summary: Obtention d'une tuile raster du Modèle Numérique de Terrain (MNT)
+      summary: Obtention d'une partie du raster du Modèle Numérique de Terrain (MNT)
       tags:
       - Coverage
       x-eov-operation-handler: controllers/DataController

@@ -8,7 +8,6 @@ info:
           <li>Le Modèle Numérique de Terrain (MNT) permet de connaître l'altitude du terrain à un endroit donné.</li>
         </ul>
   contact:
-    email: sigsupport@rennesmetropole.fr
     name: Rennes Metropole - Service Information Géographique
     url: https://public.sig.rennesmetropole.fr/
   license:

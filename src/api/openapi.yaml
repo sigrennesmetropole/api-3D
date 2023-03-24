@@ -32,7 +32,31 @@ info:
   - Open API Feature
   - OGC
 servers:
-  - url: /api
+  - url: https://api.rennesmetropole.fr/3d/v1/
+    description: Serveur de production
+  - url: https://api.rennesmetropole.fr/3d-test/v1/
+    description: Serveur de test
+components:
+  securitySchemes:
+    ApiKeyAuth:        # arbitrary name for the security scheme
+      type: apiKey
+      in: header       # can be "header", "query" or "cookie"
+      name: X-API-KEY  # name of the header, query parameter or cookie
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://example.com/oauth/authorize
+          tokenUrl: https://example.com/oauth/token
+          scopes:
+            read: Grants read access
+            write: Grants write access
+            admin: Grants access to admin operations
+security:
+  - ApiKeyAuth: []
+  - OAuth2:
+      - read
+      - write
 tags:
 - description: Propriétés générales de l'API
   name: Capabilities
@@ -69,6 +93,10 @@ paths:
                 type: string
           description: |-
             La page d'accueil fournit des liens vers les définitions de l'API (relations `service-desc` et `service-doc`) et les déclaration de conformité (chemin `/conformance`, relation `conformance`).
+        "401":
+          description: Not authenticated
+        "403":
+          description: Access token does not have the required scope
         "500":
           content:
             application/json:
@@ -118,6 +146,10 @@ paths:
           description: |-
             Les URIs des classes des standards supportés par le serveur.
             Déclarations de conformités du serveur aux standards qu'il implémente dans le but de se rendre au mieux interopérable par le standard OGC API Features.
+        "401":
+          description: Not authenticated
+        "403":
+          description: Access token does not have the required scope
         "500":
           content:
             application/json:
@@ -186,6 +218,10 @@ paths:
             * Le titre (title) du jeu de données
             * Une description (description) du jeu de données
             * Le format de sortie (type)
+        "401":
+          description: Not authenticated
+        "403":
+          description: Access token does not have the required scope
         "500":
           content:
             application/json:
@@ -248,6 +284,10 @@ paths:
             * Le lien d'accès au point d'entrée (href)
             * la classe de relation (rel) du point d'entrée
             * Le format de sortie (type)
+        "401":
+          description: Not authenticated
+        "403":
+          description: Access token does not have the required scope
         "404":
           content:
             application/json:
@@ -315,6 +355,10 @@ paths:
             * Le lien d'accès au point d'entrée (href)
             * la classe de relation (rel) du point d'entrée
             * Le format de sortie (type)
+        "401":
+          description: Not authenticated
+        "403":
+          description: Access token does not have the required scope
         "404":
           content:
             application/json:
@@ -420,6 +464,10 @@ paths:
               schema:
                 type: string
           description: Paramètre incorrect.
+        "401":
+          description: Not authenticated
+        "403":
+          description: Access token does not have the required scope
         "404":
           content:
             application/json:
@@ -487,6 +535,10 @@ paths:
               schema:
                 type: object
           description: Données CityJSON ou CityGML. Si les textures sont demandées le fichier compressé retourné contient le modèle 3D et les textures du bâtiment.
+        "401":
+          description: Not authenticated
+        "403":
+          description: Access token does not have the required scope
         "404":
           content:
             application/json:
@@ -593,6 +645,10 @@ paths:
               schema:
                 type: string
           description: Paramètre incorrect.
+        "401":
+          description: Not authenticated
+        "403":
+          description: Access token does not have the required scope
         "404":
           content:
             application/json:
@@ -699,6 +755,10 @@ paths:
               schema:
                 type: string
           description: Paramètre incorrect.
+        "401":
+          description: Not authenticated
+        "403":
+          description: Access token does not have the required scope
         "404":
           content:
             application/json:
@@ -782,6 +842,10 @@ paths:
               schema:
                 type: string
           description: Paramètre incorrect.
+        "401":
+          description: Not authenticated
+        "403":
+          description: Access token does not have the required scope
         "404":
           content:
             application/json:
@@ -843,6 +907,10 @@ paths:
               schema:
                 type: string
           description: Paramètre incorrect.
+        "401":
+          description: Not authenticated
+        "403":
+          description: Access token does not have the required scope
         "404":
           content:
             application/json:
@@ -904,6 +972,10 @@ paths:
               schema:
                 type: string
           description: Paramètre incorrect.
+        "401":
+          description: Not authenticated
+        "403":
+          description: Access token does not have the required scope
         "404":
           content:
             application/json:
@@ -966,6 +1038,10 @@ paths:
               schema:
                 type: string
           description: Paramètre incorrect.
+        "401":
+          description: Not authenticated
+        "403":
+          description: Access token does not have the required scope
         "404":
           content:
             application/json:
@@ -1076,6 +1152,10 @@ components:
           schema:
             type: string
       description: Paramètre incorrect.
+    "401":
+      description: Not authenticated
+    "403":
+      description: Access token does not have the required scope
     "404":
       content:
         application/json:

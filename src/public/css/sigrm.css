@@ -1,0 +1,40 @@
+/* Import des fonts*/
+
+@font-face {
+    font-family: 'DMSans_regular';
+    src: url('font/DMsans/DMSans-Regular.ttf');
+}
+@font-face {
+    font-family: 'DMSans_bold';
+    src: url('font/DMsans/DMSans-Bold.ttf');
+}
+@font-face {
+    font-family: 'DMSans_italic';
+    src: url('font/DMsans/DMSans-Italic.ttf');
+}
+@font-face {
+    font-family: 'DMSans_medium';
+    src: url('font/DMsans/DMSans-Medium.ttf');
+}
+@font-face {
+    font-family: 'condate_light';
+    src: url('font/CONDATE/Condate-Light.woff2')format("woff2");
+}
+@font-face {
+    font-family: 'condate_medium';
+    src: url('font/CONDATE/Condate-Medium.woff2')format("woff2");
+}
+
+/* Stylage */
+
+h1, h2, h3 {
+    font-family: 'condate_medium', Arial, Sans-serif;
+}
+
+#description {
+    font-family: 'DMSans_regular', Arial, Sans-serif;
+}
+
+.rmlogo {
+    max-height: -webkit-fill-available;
+}

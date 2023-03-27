@@ -1044,11 +1044,6 @@ paths:
       - Coverage
       x-eov-operation-handler: controllers/DataController
 components:
-  securitySchemes:
-    ApiKeyAuth:        # arbitrary name for the security scheme
-      type: apiKey
-      in: header       # can be "header", "query" or "cookie"
-      name: X-API-KEY  # name of the header, query parameter or cookie
   parameters:
     f:
       description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.

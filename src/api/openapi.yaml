@@ -32,10 +32,7 @@ info:
   - Open API Feature
   - OGC
 servers:
-  - url: https://api.rennesmetropole.fr/3d/v1/
-    description: Serveur de production
-  - url: https://api.rennesmetropole.fr/3d-test/v1/
-    description: Serveur de test
+  - url: /api
 tags:
 - description: Propriétés générales de l'API
   name: Capabilities

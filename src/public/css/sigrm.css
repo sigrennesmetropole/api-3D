@@ -37,4 +37,7 @@ h1, h2, h3 {
 
 .rmlogo {
     max-height: -webkit-fill-available;
+    max-width: -webkit-fill-available;
+    max-height: -moz-available;
+    max-width: -moz-available;
 }

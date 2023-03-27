@@ -36,14 +36,6 @@ servers:
     description: Serveur de production
   - url: https://api.rennesmetropole.fr/3d-test/v1/
     description: Serveur de test
-components:
-  securitySchemes:
-    ApiKeyAuth:        # arbitrary name for the security scheme
-      type: apiKey
-      in: header       # can be "header", "query" or "cookie"
-      name: X-API-KEY  # name of the header, query parameter or cookie
-security:
-  - ApiKeyAuth: []
 tags:
 - description: Propriétés générales de l'API
   name: Capabilities

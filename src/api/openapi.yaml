@@ -36,8 +36,6 @@ servers:
     description: Serveur de production
   - url: https://api.rennesmetropole.fr/3d-test/v1/
     description: Serveur de test
-security:
-  - ApiKeyAuth: []
 tags:
 - description: Propriétés générales de l'API
   name: Capabilities

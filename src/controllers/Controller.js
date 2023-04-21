@@ -46,7 +46,7 @@ class Controller {
     } else {
       if (responsePayload.slice(2,5) === 'xml') {
         response.type('application/octet-stream');
-        response.set('content-disposition', `attachment; filename=buildings.citygml`)
+        response.set('content-disposition', `attachment; filename=buildings.gml`)
         response.end(Buffer.from(responsePayload), 'binary');
       } else {
         response.end(responsePayload);

@@ -79,7 +79,8 @@ class ExpressServer {
             errors: err.errors || '',
           });
         });
-        http.createServer(this.app).listen(this.port);
+        var server = http.createServer(this.app).listen(this.port);
+        server.setTimeout(10*60*1000);
         console.log(`Listening on port ${this.port}`);
       });
   }

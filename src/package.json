@@ -26,6 +26,7 @@
     "https": "^1.0.0",
     "js-yaml": "^3.3.0",
     "jszip": "^3.10.1",
+    "node-stream-zip": "^1.15.0",
     "ono": "^5.0.1",
     "openapi-sampler": "^1.0.0-beta.15",
     "pg": "^8.8.0",

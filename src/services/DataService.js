@@ -10,6 +10,9 @@ var BBox = require('bbox');
 const axios = require('axios');
 var dataValidator = require('./DataValidator');
 const JSZip = require("jszip");
+const StreamZip = require('node-stream-zip');
+
+const logger = require('../logger');
 
 /**
 * fetch buildings
@@ -54,14 +57,14 @@ const getBuildings = ({ f, bbox, codeInsee, limit, startIndex, texture, dbView, 
       }, (raison) => {
         console.log(raison);
         reject(Service.rejectResponse(
-          {description: "Erreur lors de l'appel de l'exporteur", code: 500},
+          {description: "Erreur lors de l'appel de l'exporteur 1", code: 500},
           500
         ));
     });
     } catch (e) {
       console.log(e.message);
       reject(Service.rejectResponse(
-        {description: "Erreur lors de l'appel de l'exporteur", code: 500},
+        {description: "Erreur lors de l'appel de l'exporteur 2", code: 500},
         500
       ));
     }
@@ -145,14 +148,14 @@ const getbuildingById = ({ buildingID, f, texture }) => new Promise(
         traitementRetourExporter(id, format, null, null, texture, reject, resolve);
       }, (raison) => {
         reject(Service.rejectResponse(
-          {description: "Erreur lors de l'appel de l'exporteur", code: 500},
+          {description: "Erreur lors de l'appel de l'exporteur 3", code: 500},
           500
         ));
     });
     } catch (e) {
       console.log(e.message);
       reject(Service.rejectResponse(
-        {description: "Erreur lors de l'appel de l'exporteur", code: 500},
+        {description: "Erreur lors de l'appel de l'exporteur 4", code: 500},
         500
       ));
     }
@@ -244,39 +247,44 @@ async function traitementRetourPG(result, id, limit, startIndex, reject, resolve
 async function traitementRetourExporter(id, format, limit, startIndex, texture, reject, resolve) {
   let fileExtention = texture === 'oui' ? '.zip' : format;
   try{
-    let data = await new JSZip.external.Promise(function (resolve, reject) {
-      fs.readFile(process.env['EXPORTER_SAVE_PATH'] + id + fileExtention, function(err, data) {
-          if (err) {
-              reject(err);
-          } else {
-              resolve(data);
-          }
-      });
-    });
     if (texture === 'oui') {
-      let zip = await JSZip.loadAsync(data);
-      let file = await zip.file(id + `.${format.slice(5)}`).async("string");
-      if (format === '.cityjson') {
-        let parsed = await JSON.parse(file);
-        let size = Object.keys(parsed.CityObjects).length;
-        if (size === 0) {
-          reject(Service.rejectResponse(
-            { description: 'Aucun résultat', code: 404},
-            404
-          ));
+      // data = fichier à retourner
+      let data = await new JSZip.external.Promise(function (resolve, reject) {
+        // lecture du fichier zip
+        fs.readFile(process.env['EXPORTER_SAVE_PATH'] + id + fileExtention, function(err, data) { 
+            if (err) {
+                reject(err);
+            } else {
+                resolve(data);
+            }
+        });
+      });
+      
+      // stzip = stream du fichier principal pour controle du contenu
+      const stzip = new StreamZip.async({ file: process.env['EXPORTER_SAVE_PATH'] + id + fileExtention });
+      let file = '';
+      let stream = await stzip.stream(id + `.${format.slice(5)}`);
+      let atleastoneresult = false;
+      for await(const _data of stream) {
+        if (!atleastoneresult && (_data.indexOf('cityObjectMember') > 0 || _data.indexOf('BUILDINGID') > 0) ){
+          atleastoneresult = true;
         }
-      } else {
-        if(!JSON.parse(convert.xml2json(file,{compact: true}))['CityModel']['cityObjectMember']){
-          reject(Service.rejectResponse(
-            { description: 'Aucun résultat', code: 404},
-            404
-          ));
-        }
+        file += _data;
+      }
+      
+      //if(!JSON.parse(convert.xml2json(file,{compact: true}))['CityModel']['cityObjectMember']){
+      if (!atleastoneresult) {
+        await stzip.close();
+        reject(Service.rejectResponse(
+          { description: 'Aucun résultat', code: 404},
+          404
+        ));
       }
       resolve(Service.fileResponse(data, 200, 'application/zip'));
+      stzip.close();
     } else {
-      let file = fs.readFileSync(process.env['EXPORTER_SAVE_PATH'] + id + format, 'utf8');   
       if (format === '.cityjson') {
+        let file = fs.readFileSync(process.env['EXPORTER_SAVE_PATH'] + id + format, 'utf8');
         let json = JSON.parse(file);
         let size = Object.keys(json.CityObjects).length;
         if (size === 0) {
@@ -287,18 +295,27 @@ async function traitementRetourExporter(id, format, limit, startIndex, texture, 
         }
         resolve(Service.successResponse(json));
       } else {
-        if(!JSON.parse(convert.xml2json(file,{compact: true}))['CityModel']['cityObjectMember']){
+        let file = '';
+        let stream = fs.createReadStream(process.env['EXPORTER_SAVE_PATH'] + id + format, 'utf8');
+        let atleastoneresult = false;
+        for await(const _data of stream) {
+          if (!atleastoneresult && _data.indexOf('cityObjectMember') > 0  ){
+            atleastoneresult = true;
+          }
+          file += _data;
+        }
+        if(!atleastoneresult){
           reject(Service.rejectResponse(
             { description: 'Aucun résultat', code: 404},
             404
           ));
         }
+        resolve(Service.successResponse(file));
       }
-      resolve(Service.successResponse(file));
     }
-  } catch {
+  } catch (error) {
     reject(Service.rejectResponse(
-      {description: "Erreur lors de l'appel de l'exporteur", code: 500},
+      {description: "Erreur lors de l'appel de l'exporteur 5", code: 500},
       500
     ));
   } finally {

@@ -33,20 +33,23 @@ class Controller {
           filename = 'street_furniture.json';
           break;
       }
-      filename = filename.replace("cityjson", "json")
-      response.set('content-disposition', `attachment; filename=${filename}`)
+      filename = filename.replace("cityjson", "json");
+      response.set('content-disposition', `attachment; filename=${filename}`);
       response.type(payload.type);
       response.end( responsePayload, 'binary' );
+
     } else if (responsePayload instanceof Object && request.openapi.schema.operationId === "getBuildings") {
       response.type('application/octet-stream');
-      response.set('content-disposition', `attachment; filename=buildings.${responsePayload.type.toLowerCase().replace("cityjson", "json")}`)
-      response.end(Buffer.from(JSON.stringify(responsePayload)), 'binary');
-    }else if (responsePayload instanceof Object) {
+      //response.set('content-disposition', `attachment; filename=buildings.${responsePayload.type.toLowerCase().replace("cityjson", "json")}`);
+      //response.end(Buffer.from(JSON.stringify(responsePayload)), 'binary');
+      response.set('content-disposition', `attachment; filename=buildings.${responsePayload.type.toLowerCase().replace(".city", ".")}`);
+      response.end(Buffer.from(responsePayload.data), 'binary');
+    } else if (responsePayload instanceof Object) {
       response.json(responsePayload);
     } else {
       if (responsePayload.slice(2,5) === 'xml') {
         response.type('application/octet-stream');
-        response.set('content-disposition', `attachment; filename=buildings.gml`)
+        response.set('content-disposition', `attachment; filename=buildings.gml`);
         response.end(Buffer.from(responsePayload), 'binary');
       } else {
         response.end(responsePayload);
@@ -75,7 +78,6 @@ class Controller {
   * @returns {string}
   */
   static collectFile(request, fieldName) {
-   
     let uploadedFileName = '';
     if (request.files && request.files.length > 0) {
       const fileObject = request.files.find(file => file.fieldname === fieldName);
@@ -143,7 +145,7 @@ class Controller {
         requestParams[i] = extraParams[i];
       }
       logger.info('Appel du path '+ request.route.path, { "parametres" : requestParams});
-      const serviceResponse = await serviceOperation(requestParams);
+      const serviceResponse = await serviceOperation(requestParams);      
       Controller.sendResponse(response, serviceResponse, request);
     } catch (error) {
       Controller.sendError(response, error);

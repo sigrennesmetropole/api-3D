@@ -13,6 +13,7 @@ const JSZip = require("jszip");
 const StreamZip = require('node-stream-zip');
 
 const logger = require('../logger');
+const admz = require('adm-zip')
 
 /**
 * fetch buildings
@@ -52,19 +53,20 @@ const getBuildings = ({ f, bbox, codeInsee, limit, startIndex, texture, dbView, 
     try {
       let id = uuid.v4();
       let format = f === 'application/json' ? ".cityjson" : ".citygml";
+      logger.info('Export des données');
       exporter.exportData(id, format, bbox, null, limit, startIndex, texture, sqlSelect).then((valeur) => {
         traitementRetourExporter(id, format, limit, startIndex, texture, reject, resolve);
       }, (raison) => {
         console.log(raison);
         reject(Service.rejectResponse(
-          {description: "Erreur lors de l'appel de l'exporteur 1", code: 500},
+          {description: "Erreur lors de l'appel de l'exporteur", code: 500},
           500
         ));
     });
     } catch (e) {
       console.log(e.message);
       reject(Service.rejectResponse(
-        {description: "Erreur lors de l'appel de l'exporteur 2", code: 500},
+        {description: "Erreur lors de l'appel de l'exporteur", code: 500},
         500
       ));
     }
@@ -148,14 +150,14 @@ const getbuildingById = ({ buildingID, f, texture }) => new Promise(
         traitementRetourExporter(id, format, null, null, texture, reject, resolve);
       }, (raison) => {
         reject(Service.rejectResponse(
-          {description: "Erreur lors de l'appel de l'exporteur 3", code: 500},
+          {description: "Erreur lors de l'appel de l'exporteur", code: 500},
           500
         ));
     });
     } catch (e) {
       console.log(e.message);
       reject(Service.rejectResponse(
-        {description: "Erreur lors de l'appel de l'exporteur 4", code: 500},
+        {description: "Erreur lors de l'appel de l'exporteur", code: 500},
         500
       ));
     }
@@ -245,13 +247,16 @@ async function traitementRetourPG(result, id, limit, startIndex, reject, resolve
 }
 
 async function traitementRetourExporter(id, format, limit, startIndex, texture, reject, resolve) {
+  logger.info('Début du traitement après export : ' + id + format);
   let fileExtention = texture === 'oui' ? '.zip' : format;
   try{
     if (texture === 'oui') {
+      // TODO : vérifier taille du fichier . Si > 500Mo, le mettre en téléchargement (dépot du fichier dans un dossier accessible avec suppr automatique toutes les nuits)
+
       // data = fichier à retourner
       let data = await new JSZip.external.Promise(function (resolve, reject) {
-        // lecture du fichier zip
-        fs.readFile(process.env['EXPORTER_SAVE_PATH'] + id + fileExtention, function(err, data) { 
+      // lecture du fichier zip
+      fs.readFile(process.env['EXPORTER_SAVE_PATH'] + id + fileExtention, function(err, data) { 
             if (err) {
                 reject(err);
             } else {
@@ -260,7 +265,7 @@ async function traitementRetourExporter(id, format, limit, startIndex, texture, 
         });
       });
       
-      // stzip = stream du fichier principal pour controle du contenu
+      // stzip = lecture stream du fichier principal de l'archive pour controle du contenu
       const stzip = new StreamZip.async({ file: process.env['EXPORTER_SAVE_PATH'] + id + fileExtention });
       let file = '';
       let stream = await stzip.stream(id + `.${format.slice(5)}`);
@@ -272,7 +277,6 @@ async function traitementRetourExporter(id, format, limit, startIndex, texture, 
         file += _data;
       }
       
-      //if(!JSON.parse(convert.xml2json(file,{compact: true}))['CityModel']['cityObjectMember']){
       if (!atleastoneresult) {
         await stzip.close();
         reject(Service.rejectResponse(
@@ -280,29 +284,29 @@ async function traitementRetourExporter(id, format, limit, startIndex, texture, 
           404
         ));
       }
+      logger.info('Fin du traitement après export : ' + id + fileExtention);
       resolve(Service.fileResponse(data, 200, 'application/zip'));
       stzip.close();
-    } else {
-      if (format === '.cityjson') {
-        let file = fs.readFileSync(process.env['EXPORTER_SAVE_PATH'] + id + format, 'utf8');
-        let json = JSON.parse(file);
-        let size = Object.keys(json.CityObjects).length;
-        if (size === 0) {
-          reject(Service.rejectResponse(
-            { description: 'Aucun résultat', code: 404},
-            404
-          ));
-        }
-        resolve(Service.successResponse(json));
+    } 
+    else { // FICHIER UNIQUE SANS TEXTURE
+      let _tailleFichier = fs.statSync(process.env['EXPORTER_SAVE_PATH'] + id + format)["size"];
+      if ((_tailleFichier) > 500 * 1000000) { // si taille fichier > 500 M0 on crée une archive
+        const zp = new admz();
+        zp.addLocalFile(process.env['EXPORTER_SAVE_PATH'] + id + format);
+        zp.getEntries()[0].entryName="buildings"+ `.${format.slice(5)}`;
+        
+        const data = zp.toBuffer();
+        logger.info('Fin du traitement après export ' + id + format);
+        resolve(Service.fileResponse(data, 200, 'application/zip'));
       } else {
-        let file = '';
+        let string = '';
         let stream = fs.createReadStream(process.env['EXPORTER_SAVE_PATH'] + id + format, 'utf8');
         let atleastoneresult = false;
         for await(const _data of stream) {
-          if (!atleastoneresult && _data.indexOf('cityObjectMember') > 0  ){
+          if (!atleastoneresult && (_data.indexOf('cityObjectMember') > 0 || _data.indexOf('BUILDINGID') > 0) ){
             atleastoneresult = true;
           }
-          file += _data;
+          string += _data;
         }
         if(!atleastoneresult){
           reject(Service.rejectResponse(
@@ -310,18 +314,30 @@ async function traitementRetourExporter(id, format, limit, startIndex, texture, 
             404
           ));
         }
+
+        let file = {
+            type : format === '.cityjson'?'json':'gml',
+            data : string
+          };
+
+        logger.info('Fin du traitement après export : ' + id + format);
         resolve(Service.successResponse(file));
-      }
+        
+      } 
     }
   } catch (error) {
+    logger.error("Erreur du traitement après export");
     reject(Service.rejectResponse(
-      {description: "Erreur lors de l'appel de l'exporteur 5", code: 500},
+      {description: "Erreur lors du controle de l'export des données", code: 500},
       500
     ));
   } finally {
     fs.unlinkSync(process.env['EXPORTER_SAVE_PATH'] + id + fileExtention);
   }
 }; 
+
+
+
 
 module.exports = {
   getBuildings,

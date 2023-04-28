@@ -52,8 +52,9 @@ class ExpressServer {
 
     for (const uuid of process.env['FILES_IDS'].split(",")){
       this.app.get('/files/'+uuid, (req, res) => {
-        logger.info("Téléchargement du fichier "+ process.env[uuid])
-        res.download((path.join(__dirname, 'files', process.env[uuid])), process.env[uuid])
+        logger.info("Téléchargement du fichier "+ process.env[uuid]);
+        logger.info(path.join(__dirname, 'files', process.env[uuid]));
+        res.download((path.join(__dirname, 'files', process.env[uuid])), process.env[uuid]);
       });
     }
     this.app.get('/', (req, res) => {
@@ -80,7 +81,7 @@ class ExpressServer {
           });
         });
         var server = http.createServer(this.app).listen(this.port);
-        server.setTimeout(10*60*1000);
+        server.setTimeout(40*60*1000);
         console.log(`Listening on port ${this.port}`);
       });
   }

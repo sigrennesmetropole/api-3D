@@ -14,6 +14,7 @@
   "license": "Unlicense",
   "private": true,
   "dependencies": {
+    "adm-zip": "^0.5.10",
     "bbox": "^0.4.0",
     "body-parser": "^1.19.0",
     "camelcase": "^5.3.1",

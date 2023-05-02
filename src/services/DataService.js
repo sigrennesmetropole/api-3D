@@ -12,6 +12,8 @@ var dataValidator = require('./DataValidator');
 const JSZip = require("jszip");
 const StreamZip = require('node-stream-zip');
 
+const path = require('path');
+const config = require('../config');
 const logger = require('../logger');
 const admz = require('adm-zip')
 
@@ -251,46 +253,87 @@ async function traitementRetourExporter(id, format, limit, startIndex, texture, 
   let fileExtention = texture === 'oui' ? '.zip' : format;
   try{
     if (texture === 'oui') {
-      // TODO : vérifier taille du fichier . Si > 500Mo, le mettre en téléchargement (dépot du fichier dans un dossier accessible avec suppr automatique toutes les nuits)
-
-      // data = fichier à retourner
-      let data = await new JSZip.external.Promise(function (resolve, reject) {
-      // lecture du fichier zip
-      fs.readFile(process.env['EXPORTER_SAVE_PATH'] + id + fileExtention, function(err, data) { 
-            if (err) {
-                reject(err);
-            } else {
-                resolve(data);
-            }
-        });
-      });
-      
-      // stzip = lecture stream du fichier principal de l'archive pour controle du contenu
-      const stzip = new StreamZip.async({ file: process.env['EXPORTER_SAVE_PATH'] + id + fileExtention });
-      let file = '';
-      let stream = await stzip.stream(id + `.${format.slice(5)}`);
-      let atleastoneresult = false;
-      for await(const _data of stream) {
-        if (!atleastoneresult && (_data.indexOf('cityObjectMember') > 0 || _data.indexOf('BUILDINGID') > 0) ){
-          atleastoneresult = true;
+      let _tailleFichier = fs.statSync(process.env['EXPORTER_SAVE_PATH'] + id + fileExtention)["size"];
+      if ((_tailleFichier) > process.env['DOWNLD_LIMITSIZE_MO'] * 1000000) { // si taille fichier > 500 M0, on dépose le fichier dans un dossier path.join(__dirname, 'files', 'dwnldtmp')
+        
+        let sourceFile = id + fileExtention;
+        let date = new Date();
+        let month = (date.getMonth()+1).toString().length === 1 ? '0' + (date.getMonth()+1).toString() : (date.getMonth()+1).toString();
+        let day = (date.getDate()).toString().length === 1 ? '0' + (date.getDate()).toString() : (date.getDate()).toString();
+        let hours = (date.getHours()).toString().length === 1 ? '0' + (date.getHours()).toString() : (date.getHours()).toString();
+        let minutes = (date.getMinutes()).toString().length === 1 ? '0' + (date.getMinutes()).toString() : (date.getMinutes()).toString();
+        let seconds = (date.getSeconds()).toString().length === 1 ? '0' + (date.getSeconds()).toString() : (date.getSeconds()).toString();
+        let horodatage = date.getFullYear().toString()+ month + day + hours + minutes + seconds + date.getMilliseconds().toString();
+        let destFile =  horodatage + '_buildings_' + format.replace(".city", "") + fileExtention;
+        let destfolder = path.join(process.env['DOWNLD_PATH'], process.env['DOWNLD_FOLDERNAME']);
+        if (!fs.existsSync(destfolder)) {
+          await fs.mkdirSync(destfolder);
         }
-        file += _data;
+        fs.copyFile(process.env['EXPORTER_SAVE_PATH'] + sourceFile, path.join(destfolder,destFile), fs.constants.COPYFILE_FICLONE, (err) => {
+          if (err) {
+            reject(Service.rejectResponse(
+              { description: 'Erreur Copie du fichier exporté', code: 404},
+              404
+            ));
+          } 
+        });
+
+        try{
+          let url = config.URL_PATH + "/" + config.URL_PORT;
+          url += '/' + process.env['DOWNLD_FOLDERNAME'] + '/' + destFile;
+          
+          let data = {
+            commentaire : "Le résultat de votre recherche est trop lourd pour vous être fourni directement. Vous disposer de "+ process.env['DOWNLD_RETENTION_MIN'] +" minutes pour télécharger le fichier de résultat.",
+            url : url
+          }
+          logger.info('Fin du traitement après export : ' + id + fileExtention);
+          resolve(Service.successResponse({
+                data : JSON.stringify(data),
+                type : 'json'
+              }));
+        } catch (e) {
+          logger.info(e);
+        }
+      } else {
+        // data = fichier à retourner
+        let data = await new JSZip.external.Promise(function (resolve, reject) {
+        // lecture du fichier zip
+        fs.readFile(process.env['EXPORTER_SAVE_PATH'] + id + fileExtention, function(err, data) { 
+              if (err) {
+                  reject(err);
+              } else {
+                  resolve(data);
+              }
+          });
+        });
+        
+        // stzip = lecture stream du fichier principal de l'archive pour controle du contenu
+        const stzip = new StreamZip.async({ file: process.env['EXPORTER_SAVE_PATH'] + id + fileExtention });
+        let file = '';
+        let stream = await stzip.stream(id + `.${format.slice(5)}`);
+        let atleastoneresult = false;
+        for await(const _data of stream) {
+          if (!atleastoneresult && (_data.indexOf('cityObjectMember') > 0 || _data.indexOf('BUILDINGID') > 0) ){
+            atleastoneresult = true;
+          }
+          file += _data;
+        }
+        
+        if (!atleastoneresult) {
+          await stzip.close();
+          reject(Service.rejectResponse(
+            { description: 'Aucun résultat', code: 404},
+            404
+          ));
+        }
+        logger.info('Fin du traitement après export : ' + id + fileExtention);
+        resolve(Service.fileResponse(data, 200, 'application/zip'));
+        stzip.close();
       }
-      
-      if (!atleastoneresult) {
-        await stzip.close();
-        reject(Service.rejectResponse(
-          { description: 'Aucun résultat', code: 404},
-          404
-        ));
-      }
-      logger.info('Fin du traitement après export : ' + id + fileExtention);
-      resolve(Service.fileResponse(data, 200, 'application/zip'));
-      stzip.close();
     } 
     else { // FICHIER UNIQUE SANS TEXTURE
       let _tailleFichier = fs.statSync(process.env['EXPORTER_SAVE_PATH'] + id + format)["size"];
-      if ((_tailleFichier) > 500 * 1000000) { // si taille fichier > 500 M0 on crée une archive
+      if ((_tailleFichier) > process.env['DOWNLD_LIMITSIZE_MO'] * 1000000) { // si taille fichier > 500 M0 on crée une archive 
         const zp = new admz();
         zp.addLocalFile(process.env['EXPORTER_SAVE_PATH'] + id + format);
         zp.getEntries()[0].entryName="buildings"+ `.${format.slice(5)}`;
@@ -322,7 +365,6 @@ async function traitementRetourExporter(id, format, limit, startIndex, texture, 
 
         logger.info('Fin du traitement après export : ' + id + format);
         resolve(Service.successResponse(file));
-        
       } 
     }
   } catch (error) {

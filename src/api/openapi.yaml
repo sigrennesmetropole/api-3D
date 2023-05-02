@@ -363,6 +363,9 @@ paths:
         Le jeu de données `buildings` représente les bâtiments 3D.
         Les bâtiments existent sur toutes les communes du territoire métropolitain. Il est possible de les obtenir avec ou sans texture.
         Il est nécessaire de préciser un périmètre géographique (BBOX de moins de 10km² ou code insee d'une commune).
+        
+        
+        Attention, la recherche des batiments texturés sur de larges territoires peut réduire les performances de l'API. Dans ce cas, le format CityJSON est recommandé.
       operationId: getBuildings
       parameters:
       - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.

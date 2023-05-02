@@ -40,8 +40,6 @@ class Controller {
 
     } else if (responsePayload instanceof Object && request.openapi.schema.operationId === "getBuildings") {
       response.type('application/octet-stream');
-      //response.set('content-disposition', `attachment; filename=buildings.${responsePayload.type.toLowerCase().replace("cityjson", "json")}`);
-      //response.end(Buffer.from(JSON.stringify(responsePayload)), 'binary');
       response.set('content-disposition', `attachment; filename=buildings.${responsePayload.type.toLowerCase().replace(".city", ".")}`);
       response.end(Buffer.from(responsePayload.data), 'binary');
     } else if (responsePayload instanceof Object) {
@@ -145,7 +143,7 @@ class Controller {
         requestParams[i] = extraParams[i];
       }
       logger.info('Appel du path '+ request.route.path, { "parametres" : requestParams});
-      const serviceResponse = await serviceOperation(requestParams);      
+      const serviceResponse = await serviceOperation(requestParams);
       Controller.sendResponse(response, serviceResponse, request);
     } catch (error) {
       Controller.sendError(response, error);

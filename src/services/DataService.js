@@ -267,6 +267,7 @@ async function traitementRetourExporter(id, format, limit, startIndex, texture, 
         let destFile =  horodatage + '_buildings_' + format.replace(".city", "") + fileExtention;
         let destfolder = path.join(process.env['DOWNLD_PATH'], process.env['DOWNLD_FOLDERNAME']);
         if (!fs.existsSync(destfolder)) {
+          logger.info('Creation du dossier : ' + destfolder);
           await fs.mkdirSync(destfolder);
         }
         fs.copyFile(process.env['EXPORTER_SAVE_PATH'] + sourceFile, path.join(destfolder,destFile), fs.constants.COPYFILE_FICLONE, (err) => {
@@ -279,8 +280,7 @@ async function traitementRetourExporter(id, format, limit, startIndex, texture, 
         });
 
         try{
-          let url = config.URL_PATH + "/" + config.URL_PORT;
-          url += '/' + process.env['DOWNLD_FOLDERNAME'] + '/' + destFile;
+          let url =  process.env['DOWNLD_URL'] + "/" + process.env['DOWNLD_FOLDERNAME'] + '/' + destFile;
           
           let data = {
             commentaire : "Le résultat de votre recherche est trop lourd pour vous être fourni directement. Vous disposer de "+ process.env['DOWNLD_RETENTION_MIN'] +" minutes pour télécharger le fichier de résultat.",

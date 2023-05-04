@@ -255,35 +255,36 @@ async function traitementRetourExporter(id, format, limit, startIndex, texture, 
     if (texture === 'oui') {
       let _tailleFichier = fs.statSync(process.env['EXPORTER_SAVE_PATH'] + id + fileExtention)["size"];
       if ((_tailleFichier) > process.env['DOWNLD_LIMITSIZE_MO'] * 1000000) { // si taille fichier > 500 M0, on dépose le fichier dans un dossier path.join(__dirname, 'files', 'dwnldtmp')
-        
-        let sourceFile = id + fileExtention;
-        let date = new Date();
-        let month = (date.getMonth()+1).toString().length === 1 ? '0' + (date.getMonth()+1).toString() : (date.getMonth()+1).toString();
-        let day = (date.getDate()).toString().length === 1 ? '0' + (date.getDate()).toString() : (date.getDate()).toString();
-        let hours = (date.getHours()).toString().length === 1 ? '0' + (date.getHours()).toString() : (date.getHours()).toString();
-        let minutes = (date.getMinutes()).toString().length === 1 ? '0' + (date.getMinutes()).toString() : (date.getMinutes()).toString();
-        let seconds = (date.getSeconds()).toString().length === 1 ? '0' + (date.getSeconds()).toString() : (date.getSeconds()).toString();
-        let horodatage = date.getFullYear().toString()+ month + day + hours + minutes + seconds + date.getMilliseconds().toString();
-        let destFile =  horodatage + '_buildings_' + format.replace(".city", "") + fileExtention;
-        let destfolder = path.join(process.env['DOWNLD_PATH'], process.env['DOWNLD_FOLDERNAME']);
-        if (!fs.existsSync(destfolder)) {
-          logger.info('Creation du dossier : ' + destfolder);
-          await fs.mkdirSync(destfolder);
-        }
-        fs.copyFile(process.env['EXPORTER_SAVE_PATH'] + sourceFile, path.join(destfolder,destFile), fs.constants.COPYFILE_FICLONE, (err) => {
-          if (err) {
-            reject(Service.rejectResponse(
-              { description: 'Erreur Copie du fichier exporté', code: 404},
-              404
-            ));
-          } 
-        });
-
         try{
-          let url =  process.env['DOWNLD_URL'] + "/" + process.env['DOWNLD_FOLDERNAME'] + '/' + destFile;
+          let sourceFile = id + fileExtention;
+          let date = new Date();
+          let month = (date.getMonth()+1).toString().length === 1 ? '0' + (date.getMonth()+1).toString() : (date.getMonth()+1).toString();
+          let day = (date.getDate()).toString().length === 1 ? '0' + (date.getDate()).toString() : (date.getDate()).toString();
+          let hours = (date.getHours()).toString().length === 1 ? '0' + (date.getHours()).toString() : (date.getHours()).toString();
+          let minutes = (date.getMinutes()).toString().length === 1 ? '0' + (date.getMinutes()).toString() : (date.getMinutes()).toString();
+          let seconds = (date.getSeconds()).toString().length === 1 ? '0' + (date.getSeconds()).toString() : (date.getSeconds()).toString();
+          let horodatage = date.getFullYear().toString()+ month + day + hours + minutes + seconds + date.getMilliseconds().toString();
+          let destFile =  horodatage + '_buildings_' + format.replace(".city", "") + fileExtention;
+          let destfolder = path.join(process.env['DOWNLD_PATH'], process.env['DOWNLD_FOLDERNAME']);
           
+          if (!fs.existsSync(destfolder)) {
+            logger.info('Creation du dossier : ' + destfolder);
+            await fs.mkdirSync(destfolder);
+          }
+          fs.copyFile(process.env['EXPORTER_SAVE_PATH'] + sourceFile, path.join(destfolder,destFile), fs.constants.COPYFILE_FICLONE, (err) => {
+            if (err) {
+              reject(Service.rejectResponse(
+                { description: 'Erreur Copie du fichier exporté', code: 404},
+                404
+              ));
+            } 
+          });
+
+          let url =  process.env['DOWNLD_URL'] + "/" + process.env['DOWNLD_FOLDERNAME'] + '/' + destFile;
+          let refTime = new Date(date.getTime() + process.env['DOWNLD_RETENTION_MIN'] * 60 * 1000);
+
           let data = {
-            commentaire : "Le résultat de votre recherche est trop lourd pour vous être fourni directement. Vous disposer de "+ process.env['DOWNLD_RETENTION_MIN'] +" minutes pour télécharger le fichier de résultat.",
+            commentaire : "Le résultat de votre recherche est trop lourd pour vous être fourni directement. Vous pouvez le télécharger à l'adresse ci-après jusqu'au "+ refTime.toLocaleDateString() + " à " + refTime.toLocaleTimeString() +".",
             url : url
           }
           logger.info('Fin du traitement après export : ' + id + fileExtention);

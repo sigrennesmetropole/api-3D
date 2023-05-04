@@ -364,8 +364,9 @@ paths:
         Les bâtiments existent sur toutes les communes du territoire métropolitain. Il est possible de les obtenir avec ou sans texture.
         Il est nécessaire de préciser un périmètre géographique (BBOX de moins de 10km² ou code insee d'une commune).
         
+        <b><u>Attention</u></b>, la recherche des batiments texturés sur de larges territoires peut réduire les performances de l'API. Dans ce cas, le format CityJSON et la réduction de la superficie observée sont recommandés.
         
-        Attention, la recherche des batiments texturés sur de larges territoires peut réduire les performances de l'API. Dans ce cas, le format CityJSON  et la réduction de la superficie observée sont recommandés.
+        <b><u>Attention</u></b>, en cas d'export très lourd, un fichier téléchargeable sera créé et une URL temporaire de téléchargement sera fournie en résultat de l'appel à l'API.
       operationId: getBuildings
       parameters:
       - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.

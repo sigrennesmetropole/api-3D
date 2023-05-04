@@ -9,7 +9,6 @@ const logger = require('./logger');
 class TempDwnldFilesManager {
   constructor() {
     this.folder = path.join(process.env['DOWNLD_PATH'], process.env['DOWNLD_FOLDERNAME']);
-    logger.info('**Retention minutes 1 : ' + process.env['DOWNLD_RETENTION_MIN'] );
     this.startManagement();
   }
 
@@ -25,6 +24,7 @@ class TempDwnldFilesManager {
       for (var i=0; i<filenames.length; i++) {
         let file = path.join(process.env['DOWNLD_PATH'], process.env['DOWNLD_FOLDERNAME'], filenames[i] );
         if (fs.statSync(file)["birthtimeMs"] < refTime) {
+          logger.info('Suppression du fichier  ' + filenames[i]);
           fs.unlinkSync(file);
         }
       }

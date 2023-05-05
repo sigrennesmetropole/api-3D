@@ -288,10 +288,7 @@ async function traitementRetourExporter(id, format, limit, startIndex, texture, 
             url : url
           }
           logger.info('Fin du traitement après export : ' + id + fileExtention);
-          resolve(Service.successResponse({
-                data : JSON.stringify(data),
-                type : 'json'
-              }));
+          resolve(Service.successResponse(data));
         } catch (e) {
           logger.info(e);
         }

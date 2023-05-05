@@ -10,7 +10,6 @@ services:
         - ${impexp_local_path}:/etc/impexp
         - ${download_file_path}:/usr/src/app/src/files
       environment:
-        TZ: Europe/Paris
         IMPORTER_EXPORTER_PATH: /etc/impexp
         EXPORTER_SAVE_PATH: /usr/src/app/src/export/
         DISPLAY: :0.0

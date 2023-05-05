@@ -14,6 +14,7 @@ class Controller {
     response.status(payload.code || 200);
     const responsePayload = payload.payload !== undefined ? payload.payload : payload;
     const isFileResponse = payload.type !== undefined ? true : false;
+    
     if(isFileResponse){
       let filename;
       switch (request.openapi.schema.operationId) {
@@ -38,9 +39,13 @@ class Controller {
       response.type(payload.type);
       response.end( responsePayload, 'binary' );
 
-    } else if (responsePayload instanceof Object && request.openapi.schema.operationId === "getBuildings") {
+    } else if (responsePayload instanceof Object && request.openapi.schema.operationId === "getBuildings" && (responsePayload.url == undefined || !responsePayload.url)) {
       response.type('application/octet-stream');
-      response.set('content-disposition', `attachment; filename=buildings.${responsePayload.type.toLowerCase().replace(".city", ".")}`);
+      if(responsePayload.download){
+        response.set('content-disposition', `attachment; filename=obtenir_les_donnees.${responsePayload.type.toLowerCase().replace(".city", ".")}`);
+      } else {
+        response.set('content-disposition', `attachment; filename=buildings.${responsePayload.type.toLowerCase().replace(".city", ".")}`);
+      }
       response.end(Buffer.from(responsePayload.data), 'binary');
     } else if (responsePayload instanceof Object) {
       response.json(responsePayload);

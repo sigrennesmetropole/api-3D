@@ -9,6 +9,11 @@ services:
         - C:\Softs\3DCityDB-Importer-Exporter-5.1.0:/etc/impexp
         - C:\Projets\RM\api3d-fichiers statiques:/usr/src/app/src/files
       environment:
+        TZ: Europe/Paris
+        LANG: fr_FR.UTF-8
+        LANGUAGE: fr_FR:fr
+        LC_ALL: fr_FR.UTF-8
+        LC_TIME: fr_FR.UTF-8
         DB_USERNAME: admin
         DB_HOST: 3dciytdb
         DB_DATABASE: citydb

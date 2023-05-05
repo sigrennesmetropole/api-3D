@@ -1,6 +1,7 @@
 const { exec } = require("child_process");
 const c = require('../../config');
 
+
 const exportData = (uuid, format, bbox, buildingID, limit, startIndex, texture, sqlSelect) => new Promise((resolve, reject) => {
     try{
         let options = ' --db-host=' + process.env.DB_HOST
@@ -15,7 +16,7 @@ const exportData = (uuid, format, bbox, buildingID, limit, startIndex, texture, 
             options = options + ' -o ' + process.env['EXPORTER_SAVE_PATH'] + uuid + format
             + ' --no-appearance';
         }
-        if (!!bbox) options = options + ' --bbox=' + bbox.toString();
+        if (!!bbox) options = options + ' --bbox=' + bbox.toString().replace(/\s/g,'');
         if (!!buildingID) options = options + ' --resource-id=' + buildingID;
         if (!!limit) options = options + ' --count=' + limit;
         if (!!startIndex) options = options + ' --start-index=' + startIndex;

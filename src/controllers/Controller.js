@@ -14,6 +14,7 @@ class Controller {
     response.status(payload.code || 200);
     const responsePayload = payload.payload !== undefined ? payload.payload : payload;
     const isFileResponse = payload.type !== undefined ? true : false;
+    
     if(isFileResponse){
       let filename;
       switch (request.openapi.schema.operationId) {
@@ -33,20 +34,25 @@ class Controller {
           filename = 'street_furniture.json';
           break;
       }
-      filename = filename.replace("cityjson", "json")
-      response.set('content-disposition', `attachment; filename=${filename}`)
+      filename = filename.replace("cityjson", "json");
+      response.set('content-disposition', `attachment; filename=${filename}`);
       response.type(payload.type);
       response.end( responsePayload, 'binary' );
-    } else if (responsePayload instanceof Object && request.openapi.schema.operationId === "getBuildings") {
+
+    } else if (responsePayload instanceof Object && request.openapi.schema.operationId === "getBuildings" && (responsePayload.url == undefined || !responsePayload.url)) {
       response.type('application/octet-stream');
-      response.set('content-disposition', `attachment; filename=buildings.${responsePayload.type.toLowerCase().replace("cityjson", "json")}`)
-      response.end(Buffer.from(JSON.stringify(responsePayload)), 'binary');
-    }else if (responsePayload instanceof Object) {
+      if(responsePayload.download){
+        response.set('content-disposition', `attachment; filename=obtenir_les_donnees.${responsePayload.type.toLowerCase().replace(".city", ".")}`);
+      } else {
+        response.set('content-disposition', `attachment; filename=buildings.${responsePayload.type.toLowerCase().replace(".city", ".")}`);
+      }
+      response.end(Buffer.from(responsePayload.data), 'binary');
+    } else if (responsePayload instanceof Object) {
       response.json(responsePayload);
     } else {
       if (responsePayload.slice(2,5) === 'xml') {
         response.type('application/octet-stream');
-        response.set('content-disposition', `attachment; filename=buildings.citygml`)
+        response.set('content-disposition', `attachment; filename=buildings.gml`);
         response.end(Buffer.from(responsePayload), 'binary');
       } else {
         response.end(responsePayload);
@@ -75,7 +81,6 @@ class Controller {
   * @returns {string}
   */
   static collectFile(request, fieldName) {
-   
     let uploadedFileName = '';
     if (request.files && request.files.length > 0) {
       const fileObject = request.files.find(file => file.fieldname === fieldName);

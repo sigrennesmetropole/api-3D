@@ -52,14 +52,14 @@ class ExpressServer {
 
     for (const uuid of process.env['FILES_IDS'].split(",")){
       this.app.get('/files/'+uuid, (req, res) => {
-        logger.info("Téléchargement du fichier "+ process.env[uuid])
-        res.download((path.join(__dirname, 'files', process.env[uuid])), process.env[uuid])
+        logger.info("Téléchargement du fichier "+ process.env[uuid]);
+        res.download((path.join(__dirname, 'files', process.env[uuid])), process.env[uuid]);
       });
     }
     this.app.get('/', (req, res) => {
-        var data = metadata.getMetadata().then(function(result){
-          res.render(path.join(__dirname,'templates/telechargement'), result);
-        });
+      var data = metadata.getMetadata().then(function(result){
+        res.render(path.join(__dirname,'templates/telechargement'), result);
+      });
     });
   }
 
@@ -79,7 +79,8 @@ class ExpressServer {
             errors: err.errors || '',
           });
         });
-        http.createServer(this.app).listen(this.port);
+        var server = http.createServer(this.app).listen(this.port);
+        server.setTimeout(40*60*1000);
         console.log(`Listening on port ${this.port}`);
       });
   }

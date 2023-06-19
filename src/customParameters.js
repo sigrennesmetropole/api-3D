@@ -5,7 +5,6 @@ const logger = require('./logger');
 
 const matomoCustomDimension = ['f', 'bbox', 'codeInsee', 'buildingID', 'texture'];
 
-logger.info('INITIALISATION VARIABLE MATOMO');
 let customproperties;
 let matomotracker;
 
@@ -32,9 +31,6 @@ function trackAPICallMatomo(request, requestParams) {
       url: config.FULL_PATH + request.route.path.substring(1),
       action_name: request.route.path,
     };
-    logger.info('***************************************************************');
-    logger.info(requestParams);
-    logger.info('***************************************************************');
     for (const i in requestParams) {
       if (matomoCustomDimension.indexOf(i) >= 0) {
         matomoParams[`dimension${matomoCustomDimension.indexOf(i) + 1}`] = requestParams[i];

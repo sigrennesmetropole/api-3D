@@ -3,6 +3,7 @@ const path = require('path');
 const camelCase = require('camelcase');
 const config = require('../config');
 const logger = require('../logger');
+const customParam = require("../customParameters.js");
 
 class Controller {
   static sendResponse(response, payload, request) {
@@ -14,7 +15,7 @@ class Controller {
     response.status(payload.code || 200);
     const responsePayload = payload.payload !== undefined ? payload.payload : payload;
     const isFileResponse = payload.type !== undefined ? true : false;
-    
+
     if(isFileResponse){
       let filename;
       switch (request.openapi.schema.operationId) {
@@ -147,6 +148,9 @@ class Controller {
       for (let i in extraParams) {
         requestParams[i] = extraParams[i];
       }
+
+      customParam.customAPICallActions(request, requestParams);
+
       logger.info('Appel du path '+ request.route.path, { "parametres" : requestParams});
       const serviceResponse = await serviceOperation(requestParams);
       Controller.sendResponse(response, serviceResponse, request);

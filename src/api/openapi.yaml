@@ -7,12 +7,13 @@ info:
     </p>
     
     <p>
-    Les <b>données de végétation</b> et de <b>mobilier urbains</b> peuvent servir à enrichir des expériences de visualisations construites sur la base des bâtiments 3D. Toutefois, ces données sont théoriques et ne correspondent pas exactement à la réalité. Ces couches de données ponctuelles nécessite un travail de représentation à l'aide des catalogues disponibles sur la page <a target="_blank" href="https://api-3d.sig.rennesmetropole.fr"> des fichiers téléchargeables</a>.
+    Les <b>données de végétation</b> et de <b>mobilier urbains</b> peuvent servir à enrichir des expériences de visualisations construites sur la base des bâtiments 3D. Toutefois, ces données sont théoriques et ne correspondent pas exactement à la réalité. Ces couches de données ponctuelles nécessitent un travail de représentation à l'aide des catalogues disponibles sur la page <a target="_blank" href="https://api-3d.sig.rennesmetropole.fr"> des fichiers téléchargeables</a>.
     </p>
     
     <p>
     Le <b>Modèle Numérique de Terrain (MNT)</b> permet de connaître l'altitude du terrain à un endroit donné. Cette donnée raster en niveaux de gris permet de reconstruire un modèle 3D du terrain.
     </p>
+    <p>Le système de corrodonnées utilisé par cette API (résultats et paramètres) est EPSG:3949. </p>
     <p>Cette API se veut conforme au standard OGC API - Features v1.0.0 et au standard OGC API - Coverage (draft). </p>
   contact:
     name: Rennes Metropole - Service Information Géographique

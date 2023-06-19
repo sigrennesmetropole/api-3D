@@ -12,6 +12,8 @@ const { OpenApiValidator } = require('express-openapi-validator');
 const logger = require('./logger');
 const config = require('./config');
 const metadata = require("./clients/metadata/metadata");
+const customParam = require("./customParameters.js");
+const { info } = require('console');
 
 class ExpressServer {
   constructor(port, openApiYaml) {
@@ -41,6 +43,9 @@ class ExpressServer {
     this.app.get('/openapi', (req, res) => res.sendFile((path.join(__dirname, 'api', 'openapi.yaml'))));
     //View the openapi document in a visual interface. Should be able to test from this page
     this.app.use('/api/api-docs', swaggerUI.serve, swaggerUI.setup(this.schema));
+    //TODO : ajouter un bloc matomo dans la page swagger ou alors ajouter un tracker sur la page
+    customParam.init();
+    
     this.app.get('/login-redirect', (req, res) => {
       res.status(200);
       res.json(req.query);
@@ -58,11 +63,16 @@ class ExpressServer {
     }
     this.app.get('/', (req, res) => {
       var data = metadata.getMetadata().then(function(result){
+        // ajout de paramètres complémentaires
+        let customConf = customParam.getCustomProp();
+        if (customConf != 'undefined') {
+          result.custom = customConf;
+        }
         res.render(path.join(__dirname,'templates/telechargement'), result);
       });
-    });
+    }); 
   }
-
+  
   launch() {
     new OpenApiValidator({
       apiSpec: this.openApiPath,

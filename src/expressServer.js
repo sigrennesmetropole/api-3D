@@ -30,7 +30,6 @@ class ExpressServer {
   }
 
   setupMiddleware() {
-    // this.setupAllowedMedia();
     this.app.use(cors());
     this.app.use(bodyParser.json({ limit: '14MB' }));
     this.app.use(express.json());
@@ -43,7 +42,6 @@ class ExpressServer {
     this.app.get('/openapi', (req, res) => res.sendFile((path.join(__dirname, 'api', 'openapi.yaml'))));
     //View the openapi document in a visual interface. Should be able to test from this page
     this.app.use('/api/api-docs', swaggerUI.serve, swaggerUI.setup(this.schema));
-    //TODO : ajouter un bloc matomo dans la page swagger ou alors ajouter un tracker sur la page
     customParam.init();
     
     this.app.get('/login-redirect', (req, res) => {
@@ -81,9 +79,7 @@ class ExpressServer {
     }).install(this.app)
       .catch(e => console.log(e))
       .then(() => {
-        // eslint-disable-next-line no-unused-vars
         this.app.use((err, req, res, next) => {
-          // format errors
           res.status(err.status || 500).json({
             message: err.message || err,
             errors: err.errors || '',

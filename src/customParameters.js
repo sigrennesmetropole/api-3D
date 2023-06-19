@@ -1,7 +1,5 @@
 // Ajout de paramètres personnalisés
 const MatomoTracker = require('matomo-tracker');
-const config = require('./config');
-const logger = require('./logger');
 
 const matomoCustomDimension = ['f', 'bbox', 'codeInsee', 'buildingID', 'texture'];
 
@@ -28,15 +26,14 @@ const getCustomProp = () => // customproperties that can be used with ejs files
 function trackAPICallMatomo(request, requestParams) {
   if (matomotracker != undefined) {
     const matomoParams = {
-      url: config.FULL_PATH + request.route.path.substring(1),
-      action_name: request.route.path,
+      url: process.env.MATOMO_ACTION_URL + request.route.path.substring(1),
+      action_name: request.route.path
     };
     for (const i in requestParams) {
       if (matomoCustomDimension.indexOf(i) >= 0) {
         matomoParams[`dimension${matomoCustomDimension.indexOf(i) + 1}`] = requestParams[i];
       }
     }
-    logger.info(JSON.stringify(matomoParams));
     matomotracker.track(matomoParams);
   }
 }

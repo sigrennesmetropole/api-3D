@@ -13,7 +13,7 @@ info:
     <p>
     Le <b>Modèle Numérique de Terrain (MNT)</b> permet de connaître l'altitude du terrain à un endroit donné. Cette donnée raster en niveaux de gris permet de reconstruire un modèle 3D du terrain.
     </p>
-    <p>Le système de corrodonnées utilisé par cette API (résultats et paramètres) est EPSG:3949. </p>
+    <p>Le système de corrodonnées utilisé par cette API (résultats et paramètres) est EPSG:3948. </p>
     <p>Cette API se veut conforme au standard OGC API - Features v1.0.0 et au standard OGC API - Coverage (draft). </p>
   contact:
     name: Rennes Metropole - Service Information Géographique

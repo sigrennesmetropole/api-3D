@@ -1,6 +1,6 @@
 openapi: 3.0.2
 info:
-  title: RENNES METROPOLE - API 3D
+  title: RENNES METROPOLE - API 3D REST
   description: <p>L'API 3D permet un accès en flux aux données 3D produites par Rennes Métropole couvrant son territoire. </p>
     <p>
     La <b>base de données des bâtiments 3D</b> est constituée du socle millésimé et des ajustements de bâtiments. Le socle est mis à jour tous les trois ans. Les ajustements (destructions, modifications, ajouts) sont effectués pendant la période d'exploitation du millésime et ne bénéficient pas, eux, de texture.
@@ -13,11 +13,16 @@ info:
     <p>
     Le <b>Modèle Numérique de Terrain (MNT)</b> permet de connaître l'altitude du terrain à un endroit donné. Cette donnée raster en niveaux de gris permet de reconstruire un modèle 3D du terrain.
     </p>
-    <p>Le système de coordonnées utilisé par cette API (résultats et paramètres) est EPSG:3948. </p>
+    <p>Le système de coordonnées utilisé par cette API (résultats et paramètres) est <strong>EPSG:3948</strong>. </p>
+    <p>Cette API nécessite une authentification. 
+    <ul><li>Une clé publique ApiKeyAuth est mise à disposition et peut être utilisée librement. Tous les utilisateurs de cette clé partagent les mêmes accès aux données. Leurs demandes peuvent se voir mises en attente en cas d'un usage massif simultané de la clé. La clé partagée peut être récupérée dans la fenêtre d'authentification swagger. Elle est automatiquement appliquée sur les fonctions "Try it out" lorsqu'aucune authentification n'a été explicitement formulée.
+    <li>Les grands consommateurs de l'API peuvent aussi contacter le service SIG de Rennes Métropole pour demander un compte OAuth2 qui leur offre un accès indépendant aux données.
+    </ul></p>
     <p>Cette API se veut conforme au standard OGC API - Features v1.0.0 et au standard OGC API - Coverage (draft). </p>
   contact:
     name: Rennes Metropole - Service Information Géographique
     url: https://public.sig.rennesmetropole.fr/
+    email: sig@rennesmetropole.fr
   license:
     name: Licence ODbL 1.0
     url: https://opendatacommons.org/licenses/odbl/
@@ -33,7 +38,13 @@ info:
   - Open API Feature
   - OGC
 servers:
-  - url: /api
+  - url: https://api.rennesmetropole.fr/3d/v1/
+    description: Serveur de production
+  - url: https://api.rennesmetropole.fr/3d-test/v1/
+    description: Serveur de test
+security:
+  - ApiKeyAuth: []
+  - OAuth2: []
 tags:
 - description: Propriétés générales de l'API
   name: Capabilities
@@ -86,7 +97,6 @@ paths:
       summary: Page d'accueil
       tags:
       - Capabilities
-      x-eov-operation-handler: controllers/CapabilitiesController
   /conformance:
     get:
       description: Liste des standards auxquels l'API est conforme.
@@ -139,7 +149,6 @@ paths:
       summary: Déclaration des conformités aux standards
       tags:
       - Capabilities
-      x-eov-operation-handler: controllers/CapabilitiesController
   /collections:
     get:
       operationId: getCollections
@@ -211,7 +220,6 @@ paths:
       summary: Description des jeux de données 
       tags:
       - Capabilities
-      x-eov-operation-handler: controllers/CapabilitiesController
   /collections/buildings:
     get:
       operationId: describeBuildings
@@ -286,7 +294,6 @@ paths:
       summary: Description du jeu de données `buildings`
       tags:
       - Capabilities
-      x-eov-operation-handler: controllers/CapabilitiesController
   /collections/mnt2018:
     get:
       operationId: describeMnt2018
@@ -357,7 +364,6 @@ paths:
       summary: Description du jeu de données `mnt2018`
       tags:
       - Capabilities
-      x-eov-operation-handler: controllers/CapabilitiesController
   /collections/buildings/items:
     get:
       description: |-
@@ -365,9 +371,8 @@ paths:
         Les bâtiments existent sur toutes les communes du territoire métropolitain. Il est possible de les obtenir avec ou sans texture.
         Il est nécessaire de préciser un périmètre géographique (BBOX de moins de 10km² ou code insee d'une commune).
         
-        <b><u>Attention</u></b>, la recherche des batiments texturés sur de larges territoires peut réduire les performances de l'API. Dans ce cas, le format CityJSON et la réduction de la superficie observée sont recommandés.
         
-        <b><u>Attention</u></b>, en cas d'export très lourd, un fichier téléchargeable sera créé et une URL temporaire de téléchargement sera fournie en résultat de l'appel à l'API.
+        Attention, la recherche des batiments texturés sur de larges territoires peut réduire les performances de l'API. Dans ce cas, le format CityJSON est recommandé.
       operationId: getBuildings
       parameters:
       - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
@@ -423,18 +428,24 @@ paths:
           enum:
           - oui
           - non
+      produces:
+        - application/zip
+        - application/json
+        - application/gml+xml;version=3.2
       responses:
         "200":
           content:
             application/zip:
               schema:
-                type: object
+                type: file
+                format: binary
             application/json:
               schema:
                 $ref: '#/components/schemas/Buildings'
             application/gml+xml;version=3.2:
               schema:
                 type: object
+                format: binary
           description: Données CityJSON ou CityGML. Si les textures sont demandées, le fichier compressé retourné contient le modèle 3D et les textures des bâtiments.
         "400":
           content:
@@ -470,7 +481,6 @@ paths:
       summary: Obtention des données 3D bâtiments
       tags:
       - Data
-      x-eov-operation-handler: controllers/DataController
   /collections/buildings/items/{buildingID}:
     get:
       description: |-
@@ -541,7 +551,6 @@ paths:
       summary: Obtention des données 3D d'un bâtiment à partir de son identifiant.
       tags:
       - Data
-      x-eov-operation-handler: controllers/DataController
   /collections/added_building/items:
     get:
       description: |-
@@ -651,7 +660,6 @@ paths:
       summary: Obtention des données 3D "bâtiments" ajoutés depuis le dernier millésime ou une date ultérieure
       tags:
       - Data
-      x-eov-operation-handler: controllers/DataController
   /collections/modified_building/items:
     get:
       description: |-
@@ -761,7 +769,6 @@ paths:
       summary: Obtention des données 3D "bâtiments" modifiés depuis le dernier millésime ou une date ultérieure
       tags:
       - Data
-      x-eov-operation-handler: controllers/DataController
   /collections/deleted_building/items:
     get:
       description: |-
@@ -848,7 +855,6 @@ paths:
       summary: Obtention des identifiants des bâtiments modifiés depuis le dernier millésime ou une date ultérieure
       tags:
       - Data
-      x-eov-operation-handler: controllers/DataController
   /collections/vegetation/items:
     get:
       description: |-
@@ -913,7 +919,6 @@ paths:
       summary: Obtention d'une couche de données ponctuelles permettant la représentation de la végétation théorique.
       tags:
       - Data
-      x-eov-operation-handler: controllers/DataController
   /collections/mobilier/items:
     get:
       description: |-
@@ -978,7 +983,6 @@ paths:
       summary: Obtention d'une couche de données ponctuelles permettant la représentation du mobilier urbain théorique.
       tags:
       - Data
-      x-eov-operation-handler: controllers/DataController    
   /collections/mnt2018/coverage:
     get:
       description:  |-
@@ -1044,8 +1048,23 @@ paths:
       summary: Obtention d'une partie du raster du Modèle Numérique de Terrain (MNT)
       tags:
       - Coverage
-      x-eov-operation-handler: controllers/DataController
 components:
+  securitySchemes:
+    ApiKeyAuth:        # arbitrary name for the security scheme
+      type: apiKey
+      in: header       # can be "header", "query" or "cookie"
+      name: apiKey  # name of the header, query parameter or cookie
+      description: Clé d'API publique et partagée = eyJ4NXQiOiJNREJsTTJRMVltRTRaREZrTldReE4yVTJZVEJpTkRreU5EUmxaV0l4TXpGak9ESXlNalF3TWc9PSIsImtpZCI6ImdhdGV3YXlfY2VydGlmaWNhdGVfYWxpYXMiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhcHBtYW5hZ2VyQGNhcmJvbi5zdXBlciIsImFwcGxpY2F0aW9uIjp7Im93bmVyIjoiYXBwbWFuYWdlciIsInRpZXJRdW90YVR5cGUiOm51bGwsInRpZXIiOiI1MFBlck1pbiIsIm5hbWUiOiJwdWJsaXF1ZSIsImlkIjoxNDEsInV1aWQiOiJhYjU2NzA1Yi05M2RjLTQzYjEtOTQyMC1lZDJmYzUxOGQxZGQifSwiaXNzIjoiaHR0cHM6XC9cL2FwaW1hbmFnZXIuc2kucmVubmVzLmZyXC9vYXV0aDJcL3Rva2VuIiwidGllckluZm8iOnsiUHVibGlxdWVfZmFpYmxlIjp7InRpZXJRdW90YVR5cGUiOiJyZXF1ZXN0Q291bnQiLCJncmFwaFFMTWF4Q29tcGxleGl0eSI6MCwiZ3JhcGhRTE1heERlcHRoIjowLCJzdG9wT25RdW90YVJlYWNoIjp0cnVlLCJzcGlrZUFycmVzdExpbWl0IjowLCJzcGlrZUFycmVzdFVuaXQiOiJzZWMifX0sImtleXR5cGUiOiJQUk9EVUNUSU9OIiwicGVybWl0dGVkUmVmZXJlciI6IiIsInN1YnNjcmliZWRBUElzIjpbeyJzdWJzY3JpYmVyVGVuYW50RG9tYWluIjoiY2FyYm9uLnN1cGVyIiwibmFtZSI6IjNkIiwiY29udGV4dCI6IlwvM2RcL3YxIiwicHVibGlzaGVyIjoiZy50YXNzZXQiLCJ2ZXJzaW9uIjoidjEiLCJzdWJzY3JpcHRpb25UaWVyIjoiUHVibGlxdWVfZmFpYmxlIn0seyJzdWJzY3JpYmVyVGVuYW50RG9tYWluIjoiY2FyYm9uLnN1cGVyIiwibmFtZSI6IjNkLXRlc3QiLCJjb250ZXh0IjoiXC8zZC10ZXN0XC92MSIsInB1Ymxpc2hlciI6ImcudGFzc2V0IiwidmVyc2lvbiI6InYxIiwic3Vic2NyaXB0aW9uVGllciI6IlB1YmxpcXVlX2ZhaWJsZSJ9LHsic3Vic2NyaWJlclRlbmFudERvbWFpbiI6ImNhcmJvbi5zdXBlciIsIm5hbWUiOiJydmF0ZXN0IiwiY29udGV4dCI6IlwvcnZhLXRlc3RcL3YyIiwicHVibGlzaGVyIjoiZy50YXNzZXQiLCJ2ZXJzaW9uIjoidjIiLCJzdWJzY3JpcHRpb25UaWVyIjoiUHVibGlxdWVfZmFpYmxlIn1dLCJ0b2tlbl90eXBlIjoiYXBpS2V5IiwicGVybWl0dGVkSVAiOiIiLCJpYXQiOjE2NzU0MzMzOTIsImp0aSI6IjA2NzEyMWIxLWQ3NjItNDU4Ny04YzQ2LTJlMmEwMmQwZDc3OCJ9.JnDoqBRz39NvSAYJKgjlQI2-eItm95FYf_5yOk5LEwy9C8CNPHnv7oS3OR1x7lH4mCmll1X7czwIX21jsjRR7zD-HNzJlNOkishlxUWOETfaPJk4DVQoDBxvQTmvvdhdm4euE10wdSULzClc3fqRMO9Ocfx5pgX3xPK6Bv_hpghd7lekd91Q2KqcjfBaDp_aN6XlAQqF7j0O15yvtNVGrtbDPovRHLWxrNABX-HPZ7QwQaZxhFnKBohB4uys-eivsFR4-WeGHjs3-iW_hFqXXmOvr7zhWlJWSD7E7jnMF8hgBrLI8Oe2ZTKOfibf6itXwbQxuIai6owV3PQNecnA-w=="
+      
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://example.com/oauth/authorize
+          tokenUrl: https://example.com/oauth/token
+          scopes:
+            read: Grants read access
+  
   parameters:
     f:
       description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
@@ -1714,3 +1733,4 @@ components:
           -7228060.155101
           -1360678.159198
           -7228097.547001
+

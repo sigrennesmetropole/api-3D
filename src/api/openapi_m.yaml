@@ -17,10 +17,11 @@ info:
     <p>Le système de coordonnées utilisé par cette API (résultats et paramètres) est <strong>EPSG:3948</strong>. </p>
     
     <p>Cette API nécessite une authentification.
-    <ul><li>Une clé publique ApiKeyAuth est mise à disposition et peut être utilisée librement. Tous les utilisateurs de cette clé partagent les mêmes accès aux données. Leurs demandes peuvent se voir mises en attente en cas d'un usage massif simultané de la clé. La clé partagée peut être récupérée dans la fenêtre d'authentification swagger. Elle est automatiquement appliquée sur les fonctions "Try it out" lorsqu'aucune authentification n'a été explicitement formulée.
+    <ul><li>Une clé publique ApiKeyAuth est mise à disposition et peut être utilisée librement. Tous les utilisateurs de cette clé partagent les mêmes accès aux données. Leurs demandes peuvent se voir mises en attente en cas d'un usage massif simultané de la clé. La clé partagée est récupérable dans la fenêtre d'authentification swagger. 
     <li>Les grands consommateurs de l'API peuvent contacter le service SIG de Rennes Métropole pour demander une clé d'api dédiée ou un compte OAuth2 (identification d'application cliente) pour disposer d'un accès indépendant aux données (selon les contraintes imposées).
     </ul></p>
     <p>Cette API se veut conforme au standard OGC API - Features v1.0.0 et au standard OGC API - Coverage (draft). </p>
+    <p> <strong><i>Attention, l'utilisation de l'API REST est modifiée depuis septembre 2023. Les urls d'accès ont changé et il est désormais indispensable de s'authentifier pour l'utiliser.</i></strong></p>
   contact:
     name: Rennes Metropole - Service Information Géographique
     url: https://public.sig.rennesmetropole.fr/

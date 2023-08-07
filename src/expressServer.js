@@ -44,25 +44,32 @@ class ExpressServer {
     // View the openapi document in a visual interface. Should be able to test from this page
     //this.app.use('/api/api-docs', swaggerUI.serve, swaggerUI.setup(this.schema));
     //this.app.use('/api/api-docs', swaggerUI.serveFiles(this.schema, {}), swaggerUI.setup(this.schema));
-    path.join(__dirname, 'api', 'openapi.yaml')
     // swagger file that serve a WSO2 GUI (API Manager)
     if (process.env.APIM_FILE != undefined) {
       const apim_file = path.join(config.ROOT_DIR, 'api', process.env.APIM_FILE);
       const jsonapim = jsYaml.safeLoad(fs.readFileSync(apim_file));
-
+      
       this.app.use('/api/api-docs', swaggerUI.serveFiles(jsonapim, {
+
         swaggerOptions: {
+          /*
           requestInterceptor: function (req) { 
             // this function is run on client side and cannot reach server-side variables such as APIMPUBLICKEY
-            /*
             if (req.headers['apiKey'] == undefined && req.headers['Authorization'] == undefined ){
               //TODO : externaliser la clé publique
               req.headers['apiKey'] = 'eyJ4NXQiOiJNREJsTTJRMVltRTRaREZrTldReE4yVTJZVEJpTkRreU5EUmxaV0l4TXpGak9ESXlNalF3TWc9PSIsImtpZCI6ImdhdGV3YXlfY2VydGlmaWNhdGVfYWxpYXMiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhcHBtYW5hZ2VyQGNhcmJvbi5zdXBlciIsImFwcGxpY2F0aW9uIjp7Im93bmVyIjoiYXBwbWFuYWdlciIsInRpZXJRdW90YVR5cGUiOm51bGwsInRpZXIiOiI1MFBlck1pbiIsIm5hbWUiOiJwdWJsaXF1ZSIsImlkIjoxNDEsInV1aWQiOiJhYjU2NzA1Yi05M2RjLTQzYjEtOTQyMC1lZDJmYzUxOGQxZGQifSwiaXNzIjoiaHR0cHM6XC9cL2FwaW1hbmFnZXIuc2kucmVubmVzLmZyXC9vYXV0aDJcL3Rva2VuIiwidGllckluZm8iOnsiUHVibGlxdWVfZmFpYmxlIjp7InRpZXJRdW90YVR5cGUiOiJyZXF1ZXN0Q291bnQiLCJncmFwaFFMTWF4Q29tcGxleGl0eSI6MCwiZ3JhcGhRTE1heERlcHRoIjowLCJzdG9wT25RdW90YVJlYWNoIjp0cnVlLCJzcGlrZUFycmVzdExpbWl0IjowLCJzcGlrZUFycmVzdFVuaXQiOiJzZWMifX0sImtleXR5cGUiOiJQUk9EVUNUSU9OIiwicGVybWl0dGVkUmVmZXJlciI6IiIsInN1YnNjcmliZWRBUElzIjpbeyJzdWJzY3JpYmVyVGVuYW50RG9tYWluIjoiY2FyYm9uLnN1cGVyIiwibmFtZSI6IjNkIiwiY29udGV4dCI6IlwvM2RcL3YxIiwicHVibGlzaGVyIjoiZy50YXNzZXQiLCJ2ZXJzaW9uIjoidjEiLCJzdWJzY3JpcHRpb25UaWVyIjoiUHVibGlxdWVfZmFpYmxlIn0seyJzdWJzY3JpYmVyVGVuYW50RG9tYWluIjoiY2FyYm9uLnN1cGVyIiwibmFtZSI6IjNkLXRlc3QiLCJjb250ZXh0IjoiXC8zZC10ZXN0XC92MSIsInB1Ymxpc2hlciI6ImcudGFzc2V0IiwidmVyc2lvbiI6InYxIiwic3Vic2NyaXB0aW9uVGllciI6IlB1YmxpcXVlX2ZhaWJsZSJ9LHsic3Vic2NyaWJlclRlbmFudERvbWFpbiI6ImNhcmJvbi5zdXBlciIsIm5hbWUiOiJydmF0ZXN0IiwiY29udGV4dCI6IlwvcnZhLXRlc3RcL3YyIiwicHVibGlzaGVyIjoiZy50YXNzZXQiLCJ2ZXJzaW9uIjoidjIiLCJzdWJzY3JpcHRpb25UaWVyIjoiUHVibGlxdWVfZmFpYmxlIn1dLCJ0b2tlbl90eXBlIjoiYXBpS2V5IiwicGVybWl0dGVkSVAiOiIiLCJpYXQiOjE2NzU0MzMzOTIsImp0aSI6IjA2NzEyMWIxLWQ3NjItNDU4Ny04YzQ2LTJlMmEwMmQwZDc3OCJ9.JnDoqBRz39NvSAYJKgjlQI2-eItm95FYf_5yOk5LEwy9C8CNPHnv7oS3OR1x7lH4mCmll1X7czwIX21jsjRR7zD-HNzJlNOkishlxUWOETfaPJk4DVQoDBxvQTmvvdhdm4euE10wdSULzClc3fqRMO9Ocfx5pgX3xPK6Bv_hpghd7lekd91Q2KqcjfBaDp_aN6XlAQqF7j0O15yvtNVGrtbDPovRHLWxrNABX-HPZ7QwQaZxhFnKBohB4uys-eivsFR4-WeGHjs3-iW_hFqXXmOvr7zhWlJWSD7E7jnMF8hgBrLI8Oe2ZTKOfibf6itXwbQxuIai6owV3PQNecnA-w=="';
             }
-            */
               return req;
           }, 
+          */ 
+         /*  
+          responseInterceptor: function (res) {  
+            console.log(res.headers);
+            return res;
+          }     
+          */
         }
+       
       }), swaggerUI.setup(jsonapim));
     } else {
       this.app.use('/api/api-docs', swaggerUI.serve, swaggerUI.setup(this.schema));
@@ -123,14 +130,6 @@ class ExpressServer {
     }
   }
 
-  async checkResponse(res){
-    console.log("CHECK RESPONSE");
-    response = res;
-    if (response.headers['content-disposition'] != undefined && (String)(response.headers['content-disposition']).startsWith('attachment') ) {
-      response.attributCBR='téléchargement de fichier';
-    }
-    return response;
-  }
 }
 
 module.exports = ExpressServer;

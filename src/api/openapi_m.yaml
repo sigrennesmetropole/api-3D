@@ -13,10 +13,12 @@ info:
     <p>
     Le <b>Modèle Numérique de Terrain (MNT)</b> permet de connaître l'altitude du terrain à un endroit donné. Cette donnée raster en niveaux de gris permet de reconstruire un modèle 3D du terrain.
     </p>
+
     <p>Le système de coordonnées utilisé par cette API (résultats et paramètres) est <strong>EPSG:3948</strong>. </p>
-    <p>Cette API nécessite une authentification. 
+    
+    <p>Cette API nécessite une authentification.
     <ul><li>Une clé publique ApiKeyAuth est mise à disposition et peut être utilisée librement. Tous les utilisateurs de cette clé partagent les mêmes accès aux données. Leurs demandes peuvent se voir mises en attente en cas d'un usage massif simultané de la clé. La clé partagée peut être récupérée dans la fenêtre d'authentification swagger. Elle est automatiquement appliquée sur les fonctions "Try it out" lorsqu'aucune authentification n'a été explicitement formulée.
-    <li>Les grands consommateurs de l'API peuvent aussi contacter le service SIG de Rennes Métropole pour demander un compte OAuth2 qui leur offre un accès indépendant aux données.
+    <li>Les grands consommateurs de l'API peuvent contacter le service SIG de Rennes Métropole pour demander une clé d'api dédiée ou un compte OAuth2 (identification d'application cliente) pour disposer d'un accès indépendant aux données (selon les contraintes imposées).
     </ul></p>
     <p>Cette API se veut conforme au standard OGC API - Features v1.0.0 et au standard OGC API - Coverage (draft). </p>
   contact:
@@ -40,11 +42,8 @@ info:
 servers:
   - url: https://api.rennesmetropole.fr/3d/v1/
     description: Serveur de production
-  - url: https://api.rennesmetropole.fr/3d-test/v1/
-    description: Serveur de test
 security:
   - ApiKeyAuth: []
-  - OAuth2: []
 tags:
 - description: Propriétés générales de l'API
   name: Capabilities
@@ -1054,17 +1053,7 @@ components:
       type: apiKey
       in: header       # can be "header", "query" or "cookie"
       name: apiKey  # name of the header, query parameter or cookie
-      description: Clé d'API publique et partagée = eyJ4NXQiOiJNREJsTTJRMVltRTRaREZrTldReE4yVTJZVEJpTkRreU5EUmxaV0l4TXpGak9ESXlNalF3TWc9PSIsImtpZCI6ImdhdGV3YXlfY2VydGlmaWNhdGVfYWxpYXMiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhcHBtYW5hZ2VyQGNhcmJvbi5zdXBlciIsImFwcGxpY2F0aW9uIjp7Im93bmVyIjoiYXBwbWFuYWdlciIsInRpZXJRdW90YVR5cGUiOm51bGwsInRpZXIiOiI1MFBlck1pbiIsIm5hbWUiOiJwdWJsaXF1ZSIsImlkIjoxNDEsInV1aWQiOiJhYjU2NzA1Yi05M2RjLTQzYjEtOTQyMC1lZDJmYzUxOGQxZGQifSwiaXNzIjoiaHR0cHM6XC9cL2FwaW1hbmFnZXIuc2kucmVubmVzLmZyXC9vYXV0aDJcL3Rva2VuIiwidGllckluZm8iOnsiUHVibGlxdWVfZmFpYmxlIjp7InRpZXJRdW90YVR5cGUiOiJyZXF1ZXN0Q291bnQiLCJncmFwaFFMTWF4Q29tcGxleGl0eSI6MCwiZ3JhcGhRTE1heERlcHRoIjowLCJzdG9wT25RdW90YVJlYWNoIjp0cnVlLCJzcGlrZUFycmVzdExpbWl0IjowLCJzcGlrZUFycmVzdFVuaXQiOiJzZWMifX0sImtleXR5cGUiOiJQUk9EVUNUSU9OIiwicGVybWl0dGVkUmVmZXJlciI6IiIsInN1YnNjcmliZWRBUElzIjpbeyJzdWJzY3JpYmVyVGVuYW50RG9tYWluIjoiY2FyYm9uLnN1cGVyIiwibmFtZSI6IjNkIiwiY29udGV4dCI6IlwvM2RcL3YxIiwicHVibGlzaGVyIjoiZy50YXNzZXQiLCJ2ZXJzaW9uIjoidjEiLCJzdWJzY3JpcHRpb25UaWVyIjoiUHVibGlxdWVfZmFpYmxlIn0seyJzdWJzY3JpYmVyVGVuYW50RG9tYWluIjoiY2FyYm9uLnN1cGVyIiwibmFtZSI6IjNkLXRlc3QiLCJjb250ZXh0IjoiXC8zZC10ZXN0XC92MSIsInB1Ymxpc2hlciI6ImcudGFzc2V0IiwidmVyc2lvbiI6InYxIiwic3Vic2NyaXB0aW9uVGllciI6IlB1YmxpcXVlX2ZhaWJsZSJ9LHsic3Vic2NyaWJlclRlbmFudERvbWFpbiI6ImNhcmJvbi5zdXBlciIsIm5hbWUiOiJydmF0ZXN0IiwiY29udGV4dCI6IlwvcnZhLXRlc3RcL3YyIiwicHVibGlzaGVyIjoiZy50YXNzZXQiLCJ2ZXJzaW9uIjoidjIiLCJzdWJzY3JpcHRpb25UaWVyIjoiUHVibGlxdWVfZmFpYmxlIn1dLCJ0b2tlbl90eXBlIjoiYXBpS2V5IiwicGVybWl0dGVkSVAiOiIiLCJpYXQiOjE2NzU0MzMzOTIsImp0aSI6IjA2NzEyMWIxLWQ3NjItNDU4Ny04YzQ2LTJlMmEwMmQwZDc3OCJ9.JnDoqBRz39NvSAYJKgjlQI2-eItm95FYf_5yOk5LEwy9C8CNPHnv7oS3OR1x7lH4mCmll1X7czwIX21jsjRR7zD-HNzJlNOkishlxUWOETfaPJk4DVQoDBxvQTmvvdhdm4euE10wdSULzClc3fqRMO9Ocfx5pgX3xPK6Bv_hpghd7lekd91Q2KqcjfBaDp_aN6XlAQqF7j0O15yvtNVGrtbDPovRHLWxrNABX-HPZ7QwQaZxhFnKBohB4uys-eivsFR4-WeGHjs3-iW_hFqXXmOvr7zhWlJWSD7E7jnMF8hgBrLI8Oe2ZTKOfibf6itXwbQxuIai6owV3PQNecnA-w=="
-      
-    OAuth2:
-      type: oauth2
-      flows:
-        authorizationCode:
-          authorizationUrl: https://example.com/oauth/authorize
-          tokenUrl: https://example.com/oauth/token
-          scopes:
-            read: Grants read access
-  
+      description: Clé d'API publique et partagée = eyJ4NXQiOiJNREJsTTJRMVltRTRaREZrTldReE4yVTJZVEJpTkRreU5EUmxaV0l4TXpGak9ESXlNalF3TWc9PSIsImtpZCI6ImdhdGV3YXlfY2VydGlmaWNhdGVfYWxpYXMiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhcHBtYW5hZ2VyQGNhcmJvbi5zdXBlciIsImFwcGxpY2F0aW9uIjp7Im93bmVyIjoiYXBwbWFuYWdlciIsInRpZXJRdW90YVR5cGUiOm51bGwsInRpZXIiOiI1MFBlck1pbiIsIm5hbWUiOiJwdWJsaXF1ZSIsImlkIjoxNDEsInV1aWQiOiJhYjU2NzA1Yi05M2RjLTQzYjEtOTQyMC1lZDJmYzUxOGQxZGQifSwiaXNzIjoiaHR0cHM6XC9cL2FwaW1hbmFnZXIuc2kucmVubmVzLmZyXC9vYXV0aDJcL3Rva2VuIiwidGllckluZm8iOnsiUHVibGlxdWVfZmFpYmxlIjp7InRpZXJRdW90YVR5cGUiOiJyZXF1ZXN0Q291bnQiLCJncmFwaFFMTWF4Q29tcGxleGl0eSI6MCwiZ3JhcGhRTE1heERlcHRoIjowLCJzdG9wT25RdW90YVJlYWNoIjp0cnVlLCJzcGlrZUFycmVzdExpbWl0IjowLCJzcGlrZUFycmVzdFVuaXQiOiJzZWMifX0sImtleXR5cGUiOiJQUk9EVUNUSU9OIiwicGVybWl0dGVkUmVmZXJlciI6IiIsInN1YnNjcmliZWRBUElzIjpbeyJzdWJzY3JpYmVyVGVuYW50RG9tYWluIjoiY2FyYm9uLnN1cGVyIiwibmFtZSI6IjNkIiwiY29udGV4dCI6IlwvM2RcL3YxIiwicHVibGlzaGVyIjoiZy50YXNzZXQiLCJ2ZXJzaW9uIjoidjEiLCJzdWJzY3JpcHRpb25UaWVyIjoiUHVibGlxdWVfZmFpYmxlIn0seyJzdWJzY3JpYmVyVGVuYW50RG9tYWluIjoiY2FyYm9uLnN1cGVyIiwibmFtZSI6IjNkLXRlc3QiLCJjb250ZXh0IjoiXC8zZC10ZXN0XC92MSIsInB1Ymxpc2hlciI6ImcudGFzc2V0IiwidmVyc2lvbiI6InYxIiwic3Vic2NyaXB0aW9uVGllciI6IlB1YmxpcXVlX2ZhaWJsZSJ9LHsic3Vic2NyaWJlclRlbmFudERvbWFpbiI6ImNhcmJvbi5zdXBlciIsIm5hbWUiOiJydmF0ZXN0IiwiY29udGV4dCI6IlwvcnZhLXRlc3RcL3YyIiwicHVibGlzaGVyIjoiZy50YXNzZXQiLCJ2ZXJzaW9uIjoidjIiLCJzdWJzY3JpcHRpb25UaWVyIjoiUHVibGlxdWVfZmFpYmxlIn1dLCJ0b2tlbl90eXBlIjoiYXBpS2V5IiwicGVybWl0dGVkSVAiOiIiLCJpYXQiOjE2NzU0MzMzOTIsImp0aSI6IjA2NzEyMWIxLWQ3NjItNDU4Ny04YzQ2LTJlMmEwMmQwZDc3OCJ9.JnDoqBRz39NvSAYJKgjlQI2-eItm95FYf_5yOk5LEwy9C8CNPHnv7oS3OR1x7lH4mCmll1X7czwIX21jsjRR7zD-HNzJlNOkishlxUWOETfaPJk4DVQoDBxvQTmvvdhdm4euE10wdSULzClc3fqRMO9Ocfx5pgX3xPK6Bv_hpghd7lekd91Q2KqcjfBaDp_aN6XlAQqF7j0O15yvtNVGrtbDPovRHLWxrNABX-HPZ7QwQaZxhFnKBohB4uys-eivsFR4-WeGHjs3-iW_hFqXXmOvr7zhWlJWSD7E7jnMF8hgBrLI8Oe2ZTKOfibf6itXwbQxuIai6owV3PQNecnA-w== 
   parameters:
     f:
       description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.

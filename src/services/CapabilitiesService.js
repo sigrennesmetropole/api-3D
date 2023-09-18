@@ -65,12 +65,6 @@ const describeMnt2018 = ({ f }) => new Promise(
       resolve(Service.successResponse({
         "links": [
           {
-            "href": "/collections/mnt2018?f=application%2Fjson",
-            "rel": "self",
-            "type": "application/json",
-            "title": "Buildings"
-          },
-          {
             "href": "/collections/mnt2018/coverage",
             "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage",
             "type": "image/tiff;application=geotiff",
@@ -78,7 +72,7 @@ const describeMnt2018 = ({ f }) => new Promise(
           }
         ],
         "id": "mnt2018",
-        "title": "mnt2018",
+        "title": "Modèle Numérique de Terrain (MNT) 2018",
         "description": "Fetch mnt2018",
         "crs": [
           "http://www.opengis.net/def/crs/EPSG/0/3948"
@@ -113,6 +107,9 @@ const getCollections = ({ f }) => new Promise(
             "id": "buildings",
             "title": "Buildings",
             "description": "Fetch buildings",
+            "crs": [
+              "http://www.opengis.net/def/crs/EPSG/0/3948"
+            ],
             "links": [
               {
                 "href": "/collections/buildings?f=application%2Fjson",
@@ -141,8 +138,11 @@ const getCollections = ({ f }) => new Promise(
             ]
           }, {
             "id": "mnt2018",
-            "title": "mnt2018",
+            "title": "Modèle Numérique de Terrain (MNT) 2018",
             "description": "Fetch mnt2018",
+            "crs": [
+              "http://www.opengis.net/def/crs/EPSG/0/3948"
+            ],
             "links": [
               {
                 "href": "/collections/mnt2018/coverage",
@@ -155,6 +155,9 @@ const getCollections = ({ f }) => new Promise(
             "id": "vegetation",
             "title": "vegetation",
             "description": "Fetch vegetation",
+            "crs": [
+              "http://www.opengis.net/def/crs/EPSG/0/3948"
+            ],
             "links": [
               {
                 "href": "/collections/vegetation/items",
@@ -167,6 +170,9 @@ const getCollections = ({ f }) => new Promise(
             "id": "added_building",
             "title": "added building",
             "description": "Fetch added building",
+            "crs": [
+              "http://www.opengis.net/def/crs/EPSG/0/3948"
+            ],
             "links": [
               {
                 "href": "/collections/added_building/items?f=application%2Fjson",
@@ -185,6 +191,9 @@ const getCollections = ({ f }) => new Promise(
             "id": "modified_building",
             "title": "modified building",
             "description": "Fetch modified building",
+            "crs": [
+              "http://www.opengis.net/def/crs/EPSG/0/3948"
+            ],
             "links": [
               {
                 "href": "/collections/modified_building/items?f=application%2Fjson",

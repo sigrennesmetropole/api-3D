@@ -250,6 +250,9 @@ async function traitementRetourPG(result, id, limit, startIndex, reject, resolve
 
 async function traitementRetourExporter(id, format, limit, startIndex, texture, reject, resolve) {
   logger.info('Début du traitement après export : ' + id + format);
+  logger.info(path.join(process.env['DOWNLD_PATH'], process.env['DOWNLD_FOLDERNAME']));
+  logger.info(process.env['DOWNLD_URL'] + process.env['DOWNLD_URL'].substring(-1)=="/"?"":"/" + process.env['DOWNLD_FOLDERNAME']);
+
   let fileExtention = texture === 'oui' ? '.zip' : format;
   try{
     if (texture === 'oui') {
@@ -267,6 +270,7 @@ async function traitementRetourExporter(id, format, limit, startIndex, texture, 
           let destFile =  horodatage + '_buildings_' + format.replace(".city", "") + fileExtention;
           let destfolder = path.join(process.env['DOWNLD_PATH'], process.env['DOWNLD_FOLDERNAME']);
           
+          
           if (!fs.existsSync(destfolder)) {
             logger.info('Creation du dossier : ' + destfolder);
             await fs.mkdirSync(destfolder);
@@ -280,7 +284,7 @@ async function traitementRetourExporter(id, format, limit, startIndex, texture, 
             } 
           });
 
-          let url =  process.env['DOWNLD_URL'] + "/" + process.env['DOWNLD_FOLDERNAME'] + '/' + destFile;
+          let url =  process.env['DOWNLD_URL'] + process.env['DOWNLD_URL'].substring(-1)=="/"?"":"/" + process.env['DOWNLD_FOLDERNAME'] + '/' + destFile;
           let refTime = new Date(date.getTime() + process.env['DOWNLD_RETENTION_MIN'] * 60 * 1000);
 
           let data = {

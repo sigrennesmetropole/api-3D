@@ -251,7 +251,7 @@ async function traitementRetourPG(result, id, limit, startIndex, reject, resolve
 async function traitementRetourExporter(id, format, limit, startIndex, texture, reject, resolve) {
   logger.info('Début du traitement après export : ' + id + format);
   logger.info(path.join(process.env['DOWNLD_PATH'], process.env['DOWNLD_FOLDERNAME']));
-  logger.info(process.env['DOWNLD_URL'] + process.env['DOWNLD_URL'].substring(-1)=="/"?"":"/" + process.env['DOWNLD_FOLDERNAME']);
+  logger.info(process.env['DOWNLD_URL'] + (process.env['DOWNLD_URL'].slice(-1)==="/"?"":"/") + process.env['DOWNLD_FOLDERNAME']);
 
   let fileExtention = texture === 'oui' ? '.zip' : format;
   try{
@@ -284,7 +284,7 @@ async function traitementRetourExporter(id, format, limit, startIndex, texture, 
             } 
           });
 
-          let url =  process.env['DOWNLD_URL'] + process.env['DOWNLD_URL'].substring(-1)=="/"?"":"/" + process.env['DOWNLD_FOLDERNAME'] + '/' + destFile;
+          let url =  process.env['DOWNLD_URL'] + (process.env['DOWNLD_URL'].slice(-1)==="/"?"":"/") + process.env['DOWNLD_FOLDERNAME'] + '/' + destFile;
           let refTime = new Date(date.getTime() + process.env['DOWNLD_RETENTION_MIN'] * 60 * 1000);
 
           let data = {

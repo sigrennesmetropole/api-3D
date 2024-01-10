@@ -287,9 +287,9 @@ paths:
       tags:
       - Capabilities
       x-eov-operation-handler: controllers/CapabilitiesController
-  /collections/mnt2018:
+  /collections/mnt:
     get:
-      operationId: describeMnt2018
+      operationId: describeMnt
       parameters:
       - description: Optionnel, le paramètre f permet de choisir le format de sortie. JSON si non renseigné.
         explode: false
@@ -308,23 +308,23 @@ paths:
           content:
             application/json:
               example:
-                id: mnt2018
-                title: Modèle Numérique de Terrain (MNT) 2018
-                description: Fetch mnt2018
+                id: mnt
+                title: Modèle Numérique de Terrain (MNT)
+                description: Fetch mnt
                 links:
-                - href: /collections/mnt2018/coverage
+                - href: /collections/mnt/coverage
                   rel: http://www.opengis.net/def/rel/ogc/1.0/coverage
                   type: image/tiff;application=geotiff
-                  title: mnt2018
+                  title: mnt
               schema:
                 $ref: '#/components/schemas/collection'
             text/html:
               schema:
                 type: string
           description: |-
-            Description du jeu de données `mnt2018`.
+            Description du jeu de données `mnt`.
 
-            Cette route permet d'obtenir les informations dont le système de coordonnées de référence (SCR) et les méthodes d'accès aux données du jeu de données (collection) 'mnt2018'.
+            Cette route permet d'obtenir les informations dont le système de coordonnées de référence (SCR) et les méthodes d'accès aux données du jeu de données (collection) 'mnt'.
             La réponse présente la liste des points d'accès au jeu de données et pour chacun, sa description et son lien d'accès (chemin `/collections/{collectionId}/items`).
 
             Cette information comprend : 
@@ -354,7 +354,7 @@ paths:
               schema:
                 type: string
           description: Erreur du serveur rencontrée.
-      summary: Description du jeu de données `mnt2018`
+      summary: Description du jeu de données `mnt`
       tags:
       - Capabilities
       x-eov-operation-handler: controllers/CapabilitiesController
@@ -979,7 +979,7 @@ paths:
       tags:
       - Data
       x-eov-operation-handler: controllers/DataController    
-  /collections/mnt2018/coverage:
+  /collections/mnt/coverage:
     get:
       description:  |-
         Obtention du Modèle Numérique de Terrain (MNT) qui permet de connaitre le relief du terrain.

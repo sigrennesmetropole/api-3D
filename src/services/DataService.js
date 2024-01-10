@@ -86,7 +86,7 @@ const getRaster = ({ bbox }) => new Promise(
     bbox = dataValidator.getBBoxFromAny(bbox, reject);
     try {
       let {height, width} = dataValidator.getBBoxHeightAndWidth(bbox);
-      wfs.exportRasterWFS(version='1.0.0', layers='mnt2018', bbox, witdh=Math.floor(width*2), height=Math.floor(height*2), crs='EPSG:3948', format='image/geotiff')
+      wfs.exportRasterWFS(version='1.0.0', layers=process.env.current_mntlayer, bbox, witdh=Math.floor(width*2), height=Math.floor(height*2), crs='EPSG:3948', format='image/geotiff')
         .then((result) => {
           resolve(Service.fileResponse(result, 200, "image/geotiff"));
         }, (raison) => {

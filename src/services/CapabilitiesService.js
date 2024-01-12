@@ -54,26 +54,26 @@ const describeBuildings = ({ f }) => new Promise(
 );
 
 /**
-* describe the feature collection with id `mnt2018`
+* describe the feature collection with id `mnt`
 *
 * f String The optional f parameter indicates the output format that the server shall provide as part of the response document.  The default format is JSON. (optional)
 * returns collection
 * */
-const describeMnt2018 = ({ f }) => new Promise(
+const describeMnt = ({ f }) => new Promise(
   async (resolve, reject) => {
     try {
       resolve(Service.successResponse({
         "links": [
           {
-            "href": "/collections/mnt2018/coverage",
+            "href": "/collections/mnt/coverage",
             "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage",
             "type": "image/tiff;application=geotiff",
-            "title": "mnt2018"
+            "title": "mnt"
           }
         ],
-        "id": "mnt2018",
-        "title": "Modèle Numérique de Terrain (MNT) 2018",
-        "description": "Fetch mnt2018",
+        "id": "mnt",
+        "title": "Modèle Numérique de Terrain (MNT)",
+        "description": "Fetch mnt",
         "crs": [
           "http://www.opengis.net/def/crs/EPSG/0/3948"
         ],
@@ -137,18 +137,18 @@ const getCollections = ({ f }) => new Promise(
               }
             ]
           }, {
-            "id": "mnt2018",
-            "title": "Modèle Numérique de Terrain (MNT) 2018",
-            "description": "Fetch mnt2018",
+            "id": "mnt",
+            "title": "Modèle Numérique de Terrain (MNT)",
+            "description": "Fetch mnt",
             "crs": [
               "http://www.opengis.net/def/crs/EPSG/0/3948"
             ],
             "links": [
               {
-                "href": "/collections/mnt2018/coverage",
+                "href": "/collections/mnt/coverage",
                 "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage",
                 "type": "image/tiff;application=geotiff",
-                "title": "mnt2018"
+                "title": "mnt"
               }
             ]
           }, {
@@ -302,7 +302,7 @@ const getLandingPage = ({ f }) => new Promise(
 
 module.exports = {
   describeBuildings,
-  describeMnt2018,
+  describeMnt,
   getCollections,
   getConformanceDeclaration,
   getLandingPage,

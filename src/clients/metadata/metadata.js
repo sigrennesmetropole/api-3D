@@ -42,7 +42,7 @@ const getMetadata = async () => {
   let result = [];
   for (const uuid of process.env['FILES_IDS'].split(",")){
     try {
-    let link = 'https://public.sig.rennesmetropole.fr/geonetwork/srv/api/0.1/records/'+uuid
+    let link = 'https://public.sig.rennesmetropole.fr/geonetwork/srv/api/records/'+uuid
     let metadata = await retrieveMetadata(link);
     metadata['lien'] = link
     result.push(metadata);

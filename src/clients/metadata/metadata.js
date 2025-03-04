@@ -44,7 +44,7 @@ const getMetadata = async () => {
     try {
     let link = 'https://public.sig.rennesmetropole.fr/geonetwork/srv/api/records/'+uuid
     let metadata = await retrieveMetadata(link);
-    metadata['lien'] = link
+    metadata['lien'] = 'https://public.sig.rennesmetropole.fr/datahub/dataset/'+uuid
     result.push(metadata);
     }catch (e) {
       console.log("Impossible de récupérer l'uuid "+ uuid);

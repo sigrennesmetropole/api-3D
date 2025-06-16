@@ -1,0 +1,67 @@
+- name: Docker compose avec Ansible  
+  gather_facts: true
+  hosts: "{{ ENV }}"
+  vars:
+    ansible_python_interpreter: /usr/bin/python3     
+  tasks:
+    - name: Crétion dossier
+      become: true
+      become_method: sudo
+      ansible.builtin.file:
+        path: "{{ SERVER_INSTALL_PATH }}/{{ CI_PROJECT_NAME }}_{{ ENV }}"
+        state: directory
+
+    - name: Copie de la composition docker
+      become: true
+      become_method: sudo
+      ansible.builtin.template:
+        src: "{{ CI_PROJECT_DIR }}/.deploy/docker-compose.j2"
+        dest: "{{ SERVER_INSTALL_PATH }}/{{ CI_PROJECT_NAME }}_{{ ENV }}/docker-compose.yml"
+
+    - name: Authentification accès nexus
+      become: true
+      community.docker.docker_login:
+        username: "{{ NEXUS_ACCOUNT_LOGIN }}"
+        password: "{{ NEXUS_ACCOUNT_PWD }}"
+        registry: "{{ NEXUS_DOCKER_URL }}"
+
+    - name: Démarrage de la composition docker
+      become: true
+      become_method: sudo
+      community.docker.docker_compose_v2:
+        project_src: "{{ SERVER_INSTALL_PATH }}/{{ CI_PROJECT_NAME }}_{{ ENV }}"
+        pull: always
+      register: output
+
+    - name: Copy nginx file to server
+      become: true
+      ansible.builtin.template:
+        src: "{{ CI_PROJECT_DIR }}/.deploy/nginx.j2"
+        dest: /etc/nginx/sites-available/{{ FQDN }}
+      notify:
+        - reload_nginx
+
+    - name: Activation du site
+      become: true
+      ansible.builtin.file:
+        src: /etc/nginx/sites-available/{{ FQDN }}
+        dest: /etc/nginx/sites-enabled/{{ FQDN }}       
+        state: link
+      notify:
+        - reload_nginx
+
+    
+    - name: Affichage résultat
+      ansible.builtin.debug:
+        var: output
+
+  handlers:
+
+    - name: reload_nginx
+      systemd:
+        name: nginx
+        state: reloaded
+        
+      become: true
+
+

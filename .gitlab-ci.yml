@@ -1,5 +1,6 @@
 stages:
   - build
+  - deploy
 
 workflow:
   rules:    
@@ -43,3 +44,33 @@ build:
       when: manual
     - if: '$CI_COMMIT_REF_NAME == "main"'
     - if: '$CI_COMMIT_TAG'      
+
+#Déploiement avec Ansible avec les variables contenues dans .deploy/inventory
+deploy-ansible:
+  stage: deploy
+  tags: 
+    - SIG
+    - deploy
+  image: nexus.si.rennes.fr:5002/sig/ansible-runner:latest
+  script:    
+    - ansible-galaxy collection install -r .deploy/requirements.yml
+    - chmod 600 $GITLABRUNNERSIG_KEY    
+    - | 
+      ansible-playbook \
+        -i .deploy/inventory \
+        -u $REMOTE_USER --private-key $GITLABRUNNERSIG_KEY .deploy/playbook.yml \
+        --extra-vars \
+          "CI_PROJECT_DIR=$CI_PROJECT_DIR \
+            CI_PROJECT_NAME=$CI_PROJECT_NAME \            
+            DOCKER_TAGS=$DOCKER_TAGS \
+            NEXUS_ACCOUNT_LOGIN=$NEXUS_ACCOUNT_LOGIN \
+            NEXUS_ACCOUNT_PWD=$NEXUS_ACCOUNT_PWD \
+            NEXUS_DOCKER_URL=$NEXUS_DOCKER_URL \
+            ENV=$ENV"
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master"'
+      when: manual
+    - if: '$CI_COMMIT_REF_NAME == "develop"'
+      when: manual
+    - if: '$CI_COMMIT_TAG'
+      when: manual

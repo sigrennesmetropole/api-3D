@@ -1,0 +1,11 @@
+[all:vars]
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+ansible_python_interpreter=/usr/bin/python3
+SERVER_INSTALL_PATH=/var/applications
+SERVER=test-sig-3d-01
+
+[prod]
+
+[test]
+test-sig-3d-01 FQDN=test-sig-3d-01.mutu.local SERVER_PORT=80
+

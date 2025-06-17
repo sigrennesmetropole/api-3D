@@ -2,5 +2,5 @@ services:
   app:
     image: nexus.si.rennes.fr:5002/sig/{{ CI_PROJECT_NAME }}:{{DOCKER_TAGS}}
     ports:
-      - "{{SERVER_PORT}}:80"
+      - "{{SERVER_PORT}}:8080"
     restart: always

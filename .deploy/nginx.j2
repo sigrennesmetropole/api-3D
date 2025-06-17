@@ -1,0 +1,18 @@
+server {
+        listen 443 ssl;
+        listen [::]:443 ssl;
+
+        ssl_certificate /etc/ssl/certs/{{ FQDN }}.crt;
+        ssl_certificate_key /etc/ssl/private/{{ FQDN }}.key;
+        server_name {{ FQDN }};
+        
+
+        location / {
+            proxy_hide_header Access-Control-Allow-Origin;
+            add_header 'Access-Control-Allow-Origin' '*';            
+            proxy_set_header X-Forwarded-Host $host:$server_port;
+            proxy_set_header X-Forwarded-Server $host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_pass http://{{ SERVER }}:{{ SERVER_PORT }};
+        }
+}

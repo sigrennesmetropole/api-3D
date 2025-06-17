@@ -7,5 +7,5 @@ SERVER=test-sig-3d-01
 [prod]
 
 [test]
-test-sig-3d-01 FQDN=test-sig-3d-01.mutu.local SERVER_PORT=80
+test-sig-3d-01 FQDN=test-sig-3d-01.mutu.local SERVER_PORT=8080
 

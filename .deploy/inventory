@@ -5,7 +5,8 @@ SERVER_INSTALL_PATH=/var/applications
 SERVER=test-sig-3d-01
 
 [prod]
+sig-3d-01 FQDN=api-3d-intranet.sig.rennesmetropole.fr SERVER_PORT=8080
 
 [test]
-test-sig-3d-01 FQDN=test-sig-3d-01.mutu.local SERVER_PORT=8080
+test-sig-3d-01 FQDN=test-api-3d-intranet.sig.rennesmetropole.fr SERVER_PORT=8080
 

@@ -70,7 +70,7 @@ deploy-ansible:
   rules:
     - if: '$CI_COMMIT_REF_NAME == "main"'
       when: manual
-    - if: '$CI_COMMIT_REF_NAME == "develop"'
-      when: manual
+    #- if: '$CI_COMMIT_REF_NAME == "develop"'
+    #  when: manual
     - if: '$CI_COMMIT_TAG'
       when: manual

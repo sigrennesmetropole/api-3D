@@ -40,8 +40,8 @@ build:
     - docker build -t ${NEXUS_DOCKER_URL}/sig/${CI_PROJECT_NAME}:${DOCKER_TAGS} .
     - docker push ${NEXUS_DOCKER_URL}/sig/${CI_PROJECT_NAME}:${DOCKER_TAGS}
   rules:      
-    - if: '$CI_COMMIT_REF_NAME == "develop"'
-      when: manual
+    #- if: '$CI_COMMIT_REF_NAME == "develop"'
+    #  when: manual
     - if: '$CI_COMMIT_REF_NAME == "main"'
     - if: '$CI_COMMIT_TAG'      
 

@@ -68,7 +68,7 @@ deploy-ansible:
             NEXUS_DOCKER_URL=$NEXUS_DOCKER_URL \
             ENV=$ENV"
   rules:
-    - if: '$CI_COMMIT_REF_NAME == "master"'
+    - if: '$CI_COMMIT_REF_NAME == "main"'
       when: manual
     - if: '$CI_COMMIT_REF_NAME == "develop"'
       when: manual

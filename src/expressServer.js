@@ -100,7 +100,7 @@ class ExpressServer {
         if (customConf != 'undefined') {
           result.custom = customConf;
         }
-        res.render(path.join(__dirname, 'templates/telechargement'), result);
+        //res.render(path.join(__dirname, 'templates/telechargement'), result);
       });
     });
   }
